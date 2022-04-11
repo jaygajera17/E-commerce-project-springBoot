@@ -58,7 +58,7 @@ Right click project and run as spring boot & open:- http://localhost:8080/
 
 
 ## log in 
-- ADMIN Module (http://localhost:8080/admin):- 
+- ADMIN Module (http://localhost:8080/admin) 
   user name:- admin
   password :- 123
 
