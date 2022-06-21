@@ -61,27 +61,29 @@ Right click project and run as spring boot & open:- http://localhost:8080/
 ADMIN Module (http://localhost:8080/admin) 
 -  user name:- admin
 -  password :- 123
--  above default username and password , it can be changed in  database
+-  Note(above default username and password , it can be change in the database)
+
  
   
 
   User module
 -  user name:- jay 
 -  password:- 123
+
  
   
 
 
 ## Important link
-- youtube project video link ::---  [  click here  ](https://youtu.be/c6WWdINWSlI)
-- connect with me Linked in ::---  [  click here  ](https://www.linkedin.com/in/jay-gajera-a6496b204/)
+- youtube project video Working Demo link ::---  [  click here  ](https://youtu.be/c6WWdINWSlI)
+- connect in Linked in ::---  [  click here  ](https://www.linkedin.com/in/jay-gajera-a6496b204/)
 
 ## preview
 ![img](https://github.com/jaygajera17/E-commerce_website-in-java/blob/main/JtProject/src/main/resources/Product%20Images/Screenshot%202022-04-11%20111601.jpg)
 ![img](https://github.com/jaygajera17/E-commerce_website-in-java/blob/main/JtProject/src/main/resources/Product%20Images/Screenshot%202022-04-11%20111538.jpg)
 
 
-### Top Contributors
+### Contributors
 
 [@Jay Gajera](https://github.com/jaygajera17)
 [@Jay_chauhan](https://github.com/JayChauhan189)
