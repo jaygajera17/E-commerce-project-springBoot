@@ -85,9 +85,8 @@ ADMIN Module (http://localhost:8080/admin)
 <img width="938" alt="image" src="https://user-images.githubusercontent.com/81226571/178270030-c4e9f485-fe0b-4bbb-804a-a28d2c182c7c.png">
 
 
-### Contributors
 
-[@Jay Gajera](https://github.com/jaygajera17)
-[@Jay_chauhan](https://github.com/JayChauhan189)
+- Star ⭐ this repository if you find helpful.
+<img alt="Night Coding" src="https://raw.githubusercontent.com/AVS1508/AVS1508/master/assets/Night-Coding.gif" align="center"/>
 
 
