@@ -34,17 +34,20 @@ public class UserController{
 		return "uproduct";
 	}
 	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
-	public String newUseRegister(@RequestParam("username") String username,@RequestParam("email") String email,@RequestParam("password") String password,@RequestParam("address") String address)
+	public String newUseRegister(@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam("email") String email)
 	{
 		try
 		{
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject","root","");
-			PreparedStatement pst = con.prepareStatement("insert into users(username,email,password,address) values(?,?,?,?);");
+			PreparedStatement pst = con.prepareStatement("insert into users(username,password,email) values(?,?,?);");
 			pst.setString(1,username);
-			pst.setString(2, email);
-			pst.setString(3, password);
-			pst.setString(4, address);
+			pst.setString(2, password);
+			pst.setString(3, email);
+			
+
+			//pst.setString(4, address);
 			int i = pst.executeUpdate();
+			System.out.println("data base updated"+i);
 			
 		}
 		catch(Exception e)
