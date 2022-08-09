@@ -74,7 +74,7 @@ ADMIN Module (http://localhost:8080/admin)
 
 
 ## Important link
-- youtube project video Working Demo link ::---  [  click here  ](https://youtu.be/c6WWdINWSlI) {1k+ view completed)}
+- 𝗬𝗼𝘂𝘁𝘂𝗯𝗲 𝗽𝗿𝗼𝗷𝗲𝗰𝘁 𝘃𝗶𝗱𝗲𝗼 𝗪𝗼𝗿𝗸𝗶𝗻𝗴 𝗗𝗲𝗺𝗼 + 𝘀𝘁𝗲𝗽 𝗯𝘆 𝘀𝘁𝗲𝗽 𝗲𝘅𝗲𝗰𝘂𝘁𝗶𝗼𝗻 𝗹𝗶𝗻𝗸 ::---  [  click here  ](https://youtu.be/c6WWdINWSlI) {𝟭.𝟯𝗸+ 𝘃𝗶𝗲𝘄 𝗰𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱)}
 - connect in Linked in ::---  [ https://www.linkedin.com/in/jay-gajera-a6496b204/]
 - instagram:- [https://instagram.com/jay_gajera_17]
 
