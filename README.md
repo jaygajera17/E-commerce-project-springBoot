@@ -5,8 +5,15 @@
 
 
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+<!-- [![Contributors][contributors-shield]][contributors-url]
+[![MIT License][license-shield]][license-url]
+[![Isses][issues-shield]][issues-url]
 
+-->
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+<br>
 
 
 
@@ -74,7 +81,8 @@ ADMIN Module (http://localhost:8080/admin)
 
 
 ## Important link
-- 𝗬𝗼𝘂𝘁𝘂𝗯𝗲 𝗽𝗿𝗼𝗷𝗲𝗰𝘁 𝘃𝗶𝗱𝗲𝗼 𝗪𝗼𝗿𝗸𝗶𝗻𝗴 𝗗𝗲𝗺𝗼 + 𝘀𝘁𝗲𝗽 𝗯𝘆 𝘀𝘁𝗲𝗽 𝗲𝘅𝗲𝗰𝘂𝘁𝗶𝗼𝗻 𝗹𝗶𝗻𝗸 ::---  [  click here  ](https://youtu.be/c6WWdINWSlI) {𝟭.𝟯𝗸+ 𝘃𝗶𝗲𝘄 𝗰𝗼𝗺𝗽𝗹𝗲𝘁𝗲𝗱)}
+- 𝗬𝗼𝘂𝘁𝘂𝗯𝗲 𝗽𝗿𝗼𝗷𝗲𝗰𝘁 𝘃𝗶𝗱𝗲𝗼 𝗪𝗼𝗿𝗸𝗶𝗻𝗴 𝗗𝗲𝗺𝗼 + 𝘀𝘁𝗲𝗽 𝗯𝘆 𝘀𝘁𝗲𝗽 𝗲𝘅𝗲𝗰𝘂𝘁𝗶𝗼𝗻 𝗹𝗶𝗻𝗸 ::---  [  click here  ](https://youtu.be/c6WWdINWSlI) [![youtube][youtube-shield]][youtube-url]
+
 - connect in Linked in ::---  [ https://www.linkedin.com/in/jay-gajera-a6496b204/]
 - instagram:- [https://instagram.com/jay_gajera_17]
 
@@ -90,3 +98,18 @@ ADMIN Module (http://localhost:8080/admin)
 <img alt="Night Coding" src="https://raw.githubusercontent.com/AVS1508/AVS1508/master/assets/Night-Coding.gif" align="center"/>
 
 
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/jaygajera17/E-commerce-project-springBoot/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/jaygajera17/E-commerce-project-springBoot.svg?style=for-the-badge
+[forks-url]: https://github.com/jaygajera17/E-commerce-project-springBoot/network/members
+[stars-shield]: https://img.shields.io/github/stars/jaygajera17/E-commerce-project-springBoot.svg?style=for-the-badge
+[stars-url]: https://github.com/jaygajera17/E-commerce-project-springBoot/stargazers
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]:  https://www.linkedin.com/in/jay-gajera-a6496b204/
+
+[youtube-shield]:https://img.shields.io/youtube/views/c6WWdINWSlI?style=social
+[youtube-url]:  https://youtu.be/c6WWdINWSlI
