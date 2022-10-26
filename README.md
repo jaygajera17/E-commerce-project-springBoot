@@ -32,7 +32,7 @@
 
 - Pre requirement:- Spring boot Installed in Eclipse IDE ,  mysql Database , xampp 
 
-- please make sure you have eclipse ide enterprise for web development if not then re install set up and select 2nd option workspace  install.
+- please make sure you have eclipse ide enterprise for web development if not then re install set up & choose web option.
 <img width="169" alt="image" src="https://user-images.githubusercontent.com/81226571/178137583-578558de-ff7e-498b-bb00-927dd46b4fb0.png">
 
 
