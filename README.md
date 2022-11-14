@@ -24,6 +24,7 @@
 - Spring Mvc, JDBC , Jsp Servlet
 - ADMIN MODULE + USER MODULE
 - CRUD OPERATION
+- easy to understabd beginner friendly
 
 
 
