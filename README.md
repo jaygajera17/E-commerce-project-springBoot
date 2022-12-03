@@ -19,12 +19,11 @@
 
 
 ## Features
-
-- Spring Boot
-- Spring Mvc, JDBC , Jsp Servlet
-- ADMIN MODULE + USER MODULE
-- CRUD OPERATION
-- easy to understabd beginner friendly
+- ⚙️Spring Mvc, JDBC , Jsp Servlet
+- 📝ADMIN MODULE + USER MODULE
+- ➕CRUD OPERATION
+- 🌱Easy to understand beginner friendly.
+- 🥳Pull Request Welcome (Open Source).
 
 
 
