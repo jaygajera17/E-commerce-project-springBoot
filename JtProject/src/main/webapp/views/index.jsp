@@ -64,7 +64,7 @@
                 <div class="row">
                   <div class="col-sm-6 image">
                     <div class="item">
-                      <h1>Today Deal</h1>
+                      <h1>Today's Deal</h1>
                       <img class="img-fluid" src="https://tmbidigitalassetsazure.blob.core.windows.net/secure/RMS/attachments/37/1200x1200/Sausage-Sliders-with-Cran-Apple-Slaw_exps48783_SD2235819D06_24_2bC_RMS.jpg" alt="">
                     </div><!--enditem-->
                   </div><!--endcol-->
@@ -77,7 +77,7 @@
                     </div><!--endtop-->
                     <div class="details">
                       <h2 class="cr3"> Burger</h2>
-                      <p class="cr4"> tommato, green salad,pita,<br> ketchup, maionese, ….</p>
+                      <p class="cr4"> tomato, green salad, pita,<br> ketchup, mayonnaise, ….</p>
                       <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -391,10 +391,10 @@ body,html{width:100%;height:100%;}
                                 </a>
                                 <div class="card-content">
                                     <h4 class="card-title">
-                                        Best deal
+                                        Best deal's
                                     </h4>
                                     <p class="">
-                                       checkout our products
+                                       Checkout out our products
                                         <br>
                                     </p>
                                 </div>
@@ -416,7 +416,7 @@ body,html{width:100%;height:100%;}
                                         Contact us
                                     </h4>
                                     <p class="">
-                                      find out us.
+                                      find us.
                                         <br>
                                     </p>
                                 </div>
