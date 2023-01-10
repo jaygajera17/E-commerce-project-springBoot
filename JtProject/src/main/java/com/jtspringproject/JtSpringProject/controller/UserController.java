@@ -52,6 +52,12 @@ public class UserController{
 		}
 		catch(Exception e)
 		{
+			String str1 = e.toString();
+			String check = "Access denied for user 'root'@'localhost' (using password: NO)";
+			if(str1.contains(check)) {
+				return "redirect:/";
+			}
+			System.out.println(str1);
 			System.out.println("Exception:"+e);
 		}
 		return "redirect:/";
