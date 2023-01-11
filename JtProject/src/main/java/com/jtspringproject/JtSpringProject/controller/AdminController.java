@@ -315,8 +315,8 @@ public class AdminController {
 			{
 			int userid = rst.getInt(1);
 			displayusername = rst.getString(2);
-			displayemail = rst.getString(3);
-			displaypassword = rst.getString(4);
+			displayemail = rst.getString("email");
+			displaypassword = rst.getString("password");
 			displayaddress = rst.getString(5);
 			model.addAttribute("userid",userid);
 			model.addAttribute("username",displayusername);
