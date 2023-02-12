@@ -80,11 +80,11 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`parchase`
+-- Table `mydb`.`purchase`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`parchase` ;
+DROP TABLE IF EXISTS `mydb`.`purchase` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`parchase` (
+CREATE TABLE IF NOT EXISTS `mydb`.`purchase` (
   `id` INT NOT NULL,
   `userId` INT NOT NULL,
   `timeStamp` TIMESTAMP(20) NOT NULL,
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`purchase_details` (
   INDEX `FK_purchase_products_idx` (`productId` ASC) VISIBLE,
   CONSTRAINT `FK_purchase_details_purchase`
     FOREIGN KEY (`purchaseId`)
-    REFERENCES `mydb`.`parchase` (`id`)
+    REFERENCES `mydb`.`purchase` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_purchase_products`
