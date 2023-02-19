@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  realestate:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+         REACT_APP_GOOGLE_MAP_API: ${REACT_APP_GOOGLE_MAP_API}
+    ports:
+      - 5001:5001
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      MONGO_URI: ${MONGO_URI}
+      REACT_APP_GOOGLE_MAP_API: ${REACT_APP_GOOGLE_MAP_API}
+      NODE_ENV: ${NODE_ENV}
+    container_name: realestate
+    volumes:
+      - ~/realEstateAgency:/app
+      - /app/node_modules
+      - /app/client/node_modules
+      - /app/client/build
+networks:
+  default:
+    external:
+      name: nmamager_default
