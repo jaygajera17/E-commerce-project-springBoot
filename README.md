@@ -18,7 +18,7 @@
 
 ## Contributors
 - Amin Amani
-- a
+- Ali Sayed Salehi
 - b
 - c
 - d
