@@ -9,7 +9,11 @@ import java.sql.Statement;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+/**
+ * for user activities
+ * @author asad
+ *
+ */
 @Controller
 public class UserController{
 
@@ -38,7 +42,7 @@ public class UserController{
 	{
 		try
 		{
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject","root","");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject","root","root");
 			PreparedStatement pst = con.prepareStatement("insert into users(username,password,email) values(?,?,?);");
 			pst.setString(1,username);
 			pst.setString(2, password);
