@@ -201,4 +201,76 @@ public class ProductTest {
         assertFalse(rst.next());
     }
 
+    // Blackbox - postproduct: check return url
+    @Test
+    void testPostProductURL() {
+        assertEquals("redirect:/admin/categories", adminController.postproduct());
+    }
+
+    // Blackbox / Whitebox - postproduct: check status code
+    @Test
+    void testPostProductStatus() {
+        TestRestTemplate restTemplate = new TestRestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(BASIC_URL + "/admin/products", String.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    // Blackbox - addproducttodb: check return url
+    @Test
+    void testAddProductToDbURL() {
+        String name = "steam game";
+        String catid = "test1";
+        int price = 60;
+        int weight = 10;
+        int quantity = 999;
+        String descripton = "New image added";
+        String image = "2.jpg";
+
+        assertEquals("redirect:/admin/products", adminController.addproducttodb(name, catid, price, weight, quantity, descripton, image));
+    }
+
+    // Whitebox - addproducttodb: check database update
+    @Test
+    void testAddProductToDbData() throws Exception {
+        String name = "steam game 111";
+        String catid = "test1";
+        int price = 30;
+        int weight = 30;
+        int quantity = 1111;
+        String descripton = "This is a popular steam game";
+        String image = "1.jpg";
+
+        adminController.addproducttodb(name, catid, price, weight, quantity, descripton, image);
+
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from products where name = '"+name+"';");
+
+        String name1 = "", catname = "";
+        int catid1 = 0, price1 = 0, weight1 = 0, quantity1 = 0;
+        String descripton1 = "", image1 = "";
+
+        if (rst.next()) {
+            name1 = rst.getString("name");
+            catid1 = rst.getInt("categoryid");
+            image1 = rst.getString("image");
+            quantity1 = rst.getInt("quantity");
+            price1 = rst.getInt("price");
+            weight1 = rst.getInt("weight");
+            descripton1 = rst.getString("description");
+        }
+
+        Statement stmt1 = createStmt();
+        ResultSet rst1 = stmt1.executeQuery("select * from categories where categoryid = '"+catid1+"';");
+        if (rst1.next()) {
+            catname = rst1.getString("name");
+        }
+        assertEquals(name, name1);
+        assertEquals(catid, catname);
+        assertEquals(image, image1);
+        assertEquals(quantity, quantity1);
+        assertEquals(price, price1);
+        assertEquals(weight, weight1);
+        assertEquals(descripton, descripton1);
+    }
+
 }
