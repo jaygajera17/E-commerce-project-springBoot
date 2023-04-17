@@ -1,7 +1,10 @@
 package com.jtspringproject.JtSpringProject;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.jtspringproject.JtSpringProject.controller.AdminController;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,4 +117,88 @@ public class ProductTest {
         assertEquals(pweight, model.getAttribute("pweight"));
         assertEquals(pdescription, model.getAttribute("pdescription"));
     }
+
+    // Blackbox - updateproducttodb - check return url
+    @Test
+    void testUpdateProductToDbURL() {
+        int updateProductId = 16;
+        String newName = "mango";
+        int newPrice = 10;
+        int newWeight = 100;
+        int newQuantity = 20;
+        String newDescripton = "This is a mango";
+        String newImage = "1.jpg";
+
+        assertEquals("redirect:/admin/products",
+                adminController.updateproducttodb(updateProductId, newName, newPrice, newWeight, newQuantity, newDescripton, newImage));
+    }
+
+    // Whitebox - updateproducttodb - check database info
+    @Test
+    void testUpdateProductToDbData() throws Exception {
+        int updateProductId = 16;
+        String newName = "mango111";
+        int newPrice = 30;
+        int newWeight = 80;
+        int newQuantity = 10;
+        String newDescripton = "This is a mango111";
+        String newImage = "1.jpg";
+        adminController.updateproducttodb(updateProductId, newName, newPrice, newWeight, newQuantity, newDescripton, newImage);
+
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from products where id = '"+updateProductId+"';");
+
+        adminController.updateproduct(updateProductId, model);
+
+        String pname = "", pdescription = "", pimage = "", pcategoryName = "";
+        int pprice = 0, pweight = 0, pquantity = 0;
+
+        if (rst.next()) {
+            pname = rst.getString(2);
+            pimage = rst.getString(3);
+            pquantity = rst.getInt(5);
+            pprice =  rst.getInt(6);
+            pweight =  rst.getInt(7);
+            pdescription = rst.getString(8);
+        }
+
+        assertEquals(newName, pname);
+        assertEquals(newImage, pimage);
+        assertEquals(newQuantity, pquantity);
+        assertEquals(newPrice, pprice);
+        assertEquals(newWeight, pweight);
+        assertEquals(newDescripton, pdescription);
+    }
+
+    // Blackbox - removeProductDb - check return url
+    @Test
+    void testRemoveProductDbURL() {
+        int removeId = 16;
+        assertEquals("redirect:/admin/products", adminController.removeProductDb(removeId));
+    }
+
+    // Blackbox - removeProductDb - check return url when removeId not exist
+    @Test
+    void testRemoveProductDbIdNotExist() {
+        int removeId = 16;
+        assertEquals("redirect:/admin/products", adminController.removeProductDb(removeId));
+    }
+
+    // Blackbox - removeProductDb: negative category id  [FAIL]
+    @Test
+    void testRemoveCategoryDBNeg() {
+        int removeId = -1;
+        Assertions.assertThrows(MismatchedInputException.class, () -> {adminController.removeProductDb(removeId);});
+    }
+
+    // Whitebox - removeProductDb - check database update
+    @Test
+    void testRemoveProductDbData() throws Exception {
+        int removeId = 15;
+        adminController.removeProductDb(removeId);
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from products where id = '"+removeId+"';");
+        assertFalse(rst.next());
+    }
+
 }
