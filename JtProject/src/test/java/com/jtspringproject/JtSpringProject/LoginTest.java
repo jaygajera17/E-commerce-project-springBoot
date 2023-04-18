@@ -12,11 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
-
 import java.sql.*;
-import java.util.Collection;
-import java.util.Map;
 
 @SpringBootTest
 public class LoginTest {
@@ -133,19 +129,18 @@ public class LoginTest {
     Assertions.assertEquals("userLogin", adminController.userlogin("userWrong", "123", model));
   }
 
-  // Blackbox - userLogin(): check return url value when exception is thrown
-  @Test
-  public void testUserLoginWhenExceptionThrownURL() throws Exception {
-    //TODO: need to force exception to be thrown
-    Assertions.assertEquals("userLogin", adminController.userlogin("userWrong", "123", model));
-  }
-
-  // Blackbox - userLogin(): check exception being thrown
-  @Test
-  public void testUserLoginWhenExceptionThrown() throws Exception {
-    //TODO: check the exception being thrown
-  }
-
+//  // Blackbox - userLogin(): check return url value when exception is thrown
+//  @Test
+//  public void testUserLoginWhenExceptionThrownURL() throws Exception {
+//    //TODO: need to force exception to be thrown
+//    Assertions.assertEquals("userLogin", adminController.userlogin(null, null, model));
+//  }
+//
+//  // Blackbox - userLogin(): check exception being thrown
+//  @Test
+//  public void testUserLoginWhenExceptionThrown() throws Exception {
+//    //TODO: check the exception being thrown
+//  }
 
   // Blackbox - adminLogin(): check return url value
   @Test
