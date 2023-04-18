@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 
@@ -38,47 +39,7 @@ public class LoginTest {
 
   @BeforeEach
   public void setUp() {
-    model = new Model() {
-      @Override
-      public Model addAttribute(String attributeName, Object attributeValue) {
-        return null;
-      }
-
-      @Override
-      public Model addAttribute(Object attributeValue) {
-        return null;
-      }
-
-      @Override
-      public Model addAllAttributes(Collection<?> attributeValues) {
-        return null;
-      }
-
-      @Override
-      public Model addAllAttributes(Map<String, ?> attributes) {
-        return null;
-      }
-
-      @Override
-      public Model mergeAttributes(Map<String, ?> attributes) {
-        return null;
-      }
-
-      @Override
-      public boolean containsAttribute(String attributeName) {
-        return false;
-      }
-
-      @Override
-      public Object getAttribute(String attributeName) {
-        return null;
-      }
-
-      @Override
-      public Map<String, Object> asMap() {
-        return null;
-      }
-    };
+    model = new ConcurrentModel();
   }
 
   // Blackbox - returnIndex(): check return url value
@@ -98,6 +59,7 @@ public class LoginTest {
   // Blackbox - index(): check return url value when username is empty
   @Test
   public void testIndexURLEmptyUsername() {
+    adminController.usernameforclass = "";
     Assertions.assertEquals("userLogin", adminController.index(model));
   }
 
@@ -116,38 +78,101 @@ public class LoginTest {
     Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
   }
 
-
-
   // Blackbox - userLog(): check return url value
   @Test
   public void testUserLogURL() {
-    //TODO
+    Assertions.assertEquals("userLogin", adminController.userlog(model));
   }
 
-
+  // Blackbox / Whitebox - userLog(): check status code
+  @Test
+  public void testUserLogStatus() {
+    TestRestTemplate restTemplate = new TestRestTemplate();
+    ResponseEntity<String> response = restTemplate.getForEntity(BASIC_URL + "/userloginvalidate", String.class);
+    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+  }
 
   @Test
   public void testUserLogin() {
     //TODO
   }
 
+  // Blackbox - adminLogin(): check return url value
   @Test
-  public void testAdminLogin() {
-    //TODO
+  public void testAdminLoginURL() {
+    Assertions.assertEquals("adminlogin", adminController.adminlogin(model));
   }
 
+  // Blackbox / Whitebox - adminLogin(): check status code
   @Test
-  public void testAdminHome() {
-    //TODO
+  public void testAdminLoginStatus() {
+    TestRestTemplate restTemplate = new TestRestTemplate();
+    ResponseEntity<String> response = restTemplate.getForEntity(BASIC_URL + "/admin", String.class);
+    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
   }
 
+  // Blackbox - adminHome(): check return url value when adminlogcheck = 0
   @Test
-  public void testAdminLog() {
-    //TODO
+  public void testAdminHomeWithAdminLogCheckEquals0URL() {
+    adminController.adminlogcheck = 0;
+    Assertions.assertEquals("redirect:/admin", adminController.adminHome(model));
   }
 
+  // Blackbox - adminHome(): check return url value when adminlogcheck != 0
   @Test
-  public void testAdminLoginWithMoreParams() {
-    //TODO
+  public void testAdminHomeWithAdminLogCheckNotEquals0() {
+    adminController.adminlogcheck = 1;
+    Assertions.assertEquals("adminHome", adminController.adminHome(model));
+  }
+
+  // Blackbox - adminHome(): check return url value when adminlogcheck = 0
+  @Test
+  public void testAdminHomeStatus() {
+    adminController.adminlogcheck = 0;
+    TestRestTemplate restTemplate = new TestRestTemplate();
+    ResponseEntity<String> response = restTemplate.getForEntity(BASIC_URL + "/adminhome", String.class);
+    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+  }
+
+  // Blackbox - adminlog(): check return url value
+  @Test
+  public void testAdminLogURL() {
+    Assertions.assertEquals("adminlogin", adminController.adminlog(model));
+  }
+
+  // Blackbox / Whitebox - adminlog(): check status code
+  @Test
+  public void testAdminLogStatus() {
+    TestRestTemplate restTemplate = new TestRestTemplate();
+    ResponseEntity<String> response = restTemplate.getForEntity(BASIC_URL + "/loginvalidate", String.class);
+    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+  }
+
+  // Blackbox - adminLogin(username, password, model): check return url value for correct login values
+  @Test
+  public void testAdminLoginCorrectUsernameAndPasswordURL() {
+    Assertions.assertEquals("redirect:/adminhome", adminController.adminlogin("admin", "123", model));
+  }
+
+  // Blackbox - adminLogin(username, password, model): check adminlogcheck value
+  @Test
+  public void testAdminLoginCorrectUsernameAndPasswordFieldValue() {
+    Assertions.assertEquals(0, adminController.adminlogcheck);
+    adminController.adminlogin("admin", "123", model);
+    Assertions.assertEquals(1, adminController.adminlogcheck);
+  }
+
+  // Blackbox - adminLogin(username, password, model): check return url value for incorrect login values
+  @Test
+  public void testAdminLoginIncorrectUsernameAndPasswordURL() {
+    Assertions.assertEquals("adminlogin", adminController.adminlogin("admin", "1234", model));
+  }
+
+  // Blackbox / Whitebox - adminLogin(username, password, model): check status code
+  @Test
+  public void testAdminLoginValidateStatus() {
+    TestRestTemplate restTemplate = new TestRestTemplate();
+    ResponseEntity<String> response = restTemplate.getForEntity(BASIC_URL + "loginvalidate", String.class);
+    Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
   }
 }
