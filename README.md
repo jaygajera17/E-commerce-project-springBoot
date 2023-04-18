@@ -73,9 +73,6 @@ ADMIN Module (http://localhost:8080/admin)
 ## Important link
 - 𝗬𝗼𝘂𝘁𝘂𝗯𝗲 𝗽𝗿𝗼𝗷𝗲𝗰𝘁 𝘃𝗶𝗱𝗲𝗼 𝗪𝗼𝗿𝗸𝗶𝗻𝗴 𝗗𝗲𝗺𝗼 + 𝘀𝘁𝗲𝗽 𝗯𝘆 𝘀𝘁𝗲𝗽 𝗲𝘅𝗲𝗰𝘂𝘁𝗶𝗼𝗻 𝗹𝗶𝗻𝗸 ::---  [  click here  ](https://youtu.be/c6WWdINWSlI) [![youtube][youtube-shield]][youtube-url]
 
-- connect in Linked in ::---  [ https://www.linkedin.com/in/jay-gajera-a6496b204/]
-- instagram:- [https://instagram.com/jay_gajera_17]
-
 
 ## preview
 ![img](https://github.com/jaygajera17/E-commerce_website-in-java/blob/main/JtProject/src/main/resources/Product%20Images/Screenshot%202022-04-11%20111601.jpg)
