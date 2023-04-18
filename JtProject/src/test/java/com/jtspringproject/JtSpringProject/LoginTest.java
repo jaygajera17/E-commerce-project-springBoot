@@ -1,6 +1,7 @@
 package com.jtspringproject.JtSpringProject;
 
 import com.jtspringproject.JtSpringProject.controller.AdminController;
+import com.jtspringproject.JtSpringProject.controller.UserController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +14,7 @@ import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -24,6 +23,8 @@ public class LoginTest {
   static String BASIC_URL = "http://localhost:8080/";
   @Autowired
   private AdminController adminController;
+  @Autowired
+  private UserController userController;
 
   private Model model;
 
@@ -92,14 +93,63 @@ public class LoginTest {
     Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
   }
 
+  // Blackbox - userLogin(): check return url value when correct login is provided
   @Test
-  public void testUserLogin() {
-    //TODO
+  public void testUserLoginCorrectCredentialsURL() {
+    userController.newUseRegister("user", "123", "user@gmail.com");
+    Assertions.assertEquals("redirect:/index", adminController.userlogin("user", "123", model));
   }
+
+  // Blackbox / Whitebox - userLogin(): check usernameforclass matches
+  @Test
+  public void testUserLoginCorrectCredentialsFieldValues() {
+    userController.newUseRegister("user", "123", "user@gmail.com");
+    adminController.userlogin("user", "123", model);
+    Assertions.assertEquals("user", adminController.usernameforclass);
+  }
+
+  // Blackbox / Whitebox - userLogin(): check user exists in db
+  @Test
+  public void testUserLoginUserExistsTrue() throws SQLException {
+    userController.newUseRegister("user", "123", "user@gmail.com");
+    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject","root","");
+    Statement stmt = con.createStatement();
+    ResultSet rst = stmt.executeQuery("select * from users where username = '"+ "user" +"' and password = '"+ "123" +"' ;");
+    Assertions.assertTrue(rst.next());
+  }
+
+  // Blackbox / Whitebox - userLogin(): check if user doesn't exist in db
+  @Test
+  public void testUserLoginUserExistsFalse() throws SQLException {
+    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/springproject","root","");
+    Statement stmt = con.createStatement();
+    ResultSet rst = stmt.executeQuery("select * from users where username = '"+ "userWrong" +"' and password = '"+ "123" +"' ;");
+    Assertions.assertFalse(rst.next());
+  }
+
+  // Blackbox - userLogin(): check return url value when incorrect login is provided
+  @Test
+  public void testUserLoginIncorrectCredentialsURL() {
+    Assertions.assertEquals("userLogin", adminController.userlogin("userWrong", "123", model));
+  }
+
+  // Blackbox - userLogin(): check return url value when exception is thrown
+  @Test
+  public void testUserLoginWhenExceptionThrownURL() throws Exception {
+    //TODO: need to force exception to be thrown
+    Assertions.assertEquals("userLogin", adminController.userlogin("userWrong", "123", model));
+  }
+
+  // Blackbox - userLogin(): check exception being thrown
+  @Test
+  public void testUserLoginWhenExceptionThrown() throws Exception {
+    //TODO: check the exception being thrown
+  }
+
 
   // Blackbox - adminLogin(): check return url value
   @Test
-  public void testAdminLoginURL() {
+  public void testAdminLoginURL() throws Exception{
     Assertions.assertEquals("adminlogin", adminController.adminlogin(model));
   }
 
