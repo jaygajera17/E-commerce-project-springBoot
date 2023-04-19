@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+Test set: com.jtspringproject.JtSpringProject.CategoryTest
+-------------------------------------------------------------------------------
+Tests run: 12, Failures: 3, Errors: 1, Skipped: 0, Time elapsed: 0.077 s <<< FAILURE! - in com.jtspringproject.JtSpringProject.CategoryTest
+testUpdateCategoryDBNeg  Time elapsed: 0.008 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.fasterxml.jackson.databind.exc.MismatchedInputException to be thrown, but nothing was thrown.
+	at com.jtspringproject.JtSpringProject.CategoryTest.testUpdateCategoryDBNeg(CategoryTest.java:116)
+
+testRemoveCategoryDBNeg  Time elapsed: 0.007 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.fasterxml.jackson.databind.exc.MismatchedInputException to be thrown, but nothing was thrown.
+	at com.jtspringproject.JtSpringProject.CategoryTest.testRemoveCategoryDBNeg(CategoryTest.java:81)
+
+testGetCategoryStatus  Time elapsed: 0.007 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/admin/categories": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.CategoryTest.testGetCategoryStatus(CategoryTest.java:41)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.CategoryTest.testGetCategoryStatus(CategoryTest.java:41)
+
+testAddCategoryDup  Time elapsed: 0.009 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <3>
+	at com.jtspringproject.JtSpringProject.CategoryTest.testAddCategoryDup(CategoryTest.java:74)
+

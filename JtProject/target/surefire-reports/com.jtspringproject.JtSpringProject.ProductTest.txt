@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------
+Test set: com.jtspringproject.JtSpringProject.ProductTest
+-------------------------------------------------------------------------------
+Tests run: 16, Failures: 2, Errors: 3, Skipped: 0, Time elapsed: 0.108 s <<< FAILURE! - in com.jtspringproject.JtSpringProject.ProductTest
+testRemoveCategoryDBNeg  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected com.fasterxml.jackson.databind.exc.MismatchedInputException to be thrown, but nothing was thrown.
+	at com.jtspringproject.JtSpringProject.ProductTest.testRemoveCategoryDBNeg(ProductTest.java:191)
+
+testPostProductStatus  Time elapsed: 0.008 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/admin/products": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.ProductTest.testPostProductStatus(ProductTest.java:214)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.ProductTest.testPostProductStatus(ProductTest.java:214)
+
+testGetProductStatus  Time elapsed: 0.005 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/admin/products": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.ProductTest.testGetProductStatus(ProductTest.java:57)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.ProductTest.testGetProductStatus(ProductTest.java:57)
+
+testUpdateProductToDbData  Time elapsed: 0.01 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <mango111> but was: <>
+	at com.jtspringproject.JtSpringProject.ProductTest.testUpdateProductToDbData(ProductTest.java:165)
+
+testAddProductStatus  Time elapsed: 0.005 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/admin/products/add": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.ProductTest.testAddProductStatus(ProductTest.java:71)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.ProductTest.testAddProductStatus(ProductTest.java:71)
+

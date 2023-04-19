@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.jtspringproject.JtSpringProject.AdminControllerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.038 s <<< FAILURE! - in com.jtspringproject.JtSpringProject.AdminControllerTest
+testGetCustomerDetailStatus  Time elapsed: 0.006 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/admin/customers": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.AdminControllerTest.testGetCustomerDetailStatus(AdminControllerTest.java:49)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.AdminControllerTest.testGetCustomerDetailStatus(AdminControllerTest.java:49)
+
+testProfileDisplayStatus  Time elapsed: 0.005 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/profileDisplay": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.AdminControllerTest.testProfileDisplayStatus(AdminControllerTest.java:63)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.AdminControllerTest.testProfileDisplayStatus(AdminControllerTest.java:63)
+

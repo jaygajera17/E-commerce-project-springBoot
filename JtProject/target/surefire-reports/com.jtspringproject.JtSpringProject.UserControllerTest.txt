@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: com.jtspringproject.JtSpringProject.UserControllerTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 2.234 s <<< FAILURE! - in com.jtspringproject.JtSpringProject.UserControllerTest
+testContactStatus  Time elapsed: 0.29 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/contact": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testContactStatus(UserControllerTest.java:63)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testContactStatus(UserControllerTest.java:63)
+
+testGetProductStatus  Time elapsed: 0.009 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/user/products": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testGetProductStatus(UserControllerTest.java:91)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testGetProductStatus(UserControllerTest.java:91)
+
+testBuyStatus  Time elapsed: 0.005 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/buy": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testBuyStatus(UserControllerTest.java:77)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testBuyStatus(UserControllerTest.java:77)
+
+testRegisterUserStatus  Time elapsed: 0.006 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/register": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testRegisterUserStatus(UserControllerTest.java:49)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.UserControllerTest.testRegisterUserStatus(UserControllerTest.java:49)
+

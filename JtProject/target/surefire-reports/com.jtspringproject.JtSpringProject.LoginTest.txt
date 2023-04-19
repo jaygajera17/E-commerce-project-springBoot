@@ -1,0 +1,46 @@
+-------------------------------------------------------------------------------
+Test set: com.jtspringproject.JtSpringProject.LoginTest
+-------------------------------------------------------------------------------
+Tests run: 23, Failures: 0, Errors: 7, Skipped: 0, Time elapsed: 0.135 s <<< FAILURE! - in com.jtspringproject.JtSpringProject.LoginTest
+testReturnIndexStatus  Time elapsed: 0.007 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/logout": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testReturnIndexStatus(LoginTest.java:52)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testReturnIndexStatus(LoginTest.java:52)
+
+testAdminHomeStatus  Time elapsed: 0.006 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/adminhome": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminHomeStatus(LoginTest.java:178)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminHomeStatus(LoginTest.java:178)
+
+testAdminLogStatus  Time elapsed: 0.007 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/loginvalidate": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminLogStatus(LoginTest.java:192)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminLogStatus(LoginTest.java:192)
+
+testAdminLoginValidateStatus  Time elapsed: 0.007 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/loginvalidate": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminLoginValidateStatus(LoginTest.java:220)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminLoginValidateStatus(LoginTest.java:220)
+
+testIndexStatus  Time elapsed: 0.007 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/index": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testIndexStatus(LoginTest.java:74)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testIndexStatus(LoginTest.java:74)
+
+testAdminLoginStatus  Time elapsed: 0.006 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/admin": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminLoginStatus(LoginTest.java:155)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testAdminLoginStatus(LoginTest.java:155)
+
+testUserLogStatus  Time elapsed: 0.006 s  <<< ERROR!
+org.springframework.web.client.ResourceAccessException: I/O error on GET request for "http://localhost:8080/userloginvalidate": Connection refused (Connection refused); nested exception is java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testUserLogStatus(LoginTest.java:88)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at com.jtspringproject.JtSpringProject.LoginTest.testUserLogStatus(LoginTest.java:88)
+
