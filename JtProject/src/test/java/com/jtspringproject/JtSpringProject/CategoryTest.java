@@ -59,6 +59,21 @@ public class CategoryTest {
         Assertions.assertTrue(rst.next());
     }
 
+    // Whitebox - addcategorytodb(): insert duplicate category
+    @Test
+    void testAddCategoryDup() throws Exception {
+        String catname = "test1";
+        adminController.addcategorytodb(catname);
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from categories where name = '"+catname+"';");
+
+        int count = 0;
+        while(rst.next()) {
+            count++;
+        }
+        Assertions.assertEquals(2, count);
+    }
+
     // Blackbox - removeCategoryDB(): negative category id  [FAIL]
     @Test
     void testRemoveCategoryDBNeg() {
@@ -74,10 +89,23 @@ public class CategoryTest {
         Assertions.assertEquals("redirect:/admin/categories", returnStr);
     }
 
-    // Whitebox - removeCategoryDB(): TODO
+    // Whitebox - removeCategoryDB(): normal, check database value
     @Test
-    void testRemoveCategoryDBdata() {
+    void testRemoveCategoryDBdata() throws Exception {
+        int removeId = 12;
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from categories where categoryid = '"+removeId+"';");
+        Assertions.assertFalse(rst.next());
+    }
 
+    // Whitebox - removeCategoryDB(): not exist
+    @Test
+    void testRemoveCategoryNotExist() throws Exception {
+        int removeId = 12;
+        adminController.removeCategoryDb(removeId);
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from categories where categoryid = '"+removeId+"';");
+        Assertions.assertFalse(rst.next());
     }
 
     // Blackbox - updateCategoryDB(): negative category id  [FAIL]
@@ -96,9 +124,17 @@ public class CategoryTest {
         Assertions.assertEquals("redirect:/admin/categories", adminController.updateCategoryDb(updateId, newName));
     }
 
-    // Whitebox - updateCategory(): TODO
+    // Whitebox - updateCategory(): check database update
     @Test
-    void testUpdateCategoryDB() {
+    void testUpdateCategoryDB() throws Exception {
+        int updateId = 8;
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select name from categories where categoryid = '"+updateId+"';");
 
+        String result = "";
+        while (rst.next()) {
+            result = rst.getString("name");
+        }
+        Assertions.assertEquals("category8", result);
     }
 }
