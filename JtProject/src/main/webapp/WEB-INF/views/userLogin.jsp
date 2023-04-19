@@ -11,28 +11,30 @@
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <title>Document</title>
 </head>
-<body class="bg-dark">
+<body>
 
 
 
-<div class="container my-5" style="width: 1800px;" ><br>
+<div class="container my-3">
     
-        <div class="jumbotron border col-sm-5 mx-auto">
-            <h2 class="text-center">Admin Login</h2><br>
-            <form action="loginvalidate" method="post">
+        <div class="col-sm-6">
+            <h2>User Login</h2>
+            <form action="userloginvalidate" method="post">
                 <div class="form-group">
-                    <label for="username">Username :</label>
-                    <input type="text" name="username" id="username" placeholder="Admin username" required class="form-control form-control-lg border border-danger">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Username*" required class="form-control form-control-lg">
                 </div>
 					
                 <div class="form-group">
-                    <label for="password">Password :</label>
-                    <input type="password" class="form-control form-control-lg border border-danger	" placeholder="Admin Password" required name="password" id="password">
-                </div><br>
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control form-control-lg" placeholder="Password*" required name="password" id="password">
+                </div>
+                <span >Don't have an account <a class="linkControl" href="/register">Register here</a></span> <br><br>
 
                 <input type="submit" value="Login" class="btn btn-primary btn-block">
                 <br><h3 style="color:red;">${message }</h3>
                 <br>
+            </form>
         </div>
 
 </div>
