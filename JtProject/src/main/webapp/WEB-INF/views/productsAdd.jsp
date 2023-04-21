@@ -122,8 +122,8 @@
 						
 					</div>
 					<div class="form-group">
-						<img src="Product Images/one.jpg" alt="Hello" id="imgPreview" height="100px" width="100px"
-							style="margin-top: 20px" >
+						<img src="../Product%20Images/one.jpg" alt="Hello" id="imgPreview" height="100px" width="100px"
+							 style="margin-top: 20px" >
 					</div>
 					<input type="hidden" name="imgName">
 					<input type="submit" class="btn btn-primary">
