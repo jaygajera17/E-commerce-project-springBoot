@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 
 import java.sql.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @SpringBootTest
 public class UserControllerTest {
 
@@ -92,9 +95,61 @@ public class UserControllerTest {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    //Blackbox - newUseRegister(): check return value
+    // Blackbox - newUseRegister(): check return value
     @Test
     void testNewUseRegister() {
         Assertions.assertEquals("redirect:/", userController.newUseRegister("jay", "123", "ROLE_USER"));
+    }
+
+    // Whitebox - newUseRegister(): check attributes of created user
+    @Test
+    void testNewUseRegisterData() throws Exception {
+        String expectedUsername = "username";
+        String expectedPassword = "password";
+        String expectedEmail = "email";
+        userController.newUseRegister(expectedUsername, expectedPassword, expectedEmail);
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from users where username = '"+expectedUsername+"';");
+        String actualUsername = "";
+        String actualPassword = "";
+        String actualEmail = "";
+        if (rst.next()) {
+            actualUsername = rst.getString("username");
+            actualPassword = rst.getString("password");
+            actualEmail = rst.getString("email");
+        }
+        assertEquals(expectedUsername, actualUsername);
+        assertEquals(expectedPassword, actualPassword);
+        assertEquals(expectedEmail, actualEmail);
+    }
+
+    // Whitebox - newUseRegister(): check that address is not an initial attribute
+    @Test
+    void testNewUseRegisterException() throws Exception {
+        String expectedUsername = "username";
+        String expectedPassword = "password";
+        String expectedEmail = "email";
+        userController.newUseRegister(expectedUsername, expectedPassword, expectedEmail);
+        Statement stmt = createStmt();
+        ResultSet rst = stmt.executeQuery("select * from users where username = '"+expectedUsername+"';");
+        assertThrows(Exception.class,
+                ()->{
+                    if (rst.next()) {
+                        rst.getString("address");
+                    }
+                });
+    }
+
+    //Whitebox - newUseRegister(): check that duplicate created user throws error
+    @Test
+    void testNewUseRegisterDuplicateUserCreation() throws Exception {
+        String expectedUsername = "username";
+        String expectedPassword = "password";
+        String expectedEmail = "email";
+        userController.newUseRegister(expectedUsername, expectedPassword, expectedEmail);
+        assertThrows(Exception.class,
+                ()->{
+                    userController.newUseRegister(expectedUsername, expectedPassword, expectedEmail);
+                });
     }
 }
