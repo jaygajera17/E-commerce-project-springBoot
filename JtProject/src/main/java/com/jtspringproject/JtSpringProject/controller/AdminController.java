@@ -98,37 +98,32 @@ public class AdminController {
 		mView.addObject("categories",categories);
 		return mView;
 	}
-	@RequestMapping(value = "sendcategory",method = RequestMethod.POST)
-	public ModelAndView addCategory(@RequestParam("categoryname") String category_name)
+	@RequestMapping(value = "categories",method = RequestMethod.POST)
+	public String addCategory(@RequestParam("categoryname") String category_name)
 	{
 		System.out.println(category_name);
 		
 		Category category =  this.categoryService.addCategory(category_name);
 		if(category.getName().equals(category_name)) {
-			ModelAndView mView = new ModelAndView("admin/categories");
-			mView.addObject("msg", "Category added successfully");
-			return mView;
+			return "redirect:categories";
 		}else {
-			ModelAndView mView = new ModelAndView("admin/categories");
-			mView.addObject("msg", "failed to add category");
-			return mView;
+			return "redirect:categories";
 		}
 	}
 	
 	@GetMapping("/admin/categories/delete")
-	public ModelAndView removeCategoryDb(@RequestParam("id") int id)
+	public String removeCategoryDb(@RequestParam("id") int id)
 	{	
 			this.categoryService.deleteCategory(id);
 			ModelAndView mView = new ModelAndView("admin/categories");
-			return mView;
+			return "redirect:categories";
 	}
 	
-	@GetMapping("/admin/categories/update")
-	public ModelAndView updateCategoryDb(@RequestParam("categoryid") int id, @RequestParam("categoryname") String categoryname)
+	@GetMapping("categories/update")
+	public String updateCategoryDb(@RequestParam("categoryid") int id, @RequestParam("categoryname") String categoryname)
 	{
 		Category category = this.categoryService.updateCategory(id, categoryname);
-		ModelAndView mView = new ModelAndView("admin/categories");
-		return mView;
+		return "redirect:categories";
 	}
 
 	

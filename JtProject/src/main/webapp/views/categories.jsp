@@ -60,7 +60,7 @@
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<form action="sendcategory" method="get">
+					<form action="categories" method="post">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">Add New
 								Category</h5>
