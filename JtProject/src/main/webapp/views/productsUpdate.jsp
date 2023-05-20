@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <%@page import="java.sql.*"%>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">

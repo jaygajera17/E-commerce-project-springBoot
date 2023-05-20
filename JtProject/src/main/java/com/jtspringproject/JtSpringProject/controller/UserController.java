@@ -1,5 +1,6 @@
 package com.jtspringproject.JtSpringProject.controller;
 
+import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
 
 import java.io.Console;
@@ -21,12 +22,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jtspringproject.JtSpringProject.services.userService;
+import com.jtspringproject.JtSpringProject.services.productService;
+
 
 @Controller
 public class UserController{
 	
 	@Autowired
 	private userService userService;
+
+	@Autowired
+	private productService productService;
 
 	@GetMapping("/register")
 	public String registerUser()
@@ -72,8 +78,19 @@ public class UserController{
 	
 	
 	@GetMapping("/user/products")
-	public String getproduct(Model model) {
-		return "uproduct";
+	public ModelAndView getproduct() {
+
+		ModelAndView mView = new ModelAndView("products");
+
+		List<Product> products = this.productService.getProducts();
+
+		if(products.isEmpty()) {
+			mView.addObject("msg","No products are available");
+		}else {
+			mView.addObject("products",products);
+		}
+
+		return mView;
 	}
 	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
 	public String newUseRegister(@ModelAttribute User user)

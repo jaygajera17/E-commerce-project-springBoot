@@ -1,6 +1,8 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -62,72 +64,52 @@
 			<tbody>
 				<tr>
 
-					<%
-					try {
-						String url = "jdbc:mysql://localhost:3306/springproject";
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con = DriverManager.getConnection(url, "root", "");
-						Statement stmt = con.createStatement();
-						Statement stmt2 = con.createStatement();
-						ResultSet rs = stmt.executeQuery("select * from products");
-					%>
-					<%
-					while (rs.next()) {
-					%>
+
+				<c:forEach var="product" items="${products}">
+
 					<td>
-						<%= rs.getInt(1) %>
-					</td>
-					<td>
-						<%= rs.getString(2) %>
-					</td>
-					<td>
-						<%
-							int categoryid = rs.getInt(4);
-							ResultSet rs2 = stmt2.executeQuery("select * from categories where categoryid = "+categoryid+";");
-							if(rs2.next())
-							{
-								out.print(rs2.getString(2));
-							}
-						%>
-						
-					</td>
-					<td><img src="https://th.bing.com/th/id/R.fd048601910e87d09c670b696ed153a0?rik=MCuRFnBGgWZPjA&riu=http%3a%2f%2fimages2.fanpop.com%2fimages%2fphotos%2f7300000%2fSlice-of-Pizza-pizza-7383219-1600-1200.jpg&ehk=Nr%2f8Tpc4Z3p5bgSOdOEWHlN1XJS1y7jol5%2bkS6qXCpE%3d&risl=&pid=ImgRaw&r=0"
-						height="100px" width="100px">
-					<td>
-						<%= rs.getInt(5) %>
-					</td>
-					<td>
-						<%= rs.getInt(6) %>
-					</td>
-					<td>
-						<%= rs.getInt(7) %>
-					</td>
-					<td>
-						<%= rs.getString(8) %>
-					</td>
+                    						${product.id}
+                    					</td>
+                    					<td>
+                    						${product.name }
+                    					</td>
+                    					<td>
+                    						${product.category.name}
+
+                    					</td>
+
+                    					<td><img src="${product.image}"
+                    						height="100px" width="100px"></td>
+                    					<td>
+                    						${product.quantity }
+                    					</td>
+                    					<td>S
+                    						${product.price }
+                    					</td>
+                    					<td>
+                    						${product.weight }
+                    					</td>
+                    					<td>
+                    						${product.description }
+                    					</td>
+
 
 					<td>
 					
 					
 				    <form action="products/addtocart" method="get">
-							<input type="hidden" name="id" value="<%=rs.getInt(1)%>">
+							<input type="hidden" name="id" value="${product.id}">
 							<input type="submit" value="Add To Cart" class="btn btn-warning">
 					</form>
 					</td>
 					
-
+              </c:forEach>
 				</tr>
-				<%
-				}
-				%>
+
 
 			</tbody>
 		</table>
-		<%
-		} catch (Exception ex) {
-		out.println("Exception Occurred:: " + ex.getMessage());
-		}
-		%>
+
 	</div>
 
 
