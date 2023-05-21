@@ -120,10 +120,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("categories/update")
-	public String updateCategoryDb(@RequestParam("categoryid") int id, @RequestParam("categoryname") String categoryname)
+	public String updateCategory(@RequestParam("categoryid") int id, @RequestParam("categoryname") String categoryname)
 	{
 		Category category = this.categoryService.updateCategory(id, categoryname);
-		return "redirect:categories";
+		return "redirect:/admin/categories";
 	}
 
 	
@@ -182,9 +182,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "products/update/{id}",method=RequestMethod.POST)
-	public String updateProduct(@PathVariable(name = "id") int id,@ModelAttribute Product product)
+	public String updateProduct(@RequestParam("name") String name,@RequestParam("categoryid") int categoryId ,@RequestParam("price") int price,@RequestParam("weight") int weight, @RequestParam("quantity")int quantity,@RequestParam("description") String description,@RequestParam("productImage") String productImage)
 	{
-		this.productService.updateProduct(id,product);
+
+//		this.productService.updateProduct();
 		return "redirect:/admin/products";
 	}
 	
