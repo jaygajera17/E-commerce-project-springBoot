@@ -70,9 +70,9 @@
 					
 						<label for="category">Select Category</label> 
 						<select class="form-control border border-warning" name="categoryid" required>
-
+                            <option selected>Select a Category</option>
 							<c:forEach var="category" items="${categories}">
-								<option>${category.name}</option>
+								<option value="${category.id}">${category.name}</option>
 							</c:forEach>
 							
 						</select>

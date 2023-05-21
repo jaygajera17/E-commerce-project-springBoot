@@ -152,8 +152,18 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "products/add",method=RequestMethod.POST)
-	public String addProduct(@ModelAttribute Product product) {
-		System.out.println(product.getDescription());
+	public String addProduct(@RequestParam("name") String name,@RequestParam("categoryid") int categoryId ,@RequestParam("price") int price,@RequestParam("weight") int weight, @RequestParam("quantity")int quantity,@RequestParam("description") String description,@RequestParam("productImage") String productImage) {
+		System.out.println(categoryId);
+		Category category = this.categoryService.getCategory(categoryId);
+		Product product = new Product();
+		product.setId(categoryId);
+		product.setName(name);
+		product.setCategory(category);
+		product.setDescription(description);
+		product.setPrice(price);
+		product.setImage(productImage);
+		product.setWeight(weight);
+		product.setQuantity(quantity);
 		this.productService.addProduct(product);
 		return "redirect:/admin/products";
 	}

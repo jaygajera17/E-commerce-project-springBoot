@@ -77,7 +77,6 @@
 					</td>
 					<td>
 						${product.category.name}
-						
 					</td>
 					
 					<td><img src="${product.image}"
@@ -85,7 +84,7 @@
 					<td>
 						${product.quantity }
 					</td>
-					<td>S
+					<td>
 						${product.price }
 					</td>
 					<td>

@@ -53,4 +53,9 @@ public class categoryDao {
 		this.sessionFactory.getCurrentSession().update(category);
 		return category;
 	}
+
+	@Transactional
+	public Category getCategory(int id) {
+		return this.sessionFactory.getCurrentSession().get(Category.class,id);
+	}
 }
