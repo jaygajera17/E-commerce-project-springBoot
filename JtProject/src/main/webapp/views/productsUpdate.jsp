@@ -36,7 +36,7 @@
 				<ul class="navbar-nav mr-auto"></ul>
 				<ul class="navbar-nav">
 					<li class="nav-item active"><a class="nav-link"
-						href="/adminhome" >Home Page</a></li>
+						href="/dashboard" >Home Page</a></li>
 					<li class="nav-item active"><a class="nav-link"
 						href="/logout" >Logout</a></li>
 
@@ -66,7 +66,6 @@
 					
 						<label for="category">Select Category</label> 
 						<select class="form-control border border-success" name="categoryid" readonly>
-							
 							<option >${ pcategory }</option>
 						</select>
 					</div>

@@ -27,7 +27,7 @@ public class productDao {
 	
 	@Transactional
 	public Product addProduct(Product product) {
-		this.sessionFactory.getCurrentSession().saveOrUpdate(product);
+		this.sessionFactory.getCurrentSession().save(product);
 		return product;
 	}
 	
