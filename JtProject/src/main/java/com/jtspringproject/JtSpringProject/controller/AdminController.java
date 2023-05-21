@@ -58,17 +58,17 @@ public class AdminController {
 	}
 	
 	
-	@GetMapping("/")
+	@GetMapping("login")
 	public String adminlogin() {
 		
 		return "adminlogin";
 	}
-	@GetMapping("/adminhome")
+	@GetMapping("Dashboard")
 	public String adminHome(Model model) {
 		if(adminlogcheck!=1)
 			return "adminHome";
 		else
-			return "redirect:/admin";
+			return "redirect:/login";
 	}
 	@GetMapping("/loginvalidate")
 	public String adminlog(Model model) {
@@ -111,12 +111,12 @@ public class AdminController {
 		}
 	}
 	
-	@GetMapping("/admin/categories/delete")
-	public String removeCategoryDb(@RequestParam("id") int id)
+	@GetMapping("categories/delete")
+	public ModelAndView removeCategoryDb(@RequestParam("id") int id)
 	{	
 			this.categoryService.deleteCategory(id);
-			ModelAndView mView = new ModelAndView("admin/categories");
-			return "redirect:categories";
+			ModelAndView mView = new ModelAndView("forward:/categories");
+			return mView;
 	}
 	
 	@GetMapping("categories/update")
@@ -144,20 +144,18 @@ public class AdminController {
 		return mView;
 	}
 	@GetMapping("products/add")
-	public String addproduct() {
-		return "productsAdd";
+	public ModelAndView addProduct() {
+		ModelAndView mView = new ModelAndView("productsAdd");
+		List<Category> categories = this.categoryService.getCategories();
+		mView.addObject("categories",categories);
+		return mView;
 	}
 
 	@RequestMapping(value = "products/add",method=RequestMethod.POST)
-	public ModelAndView addProduct(@ModelAttribute Product product) {
+	public String addProduct(@ModelAttribute Product product) {
 		System.out.println(product.getDescription());
-		
-		ModelAndView mView = new ModelAndView("products");
-		
-		List<Product> products = this.productService.getProducts();
-		mView.addObject("products",products);
-		
-		return mView;
+		this.productService.addProduct(product);
+		return "redirect:/admin/products";
 	}
 	
 	
@@ -188,7 +186,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("products/delete")
-	public String removeProductDb(@RequestParam("id") int id)
+	public String removeProduct(@RequestParam("id") int id)
 	{
 		this.productService.deleteProduct(id);
 		return "redirect:/admin/products";

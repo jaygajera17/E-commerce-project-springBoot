@@ -97,7 +97,7 @@
 
 					<td>
 					<form action="products/delete" method="get">
-							<input type="hidden" name="id" value="${product.id }">
+							<input type="hidden" name="id" value="${product.id}">
 							<input type="submit" value="Delete" class="btn btn-danger">
 					</form>
 					</td>

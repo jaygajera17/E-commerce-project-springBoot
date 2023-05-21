@@ -48,7 +48,7 @@
 	</nav><br>
 	<div class="jumbotron container border border-info">
 		<h3>Add a new Product</h3>
-		<form action="sendData" method="post">
+		<form action="/admin/products/add" method="post">
 			<div class="row">
 				<div class="col-sm-5">
 					
@@ -70,10 +70,9 @@
 					
 						<label for="category">Select Category</label> 
 						<select class="form-control border border-warning" name="categoryid" required>
-							
-							
-							<c:forEach var="product" items="${products}">
-								<option>{product.category.name}</option>
+
+							<c:forEach var="category" items="${categories}">
+								<option>${category.name}</option>
 							</c:forEach>
 							
 						</select>
