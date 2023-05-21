@@ -65,10 +65,10 @@ public class AdminController {
 	}
 	@GetMapping("Dashboard")
 	public String adminHome(Model model) {
-		if(adminlogcheck!=1)
+		if(adminlogcheck==1)
 			return "adminHome";
 		else
-			return "redirect:/login";
+			return "redirect:/admin/login";
 	}
 	@GetMapping("/loginvalidate")
 	public String adminlog(Model model) {
@@ -82,6 +82,7 @@ public class AdminController {
 		
 		if(user.getRole().equals("ROLE_ADMIN")) {
 			ModelAndView mv = new ModelAndView("adminHome");
+			adminlogcheck=1;
 			mv.addObject("admin", user);
 			return mv;
 		}
@@ -93,10 +94,16 @@ public class AdminController {
 	}
 	@GetMapping("categories")
 	public ModelAndView getcategory() {
-		ModelAndView mView = new ModelAndView("categories");
-		List<Category> categories = this.categoryService.getCategories();
-		mView.addObject("categories",categories);
-		return mView;
+		if(adminlogcheck==0){
+			ModelAndView mView = new ModelAndView("adminlogin");
+			return mView;
+		}
+		else {
+			ModelAndView mView = new ModelAndView("categories");
+			List<Category> categories = this.categoryService.getCategories();
+			mView.addObject("categories", categories);
+			return mView;
+		}
 	}
 	@RequestMapping(value = "categories",method = RequestMethod.POST)
 	public String addCategory(@RequestParam("categoryname") String category_name)
@@ -130,18 +137,23 @@ public class AdminController {
 //	 --------------------------Remaining --------------------
 	@GetMapping("products")
 	public ModelAndView getproduct() {
-		
-		ModelAndView mView = new ModelAndView("products");
-		
-		List<Product> products = this.productService.getProducts();
-		
-		if(products.isEmpty()) {
-			mView.addObject("msg","No products are available");
-		}else {
-			mView.addObject("products",products);	
+		if(adminlogcheck==0){
+			ModelAndView mView = new ModelAndView("adminlogin");
+			return mView;
 		}
-		
-		return mView;
+		else {
+			ModelAndView mView = new ModelAndView("products");
+
+			List<Product> products = this.productService.getProducts();
+
+			if (products.isEmpty()) {
+				mView.addObject("msg", "No products are available");
+			} else {
+				mView.addObject("products", products);
+			}
+			return mView;
+		}
+
 	}
 	@GetMapping("products/add")
 	public ModelAndView addProduct() {
@@ -167,8 +179,7 @@ public class AdminController {
 		this.productService.addProduct(product);
 		return "redirect:/admin/products";
 	}
-	
-	
+
 	@GetMapping("products/update/{id}")
 	public ModelAndView updateproduct(@PathVariable("id") int id) {
 		
@@ -202,10 +213,16 @@ public class AdminController {
 	
 	@GetMapping("customers")
 	public ModelAndView getCustomerDetail() {
-		ModelAndView mView = new ModelAndView("displayCustomers");
-		List<User> users = this.userService.getUsers();
-		mView.addObject("customers", users);
-		return mView;
+		if(adminlogcheck==0){
+			ModelAndView mView = new ModelAndView("adminlogin");
+			return mView;
+		}
+		else {
+			ModelAndView mView = new ModelAndView("displayCustomers");
+			List<User> users = this.userService.getUsers();
+			mView.addObject("customers", users);
+			return mView;
+		}
 	}
 	
 	

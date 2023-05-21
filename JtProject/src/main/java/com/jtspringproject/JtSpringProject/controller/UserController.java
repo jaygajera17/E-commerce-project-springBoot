@@ -80,7 +80,7 @@ public class UserController{
 	@GetMapping("/user/products")
 	public ModelAndView getproduct() {
 
-		ModelAndView mView = new ModelAndView("products");
+		ModelAndView mView = new ModelAndView("uproduct");
 
 		List<Product> products = this.productService.getProducts();
 
