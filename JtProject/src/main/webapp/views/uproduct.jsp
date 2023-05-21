@@ -62,10 +62,11 @@
 				
 			</tr>
 			<tbody>
+			<c:forEach var="product" items="${products}">
 				<tr>
 
 
-				<c:forEach var="product" items="${products}">
+
 
 					<td>
                     						${product.id}
@@ -103,9 +104,9 @@
 					</form>
 					</td>
 					
-              </c:forEach>
-				</tr>
 
+				</tr>
+           </c:forEach>
 
 			</tbody>
 		</table>

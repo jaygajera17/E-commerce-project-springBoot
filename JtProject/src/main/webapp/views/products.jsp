@@ -65,9 +65,11 @@
 				<th scope="col">Update</th>
 			</tr>
 			<tbody>
+
+				<c:forEach var="product" items="${products}">
 				<tr>
 
-					<c:forEach var="product" items="${products}">
+
 					
 					<td>
 						${product.id}
@@ -77,6 +79,7 @@
 					</td>
 					<td>
 						${product.category.name}
+						
 					</td>
 					
 					<td><img src="${product.image}"
@@ -84,7 +87,7 @@
 					<td>
 						${product.quantity }
 					</td>
-					<td>
+					<td>S
 						${product.price }
 					</td>
 					<td>
@@ -101,13 +104,15 @@
 					</form>
 					</td>
 					<td>
-
-					<a class="btn btn-warning" href="products/update/${product.id}" role="button">Update</a>
+					<form action="products/update" method="get">
+							<input type="hidden" name="pid" value="${product.id}">
+							<input type="submit" value="Update" class="btn btn-warning">
+					</form>
 					
 					</td>
-</c:forEach>
+
 				</tr>
-				
+				</c:forEach>
 
 			</tbody>
 		</table>
