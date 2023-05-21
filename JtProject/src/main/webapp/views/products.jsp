@@ -102,10 +102,8 @@
 					</form>
 					</td>
 					<td>
-					<form action="products/update" method="get">
-							<input type="hidden" name="pid" value="${product.id}">
-							<input type="submit" value="Update" class="btn btn-warning">
-					</form>
+
+					<a class="btn btn-warning" href="products/update/${product.id}" role="button">Update</a>
 					
 					</td>
 </c:forEach>

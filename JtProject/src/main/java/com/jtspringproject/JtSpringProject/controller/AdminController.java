@@ -163,26 +163,19 @@ public class AdminController {
 	public ModelAndView updateproduct(@PathVariable("id") int id) {
 		
 		ModelAndView mView = new ModelAndView("productsUpdate");
-		
-		Product product = this.productService.getProduc(id);
+		Product product = this.productService.getProduct(id);
+		List<Category> categories = this.categoryService.getCategories();
+
+		mView.addObject("categories",categories);
 		mView.addObject("product", product);
 		return mView;
 	}
 	
 	@RequestMapping(value = "products/update/{id}",method=RequestMethod.POST)
-	public ModelAndView updateProduct(@ModelAttribute Product product) 
+	public String updateProduct(@PathVariable(name = "id") int id,@ModelAttribute Product product)
 	{
-		ModelAndView mView = new ModelAndView("products");
-		
-		List<Product> products = this.productService.getProducts();
-		
-		if(products.isEmpty()) {
-			mView.addObject("msg","No products are available");
-		}else {
-			mView.addObject("products",products);	
-		}
-		
-		return mView;
+		this.productService.updateProduct(id,product);
+		return "redirect:/admin/products";
 	}
 	
 	@GetMapping("products/delete")
