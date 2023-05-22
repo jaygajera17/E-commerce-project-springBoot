@@ -67,7 +67,15 @@ public class UserController{
 			res.addCookie(new Cookie("username", u.getUsername()));
 			ModelAndView mView  = new ModelAndView("index");	
 			mView.addObject("user", u);
+			List<Product> products = this.productService.getProducts();
+
+			if (products.isEmpty()) {
+				mView.addObject("msg", "No products are available");
+			} else {
+				mView.addObject("products", products);
+			}
 			return mView;
+
 		}else {
 			ModelAndView mView = new ModelAndView("userLogin");
 			mView.addObject("msg", "Please enter correct email and password");

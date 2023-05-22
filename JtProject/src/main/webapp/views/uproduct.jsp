@@ -46,7 +46,7 @@
 	</nav>
 	<div class="container-fluid">
 
-		
+
 		<table class="table">
 
 			<tr>
@@ -59,7 +59,7 @@
 				<th scope="col">Weight</th>
 				<th scope="col">Descrption</th>
 				<th scope="col">Buy</th>
-				
+
 			</tr>
 			<tbody>
 			<c:forEach var="product" items="${products}">
@@ -96,14 +96,14 @@
 
 
 					<td>
-					
-					
+
+
 				    <form action="products/addtocart" method="get">
 							<input type="hidden" name="id" value="${product.id}">
 							<input type="submit" value="Add To Cart" class="btn btn-warning">
 					</form>
 					</td>
-					
+
 
 				</tr>
            </c:forEach>

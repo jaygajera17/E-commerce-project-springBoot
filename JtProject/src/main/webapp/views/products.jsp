@@ -1,10 +1,10 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
-<%@page import ="java.io.FileOutputStream" %>    
+<%@page import ="java.io.FileOutputStream" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@page import=" java.io.ObjectOutputStream" %>    
+<%@page import=" java.io.ObjectOutputStream" %>
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -70,7 +70,7 @@
 				<tr>
 
 
-					
+
 					<td>
 						${product.id}
 					</td>
@@ -79,15 +79,15 @@
 					</td>
 					<td>
 						${product.category.name}
-						
+
 					</td>
-					
+
 					<td><img src="${product.image}"
 						height="100px" width="100px"></td>
 					<td>
 						${product.quantity }
 					</td>
-					<td>
+					<td>S
 						${product.price }
 					</td>
 					<td>
@@ -107,7 +107,7 @@
 					<form action="products/update/${product.id}" method="get">
                         <input type="submit" value="Update" class="btn btn-warning">
                     </form>
-					
+
 					</td>
 
 				</tr>
@@ -115,7 +115,7 @@
 
 			</tbody>
 		</table>
-	
+
 	</div>
 
 
