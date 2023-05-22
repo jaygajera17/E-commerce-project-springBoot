@@ -54,12 +54,11 @@
 				<th scope="col">Customer Name</th>
 				<th scope="col">Email</th>
 				<th scope="col">Address</th>
+				<th scope="col">Delete</th>
 			</tr>
 			<tbody>
-				<tr>
-					
 				<c:forEach var="customer" items="${customers }">
-					
+				<tr>
 					<td>
 						${customer.username}
 					</td>
@@ -71,10 +70,10 @@
 					    ${customer.address}
 						
 				    </td>
-					
+					</tr>
                 </c:forEach>
 
-				</tr>
+
 				
 			</tbody>
 		</table>

@@ -100,10 +100,11 @@
 						<textarea class="form-control border border-warning" rows="4" name="description" placeholder="Product Details" value= "no product details"></textarea>
 					</div>
 					<p>Product Image</p>
-					<div class="custom-file">
-						<input type="file" class="custom-file-input" name="productImage" accept="image/jpeg, image/png" id="productImage" onchange="loadfile(event)" /> 
-						<label class="custom-file-label border border-warning" for="productImage">Choose file</label>
-						
+					<div class="form-group">
+											<label for="Image">Image Link</label>
+                      						<input type="text" class="form-control border border-warning" required name="productImage" placeholder="Enter Short Image Link">
+
+
 					</div>
 					<div class="form-group">
 						<img src="Product Images/one.jpg" alt="Hello" id="imgPreview" height="100px" width="100px"

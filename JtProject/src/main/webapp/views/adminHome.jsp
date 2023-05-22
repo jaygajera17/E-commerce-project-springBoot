@@ -35,7 +35,7 @@
 				<ul class="navbar-nav">
 					<li class="nav-item active"><a class="nav-link" href="/adminhome">Home
 							Page</a></li>
-					<li class="nav-item active"><a class="nav-link" href="/logout">Logout</a></li>
+					<li class="nav-item active"><a class="nav-link" href="/">Logout</a></li>
 
 				</ul>
 
@@ -82,17 +82,7 @@
 				</div>
 			</div>
 			
-			<div class="col-sm-3 pt-4">
-				<div class="card" style="background-color: white;">
-					<div class="card-body text-center">
-						<h4 class="card-title">Requested item</h4>
-						<p>---------------------------------------------</p>
-						<p class="card-text">Manage all requested item .</p>
-						<a href="/admin/RequestedItem" class="card-link btn btn-primary">Manage</a>
-
-					</div>
-				</div>
-			</div>
+			
 			
 		</div>
 	</div>

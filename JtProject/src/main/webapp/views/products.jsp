@@ -87,7 +87,7 @@
 					<td>
 						${product.quantity }
 					</td>
-					<td>S
+					<td>
 						${product.price }
 					</td>
 					<td>
@@ -104,10 +104,9 @@
 					</form>
 					</td>
 					<td>
-					<form action="products/update" method="get">
-							<input type="hidden" name="pid" value="${product.id}">
-							<input type="submit" value="Update" class="btn btn-warning">
-					</form>
+					<form action="products/update/${product.id}" method="get">
+                        <input type="submit" value="Update" class="btn btn-warning">
+                    </form>
 					
 					</td>
 

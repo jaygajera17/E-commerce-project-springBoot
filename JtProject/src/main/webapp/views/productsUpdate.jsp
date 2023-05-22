@@ -39,47 +39,50 @@
 						href="/dashboard" >Home Page</a></li>
 					<li class="nav-item active"><a class="nav-link"
 						href="/logout" >Logout</a></li>
-
 				</ul>
 
 			</div>
 		</div>
 	</nav><br>
+	<c:forEach var="product" items="products">
 	<div class="jumbotron container border border-info">
 		<h3>Update Existing Product</h3>
-		<form action="updateData" method="post">
+		<form action="/products/update/${product.id}" method="post">
 			<div class="row">
 				<div class="col-sm-5">
 					
 					<div class="form-group">
 						<label for="name">Id</label> 
-						<input type="number" readonly="readonly" class="form-control border border-success" name="id"  value="${ pid }">
+						<input type="number" readonly="readonly" class="form-control border border-success" name="id"  value="${product.id}">
 						
 
 					</div>
 					<div class="form-group">
 						<label for="name">Name</label> 
-						<input type="text" class="form-control border border-success" required name="name" value="${pname }" placeholder="Enter name">
+						<input type="text" class="form-control border border-success" required name="name" value="${product.name }" placeholder="Enter name">
 					</div>
 					
 					<div class="form-group">
 					
 						<label for="category">Select Category</label> 
 						<select class="form-control border border-success" name="categoryid" readonly>
-							<option >${ pcategory }</option>
+							<option selected>Select a Category</option>
+                            							<c:forEach var="category" items="${categories}">
+                            								<option value="${category.id}">${category.name}</option>
+                            							</c:forEach>
 						</select>
 					</div>
 					<div class="form-group">
 						<label for="price">Price</label> 
-						<input type="number" class="form-control border border-success" required name="price" value="${ pprice }" min="1" placeholder="Price">
+						<input type="number" class="form-control border border-success" required name="price" value="${ product.price }" min="1" placeholder="Price">
 					</div>
 					<div class="form-group">
 						<label for="weight">Weight in grams</label> 
-						<input type="number" class="form-control border border-success" required name="weight" value="${ pweight }" min="1" placeholder="Weight">
+						<input type="number" class="form-control border border-success" required name="weight" value="${product.weight }" min="1" placeholder="Weight">
 					</div>
 					<div class="form-group">
 						<label for="weight">Available Quantity</label> 
-						<input type="number" class="form-control border border-success" required name="quantity" value="${ pquantity }" min="1" placeholder="Quantity">
+						<input type="number" class="form-control border border-success" required name="quantity" value="${ product.quantity }" min="1" placeholder="Quantity">
 					</div>
 					
 					
@@ -88,11 +91,11 @@
 				<div class="col-sm-5">
 				<div class="form-group">
 						<label for="description">Product Description</label>
-						<textarea class="form-control border border-success" rows="4" name="description" placeholder="Product Details" value= "${ pdescription }"></textarea>
+						<textarea class="form-control border border-success" rows="4" name="product.description" placeholder="Product Details" value= "${ pdescription }"></textarea>
 					</div>
 					<p>Product Image</p>
 					<div class="custom-file">
-						<input type="file" class="custom-file-input" name="productImage" value="${ pimage }" accept="image/jpeg, image/png" id="productImage"  onchange="loadfile(event)"/> 
+						<input type="file" class="custom-file-input" name="productImage" value="${ product.image }" accept="image/jpeg, image/png" id="productImage"  onchange="loadfile(event)"/>
 						<label class="custom-file-label border border-success" for="productImage">Choose file</label>
 						<script type="text/javascript">
 						var loadFile = function(event) {
@@ -111,6 +114,7 @@
 			</div>
 		</form>
 	</div>
+	</c:forEach>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
