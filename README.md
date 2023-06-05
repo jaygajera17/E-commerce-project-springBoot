@@ -12,6 +12,7 @@ This a web application Java Based  Beginner level project To developing the e-co
 - bug fixed ( product image, security , etc..)
 - support in both eclipse & intellij ide
 - overall redesign entire code that help reusability. 
+- disclaimer: currently working on this branch so there may be some bug related to endpoint, and working on cart logic.
 
 ## How to Run ?
 - open xampp control panel start mysql server
