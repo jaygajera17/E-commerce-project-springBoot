@@ -2,7 +2,7 @@
 This a web application Java Based  Beginner level project To developing the e-commerce website to Buy/sell the Food Item. We use the Spring Boot to build the back-end part
 
 ## Old Version
-- https://github.com/jaygajera17/E-commerce-project-springBoot/new/main
+- https://github.com/jaygajera17/E-commerce-project-springBoot/tree/main
 - issue: everytime connection open close for access database 
 
 ## New Upgrade ( what's new)
@@ -12,6 +12,7 @@ This a web application Java Based  Beginner level project To developing the e-co
 - bug fixed ( product image, security , etc..)
 - support in both eclipse & intellij ide
 - overall redesign entire code that help reusability. 
+- disclaimer: currently working on this branch so there may be some bug related to endpoint, and working on cart logic.
 
 ## How to Run ?
 - open xampp control panel start mysql server
