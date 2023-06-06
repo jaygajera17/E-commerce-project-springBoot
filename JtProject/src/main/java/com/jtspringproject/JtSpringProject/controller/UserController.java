@@ -1,5 +1,6 @@
 package com.jtspringproject.JtSpringProject.controller;
 
+import com.jtspringproject.JtSpringProject.models.Cart;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jtspringproject.JtSpringProject.services.cartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jtspringproject.JtSpringProject.services.userService;
 import com.jtspringproject.JtSpringProject.services.productService;
+import com.jtspringproject.JtSpringProject.services.cartService;
+
 
 
 @Controller
@@ -39,11 +43,7 @@ public class UserController{
 	{
 		return "register";
 	}
-	@GetMapping("/contact")
-	public String contact()
-	{
-		return "contact";
-	}
+
 	@GetMapping("/buy")
 	public String buy()
 	{
@@ -129,7 +129,7 @@ public class UserController{
 			return "test";
 		}
 		
-		// for learning purpose of model and view
+		// for learning purpose of model and view ( how data is pass to view)
 		
 		@GetMapping("/test2")
 		public ModelAndView Test2()
@@ -149,5 +149,13 @@ public class UserController{
 			
 			
 		}
+
+
+//	@GetMapping("carts")
+//	public ModelAndView  getCartDetail()
+//	{
+//		ModelAndView mv= new ModelAndView();
+//		List<Cart>carts = cartService.getCarts();
+//	}
 	  
 }
