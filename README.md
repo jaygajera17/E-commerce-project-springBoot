@@ -1,11 +1,5 @@
 # ecommerce-extensions
 
----
-
-_The following is forked from the original repository to add necessary changes according to our COMP 354 course project requirements. For original README, attributions and credit, please check out the original repository_ :)
-
----
-
 ## Quickstart
 
 1. Clone the repository
