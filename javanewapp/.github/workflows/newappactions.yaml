@@ -1,0 +1,66 @@
+name: Deploytoelasticbeanstalk
+on: 
+  push:
+    branches:
+        - main
+  workflow_dispatch: 
+    
+jobs:
+    
+    DeployoELB:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+
+        steps: 
+            - name: clone to repository 
+              uses: actions/checkout@v3     
+              
+            - name: setup java and maven
+              uses: actions/setup-java@v3
+              with:
+                distribution: 'adopt'
+                java-version: '11'
+
+            - name: perofrm build with maven
+              run: mvn package 
+            
+            - name: code analysis with sonarqube
+              run: mvn sonar:sonar -Dsonar.projectKey=maven-webapp-project -Dsonar.host.url=${{secrets.SONAR_HOST_URL}} -Dsonar.login=${{secrets.SONAR_LOGIN_TOKEN}}
+
+            - name: publish to github packages 
+              run: mvn --batch-mode deploy
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Authenticate to aws 
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+                aws-region: ${{secrets.AWS_REGION}}
+
+            - name: push war to s3
+              run: aws s3 cp target/xashy-webapp.war s3://artifact-repos3/
+              
+            - name: create a new elb app version of artifact
+              run: |
+                aws elasticbeanstalk create-application-version \
+                --application-name gitactions-cicdapp \
+                --source-bundle S3Bucket="artifact-repos3",S3Key="xashy-webapp.war" \
+                --version-label "ver-${{ github.sha }}" \
+                --description "commit-sha-${{ github.sha }}" 
+
+            - name: Deploy the app to the app env     
+              run: aws elasticbeanstalk update-environment --environment-name Gitactions-cicdapp-env --version-label "ver-${{ github.sha }}" --version-label "ver-${{ github.sha }}"
+
+                 
+
+
+            
+
+          
+
+
+            
