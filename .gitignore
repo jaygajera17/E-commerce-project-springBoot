@@ -40,3 +40,4 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
+JtProject/src/main/resources/application.properties
