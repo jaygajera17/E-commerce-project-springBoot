@@ -90,6 +90,18 @@ header {
   padding: 15px 30px;
   box-shadow: var(--close-shadow-secondary);
   border-radius: var(--default-border-radius);
+
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  align-items: center;
+  align-content: center;
+}
+
+header .btn-icon {
+  justify-self: flex-end;
+
+  aspect-ratio: 1;
+  width: 48px;
 }
 
 header h3 {
@@ -99,7 +111,6 @@ header h3 {
   margin: 0;
   display: flex;
   justify-content: center;
-  margin-top: -50px;
 }
 
 .btn {

@@ -69,7 +69,7 @@ public class UserController {
 
 			User u = this.userService.checkLogin(username, password);
 
-			if (u != null) {
+			if (u.getUsername() != null) {
 				ModelAndView mView = new ModelAndView("index");
 				List<Product> products = this.productService.getProducts();
 
@@ -93,7 +93,7 @@ public class UserController {
 		User u = this.userService.checkLogin(username, pass);
 		ModelAndView mView = new ModelAndView("redirect:/");
 
-		if (u != null) {
+		if (u.getUsername() != null) {
 
 			res.addCookie(new Cookie("username", u.getUsername()));
 

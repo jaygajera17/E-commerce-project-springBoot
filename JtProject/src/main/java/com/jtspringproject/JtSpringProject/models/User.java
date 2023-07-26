@@ -1,4 +1,5 @@
 package com.jtspringproject.JtSpringProject.models;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,25 +11,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name="CUSTOMER")
+@Entity(name = "CUSTOMER")
 @Table
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	private String username;
-	
+
 	private String email;
-	
+
 	private String password;
-	
+
 	private String role;
-	
+
 	private String address;
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -76,7 +76,12 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	 
+
+	@Override
+	public String toString() {
+
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
+				+ role + ", address=" + address + "]";
+	}
 
 }

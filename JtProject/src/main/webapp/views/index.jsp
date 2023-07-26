@@ -24,7 +24,11 @@
                 let basket = $("#basket");
                 let customBasket = $("#custom-basket");
 
+                // Toggle between the two baskets
                 $(".basket-type-switch").on("click", toggleBasketType);
+
+                // Redirect to the admin portal
+                $("#admin-btn").on("click", () => location.href = "admin");
 
                 // Show the basket overlay after 5 seconds
                 setTimeout(function () {
@@ -66,6 +70,10 @@
             <h3>
               Nyan Groceries
             </h3>
+
+            <c:if test="${user.getRole() == 'ROLE_ADMIN'}">
+              <img id="admin-btn" src="images/icons/admin.png" alt="Admin portal icon" class="btn btn-icon">
+            </c:if>
           </header>
 
           <body id="store-body">
