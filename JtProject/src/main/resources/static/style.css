@@ -92,7 +92,7 @@ header {
   border-radius: var(--default-border-radius);
 
   display: grid;
-  grid-template-columns: 10% 80% 10%;
+  grid-template-columns: 5% 90% 2.5% 2.5%;
   align-items: center;
   align-content: center;
 }
@@ -102,6 +102,10 @@ header .btn-icon {
 
   aspect-ratio: 1;
   width: 48px;
+}
+
+header #logout-btn {
+  grid-column: 4;
 }
 
 header h3 {

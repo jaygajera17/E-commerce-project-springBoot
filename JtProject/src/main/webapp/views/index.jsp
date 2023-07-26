@@ -30,6 +30,9 @@
                 // Redirect to the admin portal
                 $("#admin-btn").on("click", () => location.href = "admin");
 
+                // Logout
+                $("#logout-btn").on("click", () => location.href = "userlogout");
+
                 // Show the basket overlay after 5 seconds
                 setTimeout(function () {
                   $(".basket #overlay").trigger("basketOverlayOpen");
@@ -74,6 +77,8 @@
             <c:if test="${user.getRole() == 'ROLE_ADMIN'}">
               <img id="admin-btn" src="images/icons/admin.png" alt="Admin portal icon" class="btn btn-icon">
             </c:if>
+
+            <img id="logout-btn" src="images/icons/exit.png" alt="Admin portal icon" class="btn btn-icon">
           </header>
 
           <body id="store-body">

@@ -48,7 +48,7 @@ public class UserController {
 	}
 
 	@GetMapping("/")
-	public ModelAndView userlogin(Model model, HttpServletRequest req) {
+	public ModelAndView mainRedirect(Model model, HttpServletRequest req) {
 		Cookie[] cookies = req.getCookies();
 
 		// If the user is logged in, redirect them to the home page
@@ -84,6 +84,15 @@ public class UserController {
 		mView.addObject("msg", "Please enter correct email and password");
 
 		return new ModelAndView("userLogin");
+	}
+
+	@GetMapping("/userlogout")
+	public ModelAndView userlogout(Model model, HttpServletRequest req, HttpServletResponse res) {
+		ModelAndView mView = new ModelAndView("redirect:/");
+
+		res.addCookie(new Cookie("username", ""));
+
+		return mView;
 	}
 
 	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
