@@ -13,10 +13,18 @@
   --mid-shadow-secondary: 0px 16px 40px 0px var(--secondary-color); /* Mid Shadow (Secondary) */
   --close-shadow-secondary: 0px 8px 40px 0px var(--secondary-color); /* Close Shadow (Secondary) */
 
-  --mid-drop-shadow-primary: drop-shadow(0px 16px 20px var(--primary-color)); /* Mid Drop Shadow (Primary) */
-  --close-drop-shadow-primary: drop-shadow(0px 8px 20px var(--primary-color)); /* Close Drop Shadow (Primary) */
-  --mid-drop-shadow-secondary: drop-shadow(0px 16px 20px var(--secondary-color)); /* Mid Drop Shadow (Secondary) */
-  --close-drop-shadow-secondary: drop-shadow(0px 8px 20px var(--secondary-color)); /* Close Drop Shadow (Secondary) */
+  --mid-drop-shadow-primary: drop-shadow(
+    0px 16px 20px var(--primary-color)
+  ); /* Mid Drop Shadow (Primary) */
+  --close-drop-shadow-primary: drop-shadow(
+    0px 8px 20px var(--primary-color)
+  ); /* Close Drop Shadow (Primary) */
+  --mid-drop-shadow-secondary: drop-shadow(
+    0px 16px 20px var(--secondary-color)
+  ); /* Mid Drop Shadow (Secondary) */
+  --close-drop-shadow-secondary: drop-shadow(
+    0px 8px 20px var(--secondary-color)
+  ); /* Close Drop Shadow (Secondary) */
 }
 
 /* GENERAL STYLES */
@@ -51,6 +59,32 @@ a,
   margin: 10px;
 }
 
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgb(0, 0, 0, 0.7);
+}
+
+#overlay-content #title,
+#overlay-content #content {
+  display: block;
+
+  font-size: 1.75em;
+  line-height: 100%;
+}
+
+#overlay-content #title {
+  font-weight: 700;
+}
+
+#overlay-content #content {
+  margin-top: 0.5em;
+}
+
 header {
   background-color: var(--secondary-color);
   padding: 15px 30px;
@@ -71,13 +105,14 @@ header h3 {
 .btn {
   margin-top: 24px;
   width: 60%;
+  padding: 0.1em;
 
   color: var(--white-color);
 
   font-family: "Cabin", sans-serif;
   font-weight: 700;
   font-size: 1.8em;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,14 +130,14 @@ header h3 {
   opacity: 1;
   pointer-events: all;
 
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .disabled {
   opacity: 0;
   pointer-events: none;
 
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 
 /* LOGIN/REGISTER STYLES */
@@ -195,7 +230,7 @@ header h3 {
 
 #login-body form input {
   border: none;
-  border-radius: var(--button-border-radius)
+  border-radius: var(--button-border-radius);
   height: 40px;
   width: 90%;
   margin-bottom: 20px;
@@ -270,12 +305,8 @@ header h3 {
 
 /* STOREFRONT STYLES */
 
-#store-body {
-
-}
-
 #storefront {
-  width: 70%;
+  width: 75%;
   margin: 20px 0;
 
   color: var(--white-color);
@@ -328,7 +359,7 @@ header h3 {
   margin-top: 15px;
 
   border-radius: var(--default-border-radius);
-  
+
   display: flex;
   flex-wrap: wrap;
 }
@@ -349,7 +380,7 @@ header h3 {
 
   position: absolute;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   margin-top: 25px;
 }
 
@@ -378,7 +409,7 @@ header h3 {
 /* BASKET STYLES */
 
 #baskets-container {
-  width: 25%;
+  width: 22.5%;
 
   position: absolute;
   top: 102px;
@@ -389,8 +420,6 @@ header h3 {
 }
 
 #baskets-container .basket {
-  height: 82%;
-
   margin-right: 25px;
   margin-bottom: 25px;
   padding: 20px;
@@ -398,6 +427,7 @@ header h3 {
   grid-row: 1;
   grid-column: 1;
 
+  position: relative;
   display: grid;
   grid-template-rows: 50px 4fr 1fr;
 
@@ -410,19 +440,63 @@ header h3 {
 
 #baskets-container .spanning-row {
   width: 100%;
-  
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#baskets-container #basket-summary {
-  font-size: 1.5em;
-}
-
 #baskets-container .basket-type-switch {
   width: 62px;
   aspect-ratio: 1;
+}
+
+.basket #overlay {
+  z-index: 10;
+
+  padding-top: 2em;
+  padding-inline: 2em;
+  padding-bottom: 2em;
+
+  color: var(--white-color);
+
+  border-radius: var(--default-border-radius);
+}
+
+.basket #overlay-content {
+  padding-inline: 1.75em;
+  padding-block: 1.5em;
+
+  border-radius: var(--default-border-radius);
+}
+
+.basket #overlay-content #coupon-amount {
+  font-weight: 700;
+}
+
+#basket-summary {
+  padding-bottom: 0.75em;
+  padding-left: 0.95em;
+  padding-right: 0.95em;
+
+  font-size: 1.5em;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  border-radius: var(--default-border-radius);
+}
+
+#products-container {
+  margin-top: 2em;
+
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
 #basket-summary #actions {
@@ -457,6 +531,11 @@ header h3 {
   box-shadow: var(--close-shadow-primary);
 }
 
+#basket.basket #overlay-content {
+  background-color: var(--secondary-color);
+  box-shadow: var(--mid-shadow-secondary);
+}
+
 #custom-basket.basket {
   color: var(--white-color);
   background-color: var(--secondary-color);
@@ -471,27 +550,98 @@ header h3 {
   box-shadow: var(--close-shadow-primary);
 }
 
+#custom-basket.basket #overlay-content {
+  background-color: var(--primary-color);
+  box-shadow: var(--mid-shadow-primary);
+}
+
 /* SMALL PRODUCT STYLES */
 
 #small-product {
-  width: 100%;
+  position: relative;
+  padding: 2em;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 2.5fr 6fr;
   align-items: center;
+  justify-items: center;
+
+  color: var(--white-color);
 
   border-radius: var(--default-border-radius);
+}
+
+#small-product #product-icon {
+  max-width: 80%;
+}
+
+#small-product #product-info {
+  justify-self: flex-start;
+
+  display: flex;
+  gap: 1.5em;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  line-height: 100%;
+}
+
+#product-info #product-name {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+#product-info #product-prices #total-price {
+  font-size: 2em;
+  font-weight: 700;
+}
+
+#product-info #product-prices #unit-price {
+  font-size: 1.75em;
+  font-weight: 400;
+}
+
+#product-info #product-qty {
+  font-size: 2em;
+}
+
+#small-product #actions {
+  justify-self: stretch;
+
+  position: absolute;
+  right: 1.25em;
+  top: 1.25em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 0.25em;
+}
+
+#small-product #actions .btn {
+  aspect-ratio: 1;
+  width: 2em;
 }
 
 #basket #small-product {
   background-color: var(--secondary-color);
 }
 
+#basket #basket-summary {
+  background-color: var(--accent-color);
+}
+
+#basket #small-product #actions #add-basket {
+  display: none;
+}
+
 #custom-basket #small-product {
   background-color: var(--primary-color);
 }
 
-#small-product #product-icon {
-  aspect-ratio: 1;
+#custom-basket #basket-summary {
+  background-color: var(--secondary-color);
 }

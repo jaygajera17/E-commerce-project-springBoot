@@ -26,6 +26,15 @@
 
                 $(".basket-type-switch").on("click", toggleBasketType);
 
+                // Show the basket overlay after 5 seconds
+                setTimeout(function () {
+                  $(".basket #overlay").trigger("basketOverlayOpen");
+
+                  setTimeout(function () {
+                    $(".basket #overlay").trigger("basketOverlayClose");
+                  }, 5000);
+                }, 2000);
+
                 // Toggle between login and register
                 function toggleBasketType() {
                   isCustomBasket = !isCustomBasket;
@@ -104,15 +113,17 @@
             <!-- Baskets -->
             <div id="baskets-container">
               <jsp:include page="basket.jsp">
-                <jsp:param name="visibility_class" value="enabled" />
+                <jsp:param name="visibility" value="enabled" />
                 <jsp:param name="type" value="basket" />
                 <jsp:param name="name" value="Basket" />
+                <jsp:param name="basketSubtotalUntilCoupon" value="17.62" />
               </jsp:include>
 
               <jsp:include page="basket.jsp">
-                <jsp:param name="visibility_class" value="disabled" />
+                <jsp:param name="visibility" value="disabled" />
                 <jsp:param name="type" value="custom-basket" />
                 <jsp:param name="name" value="Custom Basket" />
+                <jsp:param name="basketSubtotalUntilCoupon" value="17.62" />
               </jsp:include>
             </div>
 

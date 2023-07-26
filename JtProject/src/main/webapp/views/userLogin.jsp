@@ -16,15 +16,18 @@
             $(document).ready(function () {
                 let isLogin = false;
 
+                let loginPanel = $("#login");
+                let registerPanel = $("#register");
+
                 // Toggle between login and register
                 $(".link-control").on("click", toggleLoginOrRegister);
 
                 // Toggle between login and register
                 function toggleLoginOrRegister() {
-                    $("#login").toggleClass("disabled");
-                    $("#login").toggleClass("enabled");
-                    $("#register").toggleClass("disabled");
-                    $("#register").toggleClass("enabled");
+                    loginPanel.toggleClass("disabled");
+                    loginPanel.toggleClass("enabled");
+                    registerPanel.toggleClass("disabled");
+                    registerPanel.toggleClass("enabled");
 
                     isLogin = !isLogin;
                 }

@@ -53,15 +53,30 @@ public class UserController {
 
 		// If the user is logged in, redirect them to the home page
 		if (cookies != null) {
+			String username = "";
+			String password = "";
+
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equalsIgnoreCase("username")) {
-					ModelAndView mView = new ModelAndView("index");
-					List<Product> products = this.productService.getProducts();
+				String name = cookie.getName();
+				String value = cookie.getValue();
 
-					mView.addObject("products", products);
-
-					return mView;
+				if (name.equalsIgnoreCase("username")) {
+					username = value;
+				} else if (name.equalsIgnoreCase("password")) {
+					password = value;
 				}
+			}
+
+			User u = this.userService.checkLogin(username, password);
+
+			if (u != null) {
+				ModelAndView mView = new ModelAndView("index");
+				List<Product> products = this.productService.getProducts();
+
+				mView.addObject("products", products);
+				mView.addObject("user", u);
+
+				return mView;
 			}
 		}
 
@@ -78,9 +93,16 @@ public class UserController {
 		User u = this.userService.checkLogin(username, pass);
 		ModelAndView mView = new ModelAndView("redirect:/");
 
-		if (u.getUsername().equals(username)) {
+		if (u != null) {
 
 			res.addCookie(new Cookie("username", u.getUsername()));
+
+			// DO NOT DO THIS IN REAL LIFE
+			// This is a quick hack to get the user to the next page, but it's terribly not
+			// secure
+			// An authentication token should be generated and stored in the database,
+			// accompanied by a full authentication system
+			res.addCookie(new Cookie("password", u.getPassword()));
 
 			mView.addObject("user", u);
 			List<Product> products = this.productService.getProducts();
