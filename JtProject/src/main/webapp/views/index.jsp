@@ -28,7 +28,7 @@
                 $(".basket-type-switch").on("click", toggleBasketType);
 
                 // Redirect to the admin portal
-                $("#admin-btn").on("click", () => location.href = "admin");
+                $("#admin-btn").on("click", () => location.href = "admin/loginvalidate");
 
                 // Logout
                 $("#logout-btn").on("click", () => location.href = "userlogout");

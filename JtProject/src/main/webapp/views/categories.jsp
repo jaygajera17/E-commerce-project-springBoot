@@ -47,12 +47,17 @@
 	</nav><br>
 	<div class="container">
 
-
+		<c var="category" items="${categories}">
+			<tr>
+				<td>${category.id}</td>
+				<td>${category.name}</td>
+		</c>
 
 		<!-- Button trigger modal -->
 		<button type="button" style="margin: 20px 0" class="btn btn-primary"
-			data-toggle="modal" data-target="#exampleModalCenter">Add
-			Category</button>
+			data-toggle="modal" data-target="#exampleModalCenter"
+			onclick="document.getElementById('name').value = '${category.name}';">Add Category
+			</button>
 
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1"
@@ -84,8 +89,6 @@
 		</div><br>
 
 
-
-
 		<table class="table">
 			<thead class="thead-light">
 				<tr>
@@ -99,8 +102,8 @@
 				
 				<c:forEach var="category" items="${categories }">
 				<tr>
-					<td>${category.id }</td>
-					<td>${category.name }</td>
+					<td>${category.id}</td>
+					<td>${category.name}</td>
 
 					<td>
 						<form action="categories/delete" method="get">
@@ -111,9 +114,6 @@
 
 					<td>
 						<form action="categories/update" method="get">
-
-
-
 
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-warning" data-toggle="modal"
