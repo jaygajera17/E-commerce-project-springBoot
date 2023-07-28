@@ -27,7 +27,9 @@ public class User {
 
 	private String role;
 
-	private String address;
+	private double accumalatedPurchases = 0.0;
+
+	private String customBasket;
 
 	public int getId() {
 		return id;
@@ -69,19 +71,30 @@ public class User {
 		this.role = role;
 	}
 
-	public String getAddress() {
-		return address;
+	public double getAccumalatedPurchases() {
+		return this.accumalatedPurchases;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void resetAccumalatedPurchases() {
+		this.accumalatedPurchases = 0.0;
+	}
+
+	public void updateAccumalatedPurchases(double new_purchase) {
+		this.accumalatedPurchases = this.accumalatedPurchases + new_purchase;
+	}
+
+	public String getCustomBasket() {
+		return this.customBasket;
+	}
+
+	public void setCustomeBasket(String customBasketJSON) {
+		this.customBasket = customBasketJSON;
 	}
 
 	@Override
 	public String toString() {
-
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role="
-				+ role + ", address=" + address + "]";
+				+ role + ", accumalated purchases=" + accumalatedPurchases + "]";
 	}
 
 }

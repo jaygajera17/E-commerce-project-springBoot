@@ -12,10 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jtspringproject.JtSpringProject.models.Category;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
-import com.jtspringproject.JtSpringProject.services.categoryService;
 import com.jtspringproject.JtSpringProject.services.productService;
 import com.jtspringproject.JtSpringProject.services.userService;
 import com.mysql.cj.protocol.Resultset;
@@ -29,9 +27,6 @@ public class AdminController {
 	
 	@Autowired
 	private userService userService;
-	@Autowired
-	private categoryService categoryService;
-	
 	@Autowired
 	private productService productService;
 	
@@ -92,47 +87,6 @@ public class AdminController {
 			return mv;
 		}
 	}
-	@GetMapping("categories")
-	public ModelAndView getcategory() {
-		if(adminlogcheck==0){
-			ModelAndView mView = new ModelAndView("adminlogin");
-			return mView;
-		}
-		else {
-			ModelAndView mView = new ModelAndView("categories");
-			List<Category> categories = this.categoryService.getCategories();
-			mView.addObject("categories", categories);
-			return mView;
-		}
-	}
-	@RequestMapping(value = "categories",method = RequestMethod.POST)
-	public String addCategory(@RequestParam("categoryname") String category_name)
-	{
-		System.out.println(category_name);
-		
-		Category category =  this.categoryService.addCategory(category_name);
-		if(category.getName().equals(category_name)) {
-			return "redirect:categories";
-		}else {
-			return "redirect:categories";
-		}
-	}
-	
-	@GetMapping("categories/delete")
-	public String removeCategoryDb(@RequestParam("id") int id)
-	{	
-			System.out.println(id);
-			this.categoryService.deleteCategory(id);
-			return "redirect:/admin/categories";
-	}
-	
-	@GetMapping("categories/update")
-	public String updateCategory(@RequestParam("categoryid") int id, @RequestParam("categoryname") String categoryname)
-	{
-		Category category = this.categoryService.updateCategory(id, categoryname);
-		return "redirect:/admin/categories";
-	}
-
 	
 //	 --------------------------Remaining --------------------
 	@GetMapping("products")
@@ -155,6 +109,7 @@ public class AdminController {
 		}
 
 	}
+	/* 
 	@GetMapping("products/add")
 	public ModelAndView addProduct() {
 		ModelAndView mView = new ModelAndView("productsAdd");
@@ -211,6 +166,7 @@ public class AdminController {
 	public String postproduct() {
 		return "redirect:/admin/categories";
 	}
+	*/
 	
 	@GetMapping("customers")
 	public ModelAndView getCustomerDetail() {

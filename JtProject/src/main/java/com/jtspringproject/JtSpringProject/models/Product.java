@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.hibernate.procedure.ProcedureCallMemento;
+
 @Entity(name="PRODUCT")
 public class Product {
 	@Id
@@ -21,17 +23,16 @@ public class Product {
 	
 	private String image;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "category_id",referencedColumnName = "category_id")
-	private Category category;
-	
 	private int quantity;
 	
 	private int price;
-	
-	private int weight;
-	
-	private String description;
+	 
+	/* 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "paired_product_id",referencedColumnName = "paired_product_id")
+	private Product product;
+	*/
+	private int pairedProduct;
 
 	public int getId() {
 		return id;
@@ -57,13 +58,12 @@ public class Product {
 		this.image = image;
 	}
 
-
-	public Category getCategory() {
-		return category;
+	public int getPairedProduct() {
+		return pairedProduct;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setPairedProduct(int pairedProduct) {
+		this.pairedProduct = pairedProduct;
 	}
 
 	public int getQuantity() {
@@ -81,26 +81,9 @@ public class Product {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
-	public int getWeight() {
-		return weight;
-	}
-
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	
 	@ManyToOne
     @JoinColumn(name = "customer_id")
     private User customer;
-	
 	
 }
