@@ -18,7 +18,36 @@
             <title>Store Front</title>
 
             <script type="text/javascript">
+                let slideIndex = 1;
+                const slideInterval = 3000;
+                
+                function changeSlide(x) {
+                  showSlides(slideIndex += x);
+                }
+
+                function showSlides(x) {
+                  let slides = document.querySelectorAll("#store-carousel .product");
+                  
+                  if (x > slides.length) 
+                    slideIndex = 1;
+
+                  if (x < 1) 
+                    slideIndex = slides.length;
+
+                  for (let i = 0; i < slides.length; i++) 
+                    slides[i].style.display = "none";
+
+                  slides[slideIndex - 1].style.display = "block";
+                }
+
+                function autoSlide() {
+                  changeSlide(1);
+                  setTimeout(autoSlide, slideInterval);
+                }
+
               $(document).ready(function () {
+                autoSlide();
+
                 let isCustomBasket = false;
 
                 let basket = $("#basket");
@@ -88,21 +117,25 @@
 
               <!-- Product Carousel -->
               <div id="store-carousel">
-                <c:forEach var="product" items="${products}" varStatus="loopStatus">
-                  <c:if test="${loopStatus.index < 1}"> <!-- change 1 to desired # products in carousel -->
-                    <div class="product">
-                      <div class="product-details">
-                        <h5 class="product-name">${product.name}</h5>
-                        <h5 class="product-price">$${product.price}</h5>
+                <div class="carousel-wrapper">
+                  <c:forEach var="product" items="${products}" varStatus="loopStatus">
+                    <c:if test="${loopStatus.index < 3}">
+                      <div class="product">
+                        <div class="product-details">
+                          <h5 class="product-name">${product.name}</h5>
+                          <h5 class="product-price">$${product.price}</h5>
+                        </div>
+                        <img class="product-img" src="${product.image}" alt="Product">
+                        <div class="product-buttons">
+                          <a href="#" class="btn btn-primary btn-basket"><img src="images/icons/basket.png" alt="Basket" width="40"></a>
+                          <a href="#" class="btn btn-primary btn-custombasket"><img src="images/icons/custombasket.png" alt="Basket" width="40"></a>
+                        </div>
                       </div>
-                      <img class="product-img" src="${product.image}" alt="Product">
-                      <div class="product-buttons">
-                        <a href="#" class="btn btn-primary btn-basket"><img src="images/icons/basket.png" alt="Basket" width="40"></a>
-                        <a href="#" class="btn btn-primary btn-custombasket"><img src="images/icons/custombasket.png" alt="Basket" width="40"></a>
-                      </div>
-                    </div>
-                  </c:if>
-                </c:forEach>
+                    </c:if>
+                  </c:forEach>
+                </div>
+                <button class="carousel-btn carousel-left-btn" onclick="changeSlide(-1)"><img src="images/icons/arrow_left.png" alt="Left arrow" width="30"></button>
+                <button class="carousel-btn carousel-right-btn" onclick="changeSlide(1)"><img src="images/icons/arrow_right.png" alt="Right arrow" width="30"></button>
               </div>
 
               <!-- Store List -->
@@ -141,118 +174,4 @@
             </div>
 
           </body>
-
         </html>
-
-        <!-- <section class="store">
-              <div class="row">
-                <c:forEach var="product" items="${products}">
-                  <div class="col-md-3">
-                    <div class="card mb-4">
-                      <img class="card-img-top" src="${product.image}" alt="Product 1">
-                      <div class="card-body">
-                        <b>
-                          <h4 class="card-title">${product.name}</h4>
-                        </b>
-                        <h5 class="card-text">Category: ${product.category.name}</h5>
-                        <h5 class="card-text">Price: ${product.price}</h5>
-                        <p class="card-text">Description: ${product.description}</p>
-                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                      </div>
-                    </div>
-                  </div>
-                </c:forEach>
-              </div>
-            </div>
-            </section> -->
-        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                  <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
-                      <img th:src="@{/images/logo.png}" src="../static/images/logo.png" width="auto" height="40" class="d-inline-block align-top" alt="" />
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <h4>Welcome ${ username } </h4>
-                      <ul class="navbar-nav mr-auto"></ul>
-                      <ul class="navbar-nav">
-                        <li class="nav-item active">
-                          <a class="nav-link" th:href="@{/}" href="#">Cart</a>
-                        </li>
-                        <li class="nav-item active">
-                          <a class="nav-link" href="profileDisplay">Profile</a>
-                        </li>
-                        <li class="nav-item active">
-                          <a class="nav-link" sec:authorize="isAuthenticated()" href="logout">Logout</a>
-                        </li>
-
-                      </ul>
-
-                    </div>
-                  </div>
-                </nav> -->
-        <!-- <html lang="en">
-
-                  <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Perishable Shop</title>
-                    <style>
-                      body {
-                        padding: 20px;
-                      }
-
-                      .card-body {
-                        height: 250px;
-                        /* Set a fixed height for the card body */
-                      }
-
-                      .card-img-top {
-                        max-height: 100px;
-                        /* Limit the height of the product image */
-                        object-fit: contain;
-                      }
-                    </style>
-                  </head>
-
-                  <body class="bg-light">
-                    <header>
-
-                    </header>
-                    <main>
-
-                      <div class="container">
-                        <h1>Welcome to Perishable Shop</h1>
-
-
-                        <div class="row">
-                          <c:forEach var="product" items="${products}">
-                            <div class="col-md-3">
-                              <div class="card mb-4">
-                                <img class="card-img-top" src="${product.image}" alt="Product 1">
-                                <div class="card-body">
-                                  <b>
-                                    <h4 class="card-title">${product.name}</h4>
-                                  </b>
-                                  <h5 class="card-text">Category: ${product.category.name}</h5>
-                                  <h5 class="card-text">Price: ${product.price}</h5>
-                                  <p class="card-text">Description: ${product.description}</p>
-                                  <a href="#" class="btn btn-primary">Add to Cart</a>
-                                </div>
-                              </div>
-                            </div>
-                          </c:forEach>
-                        </div>
-
-                      </div>
-                    </main>
-                    <footer>
-                      <div class="container">
-                        <p>&copy; 2023 Perishable Shop. All rights reserved.</p>
-                      </div>
-                    </footer>
-                  </body>
-
-                </html> -->

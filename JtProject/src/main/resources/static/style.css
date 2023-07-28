@@ -326,26 +326,32 @@ header h3 {
 
   color: var(--white-color);
   border-radius: var(--default-border-radius);
-
-  /* box-shadow: var(--mid-shadow-secondary); */
 }
 
 #store-carousel {
   background-color: var(--secondary-color);
   border-radius: var(--default-border-radius);
-  padding: 10px 80px;
+  height: 0;
+  padding-bottom: 40%;
+  position: relative;
 }
 
 #store-carousel .product {
   background-color: var(--primary-color);
   border-radius: var(--default-border-radius);
-  position: relative;
+  position: absolute;
+  height: 0;
+  width: 80%;
+  margin: 10px 0 0 10%;
+  height: calc(100% - 20px);;
 }
 
 #store-carousel .product-img {
-  max-height: 250px;
-  object-fit: contain;
-  margin-top: -20px;
+  margin-left: 5%;
+  width: 45%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #store-carousel .product-details {
@@ -354,8 +360,8 @@ header h3 {
 }
 
 #store-carousel .product-details h5 {
-  margin: 30px 60px;
-  font-size: 18px;
+  margin: 5% 10%;
+  font-size: 1.5em;
 }
 
 #store-carousel .product-buttons {
@@ -369,9 +375,29 @@ header h3 {
   margin-right: 40px;
 }
 
+#store-carousel .carousel-btn {
+  border: 0;
+  background-color: transparent;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  cursor: pointer;
+}
+
+#store-carousel .carousel-left-btn {
+  left: 10px;
+}
+
+#store-carousel .carousel-right-btn {
+  right: 10px;
+}
+
 #store-list {
   background-color: var(--secondary-color);
   margin-top: 15px;
+  padding: 10px 0 0 10px;
 
   border-radius: var(--default-border-radius);
 
@@ -380,9 +406,11 @@ header h3 {
 }
 
 #store-list .product {
-  margin: 10px;
-  height: 200px;
-  flex: 0 0 calc(33.333333% - 20px);
+  padding-bottom: 30%;
+  /* height: 200px; */
+  margin: 0 10px 10px 0;
+  height: 0;
+  flex: 0 0 calc(33.333333% - 10px);
   background-color: var(--primary-color);
   border-radius: var(--default-border-radius);
 
@@ -390,13 +418,12 @@ header h3 {
 }
 
 #store-list .product-img {
-  max-height: 100px;
-  object-fit: contain;
-
+  width: 60%;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 25px;
+  left: 20%;
+  top: 50%;
+  transform: translate(-50%);
+  transform: translateY(-50%);
 }
 
 #store-list .product-details {
