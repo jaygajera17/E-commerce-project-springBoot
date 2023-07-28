@@ -1,64 +1,50 @@
-# SQL configs
-SET SQL_MODE ='IGNORE_SPACE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-
 # create database and use it
 CREATE DATABASE IF NOT EXISTS ecommjava;
 USE ecommjava;
 
-# create the category table
-CREATE TABLE IF NOT EXISTS CATEGORY(
-category_id int unique key not null auto_increment primary key,
-name        varchar(255) null
-);
-
-# insert default categories
-INSERT INTO CATEGORY(name) VALUES ('Fruits'),
-                                  ('Vegetables'),
-                                  ('Meat'),
-                                  ('Fish'),
-                                  ('Dairy'),
-                                  ('Bakery'),
-                                  ('Drinks'),
-                                  ('Sweets'),
-                                  ('Other');
-
 # create the customer table
 CREATE TABLE IF NOT EXISTS CUSTOMER(
 id       int unique key not null auto_increment primary key,
-address  varchar(255) null,
 email    varchar(255) null,
 password varchar(255) null,
 role     varchar(255) null,
-username varchar(255) null
+username varchar(255) null,
+accumulatedPurchases double null,
+customBasket varchar(1024) null # a Jason object so that we can store product name and quantity 
 );
 
 # insert default customers
-INSERT INTO CUSTOMER(address, email, password, role, username) VALUES
-                                                                   ('123, Albany Street', 'admin@nyan.cat', '123', 'ROLE_ADMIN', 'admin'),
-                                                                   ('765, 5th Avenue', 'lisa@gmail.com', '765', 'ROLE_NORMAL', 'lisa');
+INSERT INTO CUSTOMER(email, password, role, username, accumulatedPurchases, customBasket) VALUES
+('admin@nyan.cat', '123', 'ROLE_ADMIN', 'admin', 0.0 , 'customBasket'),
+('lisa@gmail.com', '765', 'ROLE_NORMAL', 'lisa', 0.0 , 'customBasket'),
+('amrit@gmail.com', 'password', 'ROLE_NORMAL', 'amrit', 0.0 , 'customBasket'),
+('yupei@gmail.com', 'password', 'ROLE_NORMAL', 'yupei', 0.0 , 'customBasket');
+
 
 # create the product table
 CREATE TABLE IF NOT EXISTS PRODUCT(
 product_id  int unique key not null auto_increment primary key,
-description varchar(255) null,
 image       varchar(255) null,
 name        varchar(255) null,
 price       int null,
 quantity    int null,
-weight      int null,
-category_id int null,
-customer_id int null
+paired_product_id int null, 
+FOREIGN KEY (paired_product_id) REFERENCES PRODUCT(product_id)
 );
 
 # insert default products
-INSERT INTO PRODUCT(description, image, name, price, quantity, weight, category_id) VALUES
-                                                                                        ('Fresh and juicy', 'https://freepngimg.com/save/9557-apple-fruit-transparent/744x744', 'Apple', 3, 40, 76, 1),
-                                                                                        ('Woops! There goes the eggs...', 'https://www.nicepng.com/png/full/813-8132637_poiata-bunicii-cracked-egg.png', 'Cracked Eggs', 1, 90, 43, 9);
+INSERT INTO PRODUCT(image, name, price, quantity) VALUES
+('https://freepngimg.com/save/9557-apple-fruit-transparent/744x744', 'Apple', 3, 40),
+('https://www.nicepng.com/png/full/813-8132637_poiata-bunicii-cracked-egg.png', 'Cracked Eggs', 1, 90),
+('https://www.nicepng.com/png/detail/923-9237061_orange-naranja-orange-slide-middle-media-naranja-png.png', 'Orange', 3, 40),
+('https://www.nicepng.com/png/detail/14-146654_free-png-pear-png-images-transparent-pear-png.png', 'Pear', 3, 60),
+('https://www.nicepng.com/png/detail/45-455648_berry-vector-acai-strawberry-clipart-transparent-background.png', 'Strawberry', 2, 40),
+('https://www.nicepng.com/png/detail/51-510169_cherries-clipart-red-cherry-cherry-fruit-png.png', 'cherry', 2, 40),
+('https://www.nicepng.com/png/detail/16-161611_blueberries-png-blueberry-png.png', 'blueberry', 2, 40);
 
-
-# create indexes
-CREATE INDEX FK7u438kvwr308xcwr4wbx36uiw
-    ON PRODUCT (category_id);
-
-CREATE INDEX FKt23apo8r9s2hse1dkt95ig0w5
-    ON PRODUCT (customer_id);
+# create coupon table
+CREATE TABLE IF NOT EXISTS COUPON (
+coupon_id int unique key not null auto_increment primary key,
+customer_id int, 
+FOREIGN KEY (customer_id) REFERENCES CUSTOMER(id)
+);
