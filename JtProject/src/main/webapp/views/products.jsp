@@ -75,7 +75,7 @@
 						${product.id}
 					</td>
 					<td>
-						${product.name }
+						${product.name}
 					</td>
 					<td>
 						${product.category.name}
@@ -85,16 +85,16 @@
 					<td><img src="${product.image}"
 						height="100px" width="100px"></td>
 					<td>
-						${product.quantity }
+						${product.quantity}
 					</td>
 					<td>S
-						${product.price }
+						${product.price}
 					</td>
 					<td>
-						${product.weight }
+						${product.weight}
 					</td>
 					<td>
-						${product.description }
+						${product.description}
 					</td>
 
 					<td>

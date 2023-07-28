@@ -119,11 +119,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("categories/delete")
-	public ModelAndView removeCategoryDb(@RequestParam("id") int id)
+	public String removeCategoryDb(@RequestParam("id") int id)
 	{	
+			System.out.println(id);
 			this.categoryService.deleteCategory(id);
-			ModelAndView mView = new ModelAndView("forward:/categories");
-			return mView;
+			return "redirect:/admin/categories";
 	}
 	
 	@GetMapping("categories/update")
