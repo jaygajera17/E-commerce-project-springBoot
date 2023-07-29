@@ -25,13 +25,14 @@ public class productService {
 		return this.productDao.getProduct(id);
 	}
 
-	public Product updateProduct(int id,Product product){
-		product.setId(id);
+	public Product updateProduct(Product product){
 		return this.productDao.updateProduct(product);
 	}
+
 	public boolean deleteProduct(int id) {
 		return this.productDao.deletProduct(id);
 	}
+
 	public int getPairedProduct(int id) {
 		return this.productDao.getPairedProduct(id);
 	}

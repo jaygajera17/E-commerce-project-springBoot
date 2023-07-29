@@ -37,7 +37,6 @@ public class productDao {
 
 	@Transactional
 	public Product updateProduct(Product product){
-		// in order for this to work, you have to create a new product object with the data from the forms on the UI
 		this.sessionFactory.getCurrentSession().update(String.valueOf(Product.class), product);
 		return product;
 	}
