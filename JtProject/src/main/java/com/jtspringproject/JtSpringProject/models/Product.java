@@ -1,5 +1,7 @@
 package com.jtspringproject.JtSpringProject.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,13 +28,14 @@ public class Product {
 	private int quantity;
 	
 	private int price;
+
+	private int pairedProduct;
 	 
 	/* 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "paired_product_id",referencedColumnName = "paired_product_id")
 	private Product product;
 	*/
-	private int pairedProduct;
 
 	public int getId() {
 		return id;
@@ -82,8 +85,18 @@ public class Product {
 		this.price = price;
 	}
 	
+	/* 
 	@ManyToOne
     @JoinColumn(name = "customer_id")
     private User customer;
+	*/
+
+	public void setProductValues(String name, String image, int paired_product, int quantity, int price) {
+		this.name = name;
+		this.image = image;
+		this.pairedProduct = paired_product;
+		this.quantity = quantity;
+		this.price = price;
+	}
 	
 }
