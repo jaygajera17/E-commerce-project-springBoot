@@ -72,6 +72,7 @@ public class productDao {
 		product.setPairedProduct(paired_product_id);
 		this.updateProduct(product);
 
+		/*
 		// acess db get prodcut with paired_product_id
 		// set column value for column paired_product_id to int id
 		Session session2 = this.sessionFactory.getCurrentSession();
@@ -79,7 +80,7 @@ public class productDao {
 
 		paired_product.setPairedProduct(id);
 		session2.save(paired_product); // ??
-
+		*/
 		return paired_product_id;
 	}
 

@@ -119,7 +119,11 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "products/add",method=RequestMethod.POST)
-	public String addProduct(@RequestParam("name") String name , @RequestParam("productImage") String image,  @RequestParam("pairedProduct") int paired_product, @RequestParam("quantity")int quantity, @RequestParam("price") int price) {
+	public String addProduct(@RequestParam("name") String name , 
+							@RequestParam("productImage") String image,  
+							@RequestParam("pairedProduct") int paired_product, 
+							@RequestParam("quantity")int quantity,
+							@RequestParam("price") int price) {
 		Product product = new Product();
 		product.setProductValues(name, image, paired_product, quantity, price);
 		this.productService.addProduct(product);
