@@ -33,5 +33,10 @@ public class productService {
 		return this.productDao.deletProduct(id);
 	}
 
-	
+	public void printAllProducts() {
+		List<Product> products = productDao.getProducts();
+		for (Product product : products) {
+			System.out.println(product);
+		}
+	}
 }
