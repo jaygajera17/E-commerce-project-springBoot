@@ -25,19 +25,18 @@ public class productService {
 		return this.productDao.getProduct(id);
 	}
 
-	public Product updateProduct(Product product){
+	public Product updateProduct(int id,Product product){
+		product.setId(id);
 		return this.productDao.updateProduct(product);
 	}
-
 	public boolean deleteProduct(int id) {
 		return this.productDao.deletProduct(id);
 	}
 
-	public int getPairedProduct(int id) {
-		return this.productDao.getPairedProduct(id);
-	}
-
-	public int updatePairedProduct(int id, int paired_product_id) {
-		return this.updatePairedProduct(id, paired_product_id);
+	public void printAllProducts() {
+		List<Product> products = productDao.getProducts();
+		for (Product product : products) {
+			System.out.println(product);
+		}
 	}
 }

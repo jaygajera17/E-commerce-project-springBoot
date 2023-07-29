@@ -39,6 +39,8 @@ public class AdminController {
 		return "userLogin";
 	}
 	
+	
+	
 	@GetMapping("/index")
 	public String index(Model model) {
 		if(usernameforclass.equalsIgnoreCase(""))
@@ -49,6 +51,7 @@ public class AdminController {
 		}
 			
 	}
+	
 	
 	@GetMapping("login")
 	public String adminlogin() {
@@ -85,7 +88,7 @@ public class AdminController {
 		}
 	}
 	
-	// PRODUCTS //
+//	 --------------------------Remaining --------------------
 	@GetMapping("products")
 	public ModelAndView getproduct() {
 		if(adminlogcheck==0){
@@ -106,24 +109,29 @@ public class AdminController {
 		}
 
 	}
-
+	/* 
 	@GetMapping("products/add")
 	public ModelAndView addProduct() {
 		ModelAndView mView = new ModelAndView("productsAdd");
-
-		// limits the paired product to available products
-		List<Product> products = this.productService.getProducts();
-		mView.addObject("availableProducts",products);
-
+		List<Category> categories = this.categoryService.getCategories();
+		mView.addObject("categories",categories);
 		return mView;
 	}
 
 	@RequestMapping(value = "products/add",method=RequestMethod.POST)
-	public String addProduct(@RequestParam("name") String name , @RequestParam("productImage") String image,  @RequestParam("pairedProduct") int paired_product, @RequestParam("quantity")int quantity, @RequestParam("price") int price) {
+	public String addProduct(@RequestParam("name") String name,@RequestParam("categoryid") int categoryId ,@RequestParam("price") int price,@RequestParam("weight") int weight, @RequestParam("quantity")int quantity,@RequestParam("description") String description,@RequestParam("productImage") String productImage) {
+		System.out.println(categoryId);
+		Category category = this.categoryService.getCategory(categoryId);
 		Product product = new Product();
-		product.setProductValues(name, image, paired_product, quantity, price);
+		product.setId(categoryId);
+		product.setName(name);
+		product.setCategory(category);
+		product.setDescription(description);
+		product.setPrice(price);
+		product.setImage(productImage);
+		product.setWeight(weight);
+		product.setQuantity(quantity);
 		this.productService.addProduct(product);
-
 		return "redirect:/admin/products";
 	}
 
@@ -132,19 +140,18 @@ public class AdminController {
 		
 		ModelAndView mView = new ModelAndView("productsUpdate");
 		Product product = this.productService.getProduct(id);
-		// limits the paired product to available products
-		List<Product> products = this.productService.getProducts();
-		mView.addObject("availableProducts",products);
+		List<Category> categories = this.categoryService.getCategories();
+
+		mView.addObject("categories",categories);
 		mView.addObject("product", product);
 		return mView;
 	}
 	
 	@RequestMapping(value = "products/update/{id}",method=RequestMethod.POST)
-	public String updateProduct(@RequestParam("name") String name , @RequestParam("productImage") String image,  @RequestParam("pairedProduct") int paired_product, @RequestParam("quantity")int quantity, @RequestParam("price") int price)
+	public String updateProduct(@PathVariable("id") int id ,@RequestParam("name") String name,@RequestParam("categoryid") int categoryId ,@RequestParam("price") int price,@RequestParam("weight") int weight, @RequestParam("quantity")int quantity,@RequestParam("description") String description,@RequestParam("productImage") String productImage)
 	{
-		Product product = new Product();
-		product.setProductValues(name, image, paired_product, quantity, price);
-		this.productService.updateProduct(product);
+
+//		this.productService.updateProduct();
 		return "redirect:/admin/products";
 	}
 	
@@ -157,8 +164,9 @@ public class AdminController {
 	
 	@PostMapping("products")
 	public String postproduct() {
-		return "redirect:/admin/products";
+		return "redirect:/admin/categories";
 	}
+	*/
 	
 	@GetMapping("customers")
 	public ModelAndView getCustomerDetail() {
@@ -173,6 +181,7 @@ public class AdminController {
 			return mView;
 		}
 	}
+	
 	
 	@GetMapping("profileDisplay")
 	public String profileDisplay(Model model) {
