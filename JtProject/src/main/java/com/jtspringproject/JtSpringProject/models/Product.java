@@ -82,8 +82,18 @@ public class Product {
 		this.price = price;
 	}
 	
+	/* 
 	@ManyToOne
     @JoinColumn(name = "customer_id")
     private User customer;
+	*/
+
+	public void setProductValues(String name, String image, int paired_product, int quantity, int price) {
+		this.name = name;
+		this.image = image;
+		this.pairedProduct = paired_product;
+		this.quantity = quantity;
+		this.price = price;
+	}
 	
 }

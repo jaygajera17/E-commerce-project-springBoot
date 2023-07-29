@@ -35,10 +35,13 @@ public class productDao {
 		return this.sessionFactory.getCurrentSession().get(Product.class, id);
 	}
 
+	@Transactional
 	public Product updateProduct(Product product){
-		this.sessionFactory.getCurrentSession().update(String.valueOf(Product.class),product);
+		// in order for this to work, you have to create a new product object with the data from the forms on the UI
+		this.sessionFactory.getCurrentSession().update(String.valueOf(Product.class), product);
 		return product;
 	}
+
 	@Transactional
 	public Boolean deletProduct(int id) {
 
@@ -50,6 +53,35 @@ public class productDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Transactional
+	public int getPairedProduct(int id) {
+		// access db get product with id then return the int value under the column labelled paired_product_id
+		Session session1 = this.sessionFactory.getCurrentSession();
+		Product product = (Product) session1.load(Product.class, id);
+		return product.getPairedProduct();
+	}
+
+	@Transactional
+	public int updatePairedProduct(int id, int paired_product_id) {
+		// access db get product with id
+		// set column value for column paired_product_id to int paired_product_id
+		Session session1 = this.sessionFactory.getCurrentSession();
+		Product product = (Product) session1.load(Product.class, id);
+
+		product.setPairedProduct(paired_product_id);
+		this.updateProduct(product);
+
+		// acess db get prodcut with paired_product_id
+		// set column value for column paired_product_id to int id
+		Session session2 = this.sessionFactory.getCurrentSession();
+		Product paired_product = (Product) session2.load(Product.class, paired_product_id);
+
+		paired_product.setPairedProduct(id);
+		session2.save(paired_product); // ??
+
+		return paired_product_id;
 	}
 
 }

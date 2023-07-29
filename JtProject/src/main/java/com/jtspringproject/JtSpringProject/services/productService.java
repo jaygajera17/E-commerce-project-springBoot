@@ -32,11 +32,11 @@ public class productService {
 	public boolean deleteProduct(int id) {
 		return this.productDao.deletProduct(id);
 	}
+	public int getPairedProduct(int id) {
+		return this.productDao.getPairedProduct(id);
+	}
 
-	public void printAllProducts() {
-		List<Product> products = productDao.getProducts();
-		for (Product product : products) {
-			System.out.println(product);
-		}
+	public int updatePairedProduct(int id, int paired_product_id) {
+		return this.updatePairedProduct(id, paired_product_id);
 	}
 }
