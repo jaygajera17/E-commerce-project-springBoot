@@ -1,6 +1,7 @@
 package com.jtspringproject.JtSpringProject.controller;
 
 import java.sql.*;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -234,8 +235,9 @@ public class AdminController {
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
-			Statement stmt = con.createStatement();
-			ResultSet rst = stmt.executeQuery("select * from users where username = '"+usernameforclass+"';");
+			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
+			stmt.setString(1, usernameforclass);
+			ResultSet rst = stmt.execute();
 			
 			if(rst.next())
 			{
