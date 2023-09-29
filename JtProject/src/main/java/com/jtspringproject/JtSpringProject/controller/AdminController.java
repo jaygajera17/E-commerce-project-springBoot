@@ -49,7 +49,7 @@ public class AdminController {
 	
 	@GetMapping("/index")
 	public String index(Model model) {
-		if(usernameforclass.equalsIgnoreCase(""))
+		if("".equalsIgnoreCase(usernameforclass))
 			return "userLogin";
 		else {
 			model.addAttribute("username", usernameforclass);
@@ -81,7 +81,7 @@ public class AdminController {
 		
 		User user=this.userService.checkLogin(username, pass);
 		
-		if(user.getRole().equals("ROLE_ADMIN")) {
+		if("ROLE_ADMIN".equals(user.getRole())) {
 			ModelAndView mv = new ModelAndView("adminHome");
 			adminlogcheck=1;
 			mv.addObject("admin", user);
