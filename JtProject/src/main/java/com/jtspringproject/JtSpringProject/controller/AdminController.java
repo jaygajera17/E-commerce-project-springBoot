@@ -233,12 +233,15 @@ public class AdminController {
 		String displayusername,displaypassword,displayemail,displayaddress;
 		try
 		{
+
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
-			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava", "root", "");
+			String sql = "SELECT * FROM users WHERE username = ?";
+			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, usernameforclass);
-			ResultSet rst = stmt.execute();
-			
+			ResultSet rst = stmt.executeQuery();
+
+
 			if(rst.next())
 			{
 			int userid = rst.getInt(1);
