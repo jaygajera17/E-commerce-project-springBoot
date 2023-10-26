@@ -235,7 +235,7 @@ public class AdminController {
 		{
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","123456");
-			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
+			PreparedStatement stmt = con.prepareStatement("select * from customer where username = ?"+";");
 			stmt.setString(1, usernameforclass);
 			ResultSet rst = stmt.executeQuery();
 			
@@ -270,7 +270,7 @@ public class AdminController {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
 			
-			PreparedStatement pst = con.prepareStatement("update users set username= ?,email = ?,password= ?, address= ? where uid = ?;");
+			PreparedStatement pst = con.prepareStatement("update customer set username= ?,email = ?,password= ?, address= ? where id = ?;");
 			pst.setString(1, username);
 			pst.setString(2, email);
 			pst.setString(3, password);
