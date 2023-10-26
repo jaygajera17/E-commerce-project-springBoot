@@ -1,15 +1,9 @@
 ## Old Version
-- https://github.com/jaygajera17/E-commerce-project-springBoot/tree/main
-- issue: everytime connection open close for access database 
+- https://github.com/jaygajera17/E-commerce-project-springBoot
 
 ## New Upgrade ( what's new)
-- Hibernate configuration added( database and tables automatically create when run the project)
-- Service classes provide reusable services throughout project
-- dao classes interact with database 
-- bug fixed ( product image, security , etc..)
-- support in both eclipse & intellij ide
-- overall redesign entire code that help reusability. 
-- disclaimer: currently working on this branch so there may be some bug related to endpoint, and working on cart logic.
+- bug fixed (syntax error: execute->executeQuery) (AdminController: 240)
+- bug fixed (table name: user->customer, column name uid->id) (AdminController: 238, 273)
   
 ## Quickstart
 
@@ -18,8 +12,10 @@
     * If you are using IntelliJ IDEA, make sure the IDE recognizes the project as a Spring Boot project. Also, you must change the working directory of the project so that the views (the actual web pages to be shown) are found by Spring Boot (check out [Web Directories IntelliJ IDEA](#web-directories).
 3. Make sure you are in the `JtProject` directory
 4. Configure the database connection in `application.properties` file (check the [Database](#database) section below for more info)
-5. Run the project (by running the `main` method in `JtSpringProjectApplication.java`)
-6. Open http://localhost:8080/ in your browser!
+5. Run command in JtProject directory 'mvn install' to install all the dependencies
+6. Run following command in JtPRoject directory to deploy the project locally
+java -jar target/JtSpringProject-0.0.1-SNAPSHOT.jar
+7. Open http://localhost:8080/ in your browser!
    * If you ran the [`basedata.sql`](https://github.com/jaygajera17/E-commerce-project-springBoot/blob/master2/JtProject/basedata.sql)script on the database, you can log in with the following credentials as admin; otherwise you'll have to manually create an admin user in the database:
      * Username: `admin`
      * Password: `123`
