@@ -18,7 +18,7 @@ public class HibernateConfiguration {
     @Value("${db.driver}")
     private String DRIVER;
  
-    @Value("${db.password}")
+    @Value("dbpassword")
     private String PASSWORD;
  
     @Value("${db.url}")
