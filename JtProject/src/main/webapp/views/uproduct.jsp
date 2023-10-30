@@ -1,8 +1,6 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -46,7 +44,7 @@
 	</nav>
 	<div class="container-fluid">
 
-
+		
 		<table class="table">
 
 			<tr>
@@ -59,58 +57,81 @@
 				<th scope="col">Weight</th>
 				<th scope="col">Descrption</th>
 				<th scope="col">Buy</th>
-
+				
 			</tr>
 			<tbody>
-			<c:forEach var="product" items="${products}">
 				<tr>
 
-
-
-
+					<%
+					try {
+						String url = "jdbc:postgresql://localhost:5432/springproject";
+						Class.forName("org.postgresql.Driver");
+						Connection con = DriverManager.getConnection(url, "postgres", password);
+						Statement stmt = con.createStatement();
+						Statement stmt2 = con.createStatement();
+						ResultSet rs = stmt.executeQuery("select * from products");
+					%>
+					<%
+					while (rs.next()) {
+					%>
 					<td>
-                    						${product.id}
-                    					</td>
-                    					<td>
-                    						${product.name }
-                    					</td>
-                    					<td>
-                    						${product.category.name}
-
-                    					</td>
-
-                    					<td><img src="${product.image}"
-                    						height="100px" width="100px"></td>
-                    					<td>
-                    						${product.quantity }
-                    					</td>
-                    					<td>S
-                    						${product.price }
-                    					</td>
-                    					<td>
-                    						${product.weight }
-                    					</td>
-                    					<td>
-                    						${product.description }
-                    					</td>
-
-
+						<%= rs.getInt(1) %>
+					</td>
 					<td>
-
-
-				    <form action="products/addtocart" method="get">
-							<input type="hidden" name="id" value="${product.id}">
-							<input type="submit" value="Add To Cart" class="btn btn-warning">
-					</form>
+						<%= rs.getString(2) %>
+					</td>
+					<td>
+						<%
+							int categoryid = rs.getInt(4);
+							ResultSet rs2 = stmt2.executeQuery("select * from categories where categoryid = "+categoryid+";");
+							if(rs2.next())
+							{
+								out.print(rs2.getString(2));
+							}
+						%>
+						
+					</td>
+					<td><img src="https://th.bing.com/th/id/R.fd048601910e87d09c670b696ed153a0?rik=MCuRFnBGgWZPjA&riu=http%3a%2f%2fimages2.fanpop.com%2fimages%2fphotos%2f7300000%2fSlice-of-Pizza-pizza-7383219-1600-1200.jpg&ehk=Nr%2f8Tpc4Z3p5bgSOdOEWHlN1XJS1y7jol5%2bkS6qXCpE%3d&risl=&pid=ImgRaw&r=0"
+						height="100px" width="100px">
+					<td>
+						<%= rs.getInt(5) %>
+					</td>
+					<td>
+						<%= rs.getInt(6) %>
+					</td>
+					<td>
+						<%= rs.getInt(7) %>
+					</td>
+					<td>
+						<%= rs.getString(8) %>
 					</td>
 
+					<td>
+					<form action="/buy" method="get">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>	<input type="hidden" name="id" value="<%=rs.getInt(1)%>">
+							<input type="submit" value="Buy" class="btn btn-info btn-lg">
+							
+					</form>
+					</td>
+					<td>
+					
+					
+					</td>
 
 				</tr>
-           </c:forEach>
+				<%
+				}
+				%>
 
 			</tbody>
 		</table>
-
+		<%
+		} catch (Exception ex) {
+		out.println("Exception Occurred:: " + ex.getMessage());
+		}
+		%>
 	</div>
 
 

@@ -1,5 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!doctype html>
 <%@page import="java.sql.*"%>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
@@ -60,7 +58,7 @@
 			aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<form action="categories" method="post">
+					<form action="sendcategory" method="get">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">Add New
 								Category</h5>
@@ -96,15 +94,24 @@
 				</tr>
 			</thead>
 			<tbody>
-				
-				<c:forEach var="category" items="${categories }">
+				<%
+				try {
+					String url = "jdbc:postgresql://localhost:5432/springproject";
+					Class.forName("org.postgresql.Driver");
+					Connection con = DriverManager.getConnection(url, "postgres", password);
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("select * from categories");
+				%>
+				<%
+				while (rs.next()) {
+				%>
 				<tr>
-					<td>${category.id }</td>
-					<td>${category.name }</td>
+					<td><%=rs.getInt(1)%></td>
+					<td><%=rs.getString(2)%></td>
 
 					<td>
 						<form action="categories/delete" method="get">
-							<input type="hidden" name="id" value="${category.id}">
+							<input type="hidden" name="id" value="<%=rs.getInt(1)%>">
 							<input type="submit" value="Delete" class="btn btn-danger">
 						</form>
 					</td>
@@ -118,7 +125,7 @@
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-warning" data-toggle="modal"
 								data-target="#exampleModalCenter2"
-								onclick="document.getElementById('categoryname').value =  '${category.name }'; document.getElementById('categoryid').value =  '${category.id}'; ">Update
+								onclick="document.getElementById('categoryname').value =  '<%=rs.getString(2)%>'; document.getElementById('categoryid').value =  '<%=rs.getString(1)%>'; ">Update
 							</button>
 
 							<!-- Modal -->
@@ -164,10 +171,16 @@
 					</td>
 
 				</tr>
-				</c:forEach>
+				<%
+				}
+				%>
 			</tbody>
 		</table>
-		
+		<%
+		} catch (Exception ex) {
+		out.println("Exception Occurred:: " + ex.getMessage());
+		}
+		%>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

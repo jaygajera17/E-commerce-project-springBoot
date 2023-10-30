@@ -1,8 +1,6 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -50,34 +48,51 @@
 		<table class="table">
 
 			<tr>
-				
+				<th scope="col">UserId</th>
 				<th scope="col">Customer Name</th>
 				<th scope="col">Email</th>
 				<th scope="col">Address</th>
-				<th scope="col">Delete</th>
 			</tr>
 			<tbody>
-				<c:forEach var="customer" items="${customers }">
 				<tr>
+
+					<%
+					try {
+						String url = "jdbc:postgresql://localhost:5432/springproject";
+						Class.forName("org.postgresql.Driver");
+						Connection con = DriverManager.getConnection(url, "postgres", password);
+						Statement stmt = con.createStatement();
+						Statement stmt2 = con.createStatement();
+						ResultSet rs = stmt.executeQuery("select * from users");
+					%>
+					<%
+					while (rs.next()) {
+					%>
 					<td>
-						${customer.username}
+						<%= rs.getInt(1) %>
 					</td>
 					<td>
-					    ${customer.email}
-						
+						<%= rs.getString(2) %>
 					</td>
 					<td>
-					    ${customer.address}
-						
-				    </td>
-					</tr>
-                </c:forEach>
+						<%= rs.getString(6) %>
+						</td>
+					<td>
+						<%= rs.getString(5) %>
+					</td>
 
+				</tr>
+				<%
+				}
+				%>
 
-				
 			</tbody>
 		</table>
-		
+		<%
+		} catch (Exception ex) {
+		out.println("Exception Occurred:: " + ex.getMessage());
+		}
+		%>
 	</div>
 
 
