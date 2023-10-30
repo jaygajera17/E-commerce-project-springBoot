@@ -57,7 +57,7 @@ public class AdminController {
 			return "index";
 		}
 			
-	}
+	} //test
 	
 	
 	@GetMapping("login")
