@@ -50,9 +50,9 @@
 				<div class="col-sm-5">
 					<%
 					try {
-						String url = "jdbc:jdbc:postgresql://localhost:5432/springproject//localhost:3306/springproject";
+						String url = "jdbc:postgresql://localhost:5432/springproject";
 						Class.forName("org.postgresql.Driver");
-						Connection con = DriverManager.getConnection(url, "root", password);
+						Connection con = DriverManager.getConnection(url, "postgres", password);
 						Statement stmt = con.createStatement();
 						ResultSet rs = stmt.executeQuery("select * from products order by id desc");
 					%>

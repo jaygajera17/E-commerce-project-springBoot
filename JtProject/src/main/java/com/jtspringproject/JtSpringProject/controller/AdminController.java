@@ -1,5 +1,7 @@
 package com.jtspringproject.JtSpringProject.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,8 @@ import java.sql.*;
 public class AdminController {
     int adminlogcheck = 0;
     String usernameforclass = "";
+    private static final Logger logger = LogManager.getLogger(AdminController.class);
+    String dbDriver = "org.postgresql.Driver";
     @Value("${datasource.password}")
     private String password;
 
@@ -39,11 +43,11 @@ public class AdminController {
         return "userLogin";
     }
 
-    @RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
+    @PostMapping(value = "userloginvalidate")
     public String userlogin(@RequestParam("username") String username, @RequestParam("password") String pass, Model model) {
 
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
             Statement stmt = con.createStatement();
             ResultSet rst = stmt.executeQuery("select * from users where username = '" + username + "' and password = '" + pass + "' ;");
@@ -56,7 +60,7 @@ public class AdminController {
             }
 
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "userLogin";
 
@@ -84,7 +88,7 @@ public class AdminController {
         return "adminlogin";
     }
 
-    @RequestMapping(value = "loginvalidate", method = RequestMethod.POST)
+    @PostMapping(value = "loginvalidate")
     public String adminlogin(@RequestParam("username") String username, @RequestParam("password") String pass, Model model) {
 
         if (username.equalsIgnoreCase("admin") && pass.equalsIgnoreCase("123")) {
@@ -101,19 +105,18 @@ public class AdminController {
         return "categories";
     }
 
-    @RequestMapping(value = "admin/sendcategory", method = RequestMethod.GET)
+    @GetMapping(value = "admin/sendcategory")
     public String addcategorytodb(@RequestParam("categoryname") String catname) {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
-            Statement stmt = con.createStatement();
 
             PreparedStatement pst = con.prepareStatement("insert into categories(name) values(?);");
             pst.setString(1, catname);
-            int i = pst.executeUpdate();
+            pst.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "redirect:/admin/categories";
     }
@@ -121,16 +124,15 @@ public class AdminController {
     @GetMapping("/admin/categories/delete")
     public String removeCategoryDb(@RequestParam("id") int id) {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
-            Statement stmt = con.createStatement();
 
             PreparedStatement pst = con.prepareStatement("delete from categories where categoryid = ? ;");
             pst.setInt(1, id);
-            int i = pst.executeUpdate();
+            pst.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "redirect:/admin/categories";
     }
@@ -138,17 +140,16 @@ public class AdminController {
     @GetMapping("/admin/categories/update")
     public String updateCategoryDb(@RequestParam("categoryid") int id, @RequestParam("categoryname") String categoryname) {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
-            Statement stmt = con.createStatement();
 
             PreparedStatement pst = con.prepareStatement("update categories set name = ? where categoryid = ?");
             pst.setString(1, categoryname);
             pst.setInt(2, id);
-            int i = pst.executeUpdate();
+            pst.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "redirect:/admin/categories";
     }
@@ -165,13 +166,18 @@ public class AdminController {
 
     @GetMapping("/admin/products/update")
     public String updateproduct(@RequestParam("pid") int id, Model model) {
-        String pname, pdescription, pimage;
-        int pid, pprice, pweight, pquantity, pcategory;
+        String pname;
+        String pdescription;
+        String pimage;
+        int pid;
+        int pprice;
+        int pweight;
+        int pquantity;
+        int pcategory;
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
             Statement stmt = con.createStatement();
-            Statement stmt2 = con.createStatement();
             ResultSet rst = stmt.executeQuery("select * from products where id = " + id + ";");
 
             if (rst.next()) {
@@ -196,15 +202,15 @@ public class AdminController {
                 model.addAttribute("pdescription", pdescription);
             }
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "productsUpdate";
     }
 
-    @RequestMapping(value = "admin/products/updateData", method = RequestMethod.POST)
+    @PostMapping(value = "admin/products/updateData")
     public String updateproducttodb(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("weight") int weight, @RequestParam("quantity") int quantity, @RequestParam("description") String description, @RequestParam("productImage") String picture) {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
 
             PreparedStatement pst = con.prepareStatement("update products set name= ?,image = ?,quantity = ?, price = ?, weight = ?,description = ? where id = ?;");
@@ -215,9 +221,9 @@ public class AdminController {
             pst.setInt(5, weight);
             pst.setString(6, description);
             pst.setInt(7, id);
-            int i = pst.executeUpdate();
+            pst.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "redirect:/admin/products";
     }
@@ -225,16 +231,16 @@ public class AdminController {
     @GetMapping("/admin/products/delete")
     public String removeProductDb(@RequestParam("id") int id) {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
 
 
             PreparedStatement pst = con.prepareStatement("delete from products where id = ? ;");
             pst.setInt(1, id);
-            int i = pst.executeUpdate();
+            pst.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "redirect:/admin/products";
     }
@@ -244,7 +250,7 @@ public class AdminController {
         return "redirect:/admin/categories";
     }
 
-    @RequestMapping(value = "admin/products/sendData", method = RequestMethod.POST)
+    @PostMapping(value = "admin/products/sendData")
     public String addproducttodb(@RequestParam("name") String name, @RequestParam("categoryid") String catid, @RequestParam("price") int price, @RequestParam("weight") int weight, @RequestParam("quantity") int quantity, @RequestParam("description") String description, @RequestParam("productImage") String picture) {
 
         try {
@@ -262,10 +268,10 @@ public class AdminController {
                 pst.setInt(5, price);
                 pst.setInt(6, weight);
                 pst.setString(7, description);
-                int i = pst.executeUpdate();
+                pst.executeUpdate();
             }
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "redirect:/admin/products";
     }
@@ -278,9 +284,12 @@ public class AdminController {
 
     @GetMapping("profileDisplay")
     public String profileDisplay(Model model) {
-        String displayusername, displaypassword, displayemail, displayaddress;
+        String displayusername;
+        String displaypassword;
+        String displayemail;
+        String displayaddress;
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
             Statement stmt = con.createStatement();
             ResultSet rst = stmt.executeQuery("select * from users where username = '" + usernameforclass + "';");
@@ -297,17 +306,17 @@ public class AdminController {
                 model.addAttribute("password", displaypassword);
                 model.addAttribute("address", displayaddress);
             }
+            con.close();
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
-        System.out.println("Hello");
         return "updateProfile";
     }
 
-    @RequestMapping(value = "updateuser", method = RequestMethod.POST)
+    @PostMapping(value = "updateuser")
     public String updateUserProfile(@RequestParam("userid") int userid, @RequestParam("username") String username, @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("address") String address) {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(dbDriver);
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/springproject", "postgres", password);
 
             PreparedStatement pst = con.prepareStatement("update users set username= ?,email = ?,password= ?, address= ? where uid = ?;");
@@ -316,10 +325,10 @@ public class AdminController {
             pst.setString(3, password);
             pst.setString(4, address);
             pst.setInt(5, userid);
-            int i = pst.executeUpdate();
+            pst.executeUpdate();
             usernameforclass = username;
         } catch (Exception e) {
-            System.out.println("Exception:" + e);
+            logger.debug("data base updated throws exception");
         }
         return "redirect:/index";
     }
