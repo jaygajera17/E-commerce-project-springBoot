@@ -34,7 +34,6 @@
                 <input type="submit" value="Login" class="btn btn-primary btn-block">
                 <br><h3 style="color:red;">${message }</h3>
                 <br>
-                </form>
         </div>
 
 </div>

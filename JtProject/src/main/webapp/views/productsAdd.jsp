@@ -1,7 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!doctype html>
-
 <%@page import="java.sql.*"%>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -48,16 +45,27 @@
 	</nav><br>
 	<div class="jumbotron container border border-info">
 		<h3>Add a new Product</h3>
-		<form action="/admin/products/add" method="post">
+		<form action="sendData" method="post">
 			<div class="row">
 				<div class="col-sm-5">
-					
+					<%
+					try {
+						String url = "jdbc:jdbc:postgresql://localhost:5432/springproject//localhost:3306/springproject";
+						Class.forName("org.postgresql.Driver");
+						Connection con = DriverManager.getConnection(url, "root", password);
+						Statement stmt = con.createStatement();
+						ResultSet rs = stmt.executeQuery("select * from products order by id desc");
+					%>
 					<div class="form-group">
-						<c:forEach var="product" items="${products}">
+						<%
+						if (rs.next()) {
+						%>
 						<label for="name">Id</label> 
-						<input type="number" readonly="readonly" class="form-control border border-warning" name="id"  value="${product.id + 1} ">
+						<input type="number" readonly="readonly" class="form-control border border-warning" name="id"  value="<%=rs.getInt(1) + 1%>">
 						
-						</c:forEach>
+						<%
+						}
+						%>
 						
 
 					</div>
@@ -70,14 +78,22 @@
 					
 						<label for="category">Select Category</label> 
 						<select class="form-control border border-warning" name="categoryid" required>
-                            <option selected>Select a Category</option>
-							<c:forEach var="category" items="${categories}">
-								<option value="${category.id}">${category.name}</option>
-							</c:forEach>
-							
+							<% 
+							rs = stmt.executeQuery("select * from categories");
+							while(rs.next())
+							{
+								%>
+								<option ><%= rs.getString(2) %></option>
+								<%	
+							}
+							%>
 						</select>
 					</div>
-					
+					<%
+						} catch (Exception e) {
+						System.out.println("Exception: " + e);
+						}
+						%>
 					<div class="form-group">
 						<label for="price">Price</label> 
 						<input type="number" class="form-control border border-warning" required name="price" min="1" placeholder="Price">
@@ -100,11 +116,10 @@
 						<textarea class="form-control border border-warning" rows="4" name="description" placeholder="Product Details" value= "no product details"></textarea>
 					</div>
 					<p>Product Image</p>
-					<div class="form-group">
-											<label for="Image">Image Link</label>
-                      						<input type="text" class="form-control border border-warning" required name="productImage" placeholder="Enter Short Image Link">
-
-
+					<div class="custom-file">
+						<input type="file" class="custom-file-input" name="productImage" accept="image/jpeg, image/png" id="productImage" onchange="loadfile(event)" /> 
+						<label class="custom-file-label border border-warning" for="productImage">Choose file</label>
+						
 					</div>
 					<div class="form-group">
 						<img src="Product Images/one.jpg" alt="Hello" id="imgPreview" height="100px" width="100px"
