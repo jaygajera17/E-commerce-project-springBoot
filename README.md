@@ -1,3 +1,11 @@
+## My changes /contributions
+developed new logging
+added PostgreSQL
+fixed sonar issues
+removed vulnerabilities
+converted script for Postgresql
+
+
 ## Old Version
 - https://github.com/jaygajera17/E-commerce-project-springBoot/tree/main
 - issue: everytime connection open close for access database 
