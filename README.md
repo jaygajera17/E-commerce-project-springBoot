@@ -1,9 +1,9 @@
 ## My changes /contributions
-developed new logging
-added PostgreSQL
-fixed sonar issues
-removed vulnerabilities
-converted script for Postgresql
+- developed new logging
+- added PostgreSQL
+- fixed sonar issues
+- removed vulnerabilities
+- converted script for Postgresql
 
 
 ## Old Version
