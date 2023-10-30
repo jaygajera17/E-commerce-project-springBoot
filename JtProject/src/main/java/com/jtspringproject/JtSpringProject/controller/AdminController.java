@@ -19,6 +19,7 @@ import com.jtspringproject.JtSpringProject.models.User;
 import com.jtspringproject.JtSpringProject.services.categoryService;
 import com.jtspringproject.JtSpringProject.services.productService;
 import com.jtspringproject.JtSpringProject.services.userService;
+import org.apache.logging.log4j.LogManager;
 import com.mysql.cj.protocol.Resultset;
 
 import net.bytebuddy.asm.Advice.This;
