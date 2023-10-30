@@ -44,9 +44,8 @@ public class UserController {
             pst.setString(1, username);
             pst.setString(2, password);
             pst.setString(3, email);
-            int i = pst.executeUpdate();
-            logger.debug("data base updated %d" , i);
-
+            pst.executeUpdate();
+            logger.debug("New user Created for"+email);
         } catch (Exception e) {
             logger.debug("data base updated throws exception");
         }
