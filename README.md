@@ -37,6 +37,8 @@ MySQL or MariaDB can be used as the database for this project. The database conn
     db.password=[password, if any]
 ```
 
+if you met the error `java.lang.IllegalArgumentException: Could not resolve placeholder 'db.driver' in value "${db.driver}"`, maybe you should change your `mysql-connector-java` version in `pom.xml` file according to your mysql version, don't forget to reload your Maven project.
+
 Having done that, you must create some base data in the database. You can do that by running the `basedata.sql` script on the database. Check out Google for how to do that, because it depends on what tool you are using to access said database. 
 
 ### Web Directories
