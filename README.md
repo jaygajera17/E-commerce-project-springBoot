@@ -28,7 +28,7 @@
 		the following credentials as admin; otherwise you'll have to manually
 		create an admin user in the database:
 		* Username: `root`
-		* Password: `1234`
+		* Password: `123`
 7. Log in as a normal user:
 	* Username: `lisa`
 	* Password: `765`
