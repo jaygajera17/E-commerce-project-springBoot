@@ -67,15 +67,16 @@
 					</div>
 					
 					<div class="form-group">
-					
-						<label for="category">Select Category</label> 
+
+						<label for="category">Select Category</label>
 						<select class="form-control border border-warning" name="categoryid" required>
-                            <option selected>Select a Category</option>
-							<c:forEach var="category" items="${categories}">
-								<option value="${category.id}">${category.name}</option>
-							</c:forEach>
-							
-						</select>
+                            <option value="" selected>Select a Category</option>
+                            <c:forEach var="category" items="${categories}">
+                                <option value="${category.id}">${category.name}</option>
+                            </c:forEach>
+                        </select>
+
+
 					</div>
 					
 					<div class="form-group">
