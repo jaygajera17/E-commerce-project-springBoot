@@ -9,6 +9,7 @@ public class JtSpringProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JtSpringProjectApplication.class, args);
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 	}
 
 }

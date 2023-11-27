@@ -27,9 +27,9 @@ public class Product {
 	
 	private int quantity;
 	
-	private int price;
+	private double price;
 	
-	private int weight;
+	private double weight;
 	
 	private String description;
 
@@ -74,19 +74,19 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 

@@ -43,9 +43,9 @@ product_id  int unique key not null auto_increment primary key,
 description varchar(255) null,
 image       varchar(255) null,
 name        varchar(255) null,
-price       int null,
+price       DECIMAL(10,2) null,
 quantity    int null,
-weight      int null,
+weight      DECIMAL(10,2) null,
 category_id int null,
 customer_id int null
 );
