@@ -123,7 +123,7 @@ public class AdminController {
 	public ModelAndView removeCategoryDb(@RequestParam("id") int id)
 	{	
 			this.categoryService.deleteCategory(id);
-			ModelAndView mView = new ModelAndView("forward:/categories");
+			ModelAndView mView = new ModelAndView("redirect:/admin/categories");
 			return mView;
 	}
 	

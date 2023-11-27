@@ -33,7 +33,7 @@ public class categoryDao {
 	}
 
 	@Transactional
-	public Boolean deletCategory(int id) {
+	public Boolean deleteCategory(int id) {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		Object persistanceInstance = session.load(Category.class, id);

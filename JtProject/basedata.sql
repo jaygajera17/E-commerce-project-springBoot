@@ -62,3 +62,5 @@ CREATE INDEX FK7u438kvwr308xcwr4wbx36uiw
 
 CREATE INDEX FKt23apo8r9s2hse1dkt95ig0w5
     ON PRODUCT (customer_id);
+
+select * from category;
