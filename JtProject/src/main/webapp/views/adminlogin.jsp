@@ -31,8 +31,9 @@
                 </div><br>
 
                 <input type="submit" value="Login" class="btn btn-primary btn-block">
-                <br><h3 style="color:red;">${msg }</h3>
+                <br><h3 style="color:red;">${msg}</h3>
                 <br>
+            </form>
         </div>
 
 

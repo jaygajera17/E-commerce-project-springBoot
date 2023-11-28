@@ -2,6 +2,7 @@ package com.jtspringproject.JtSpringProject.dao;
 
 import java.util.List;
 
+import com.jtspringproject.JtSpringProject.models.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,15 @@ public class categoryDao {
 	public Boolean deleteCategory(int id) {
 
 		Session session = this.sessionFactory.getCurrentSession();
-		Object persistanceInstance = session.load(Category.class, id);
+		Object persistanceInstance = session.get(Category.class, id);
+		Object productInstance = session.get(Product.class,id);
 
 		if (persistanceInstance != null) {
+
+			if(productInstance != null)
+			{
+				return false;
+			}
 			session.delete(persistanceInstance);
 			return true;
 		}

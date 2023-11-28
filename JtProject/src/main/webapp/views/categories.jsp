@@ -1,4 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.*" %>
+<%@ page import="javax.servlet.http.*" %>
+
+<%
+	// Get the "delete" parameter from the request
+	String deleteParam = request.getParameter("delete");
+
+	// Convert the parameter to a boolean value
+	boolean delete = Boolean.parseBoolean(deleteParam);
+
+	// Set the "delete" variable as a request attribute
+	request.setAttribute("delete", delete);
+%>
 
 <!doctype html>
 <%@page import="java.sql.*"%>
@@ -17,6 +30,7 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 <title>Document</title>
+
 </head>
 <body class="bg-light">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -103,17 +117,18 @@
 					<td>${category.name }</td>
 
 					<td>
-						<form action="categories/delete" method="get">
+						<form action="categories/delete" method="get" >
 							<input type="hidden" name="id" value="${category.id}">
 							<input type="submit" value="Delete" class="btn btn-danger">
+
 						</form>
+
 					</td>
+
+
 
 					<td>
 						<form action="categories/update" method="get">
-
-
-
 
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-warning" data-toggle="modal"
@@ -170,6 +185,8 @@
 		
 	</div>
 
+
+
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 		crossorigin="anonymous"></script>
@@ -181,5 +198,28 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
+
+
+
+	<script>
+		console.log("Script is running!");
+
+		<c:if test="${requestScope.delete}">
+		alert('Cannot delete category that is associated with products.');
+
+		// Set a flag to indicate that the alert has been shown
+		let alertShown = true;
+
+		// Event listener for when the alert is closed
+		window.addEventListener('unload', function() {
+			if (alertShown) {
+				// Redirect to a new URL after the alert is closed
+				window.location.href = "/admin/categories"; // Change this URL to the desired one
+			}
+		});
+		</c:if>
+	</script>
+
+
 </body>
 </html>
