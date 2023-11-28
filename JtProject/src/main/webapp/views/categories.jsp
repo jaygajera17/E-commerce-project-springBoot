@@ -117,7 +117,7 @@
 					<td>${category.name }</td>
 
 					<td>
-						<form action="categories/delete" method="get" >
+						<form action="categories/delete" method="get"  onsubmit="return confirmDelete(${category.id})">
 							<input type="hidden" name="id" value="${category.id}">
 							<input type="submit" value="Delete" class="btn btn-danger">
 
@@ -220,6 +220,12 @@
 		</c:if>
 	</script>
 
+
+	<script>
+		function confirmDelete(categoryId) {
+			return confirm('Are you sure you want to delete this category?');
+		}
+	</script>
 
 </body>
 </html>
