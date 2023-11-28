@@ -44,7 +44,6 @@
 			</div>
 		</div>
 	</nav><br>
-	<c:forEach var="product" items="products">
 	<div class="jumbotron container border border-info">
 		<h3>Update Existing Product</h3>
 		<form action="/products/update/${product.id}" method="post">
@@ -114,7 +113,6 @@
 			</div>
 		</form>
 	</div>
-	</c:forEach>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
