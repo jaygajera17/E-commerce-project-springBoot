@@ -199,8 +199,25 @@ public class AdminController {
 								@RequestParam("weight") double weight, @RequestParam("quantity")int quantity,
 								@RequestParam("description") String description, @RequestParam("productImage") String productImage){
 
-//		this.productService.updateProduct();
+		Product product = this.productService.getProduct(id);
+		if (product != null) {
+			// Set details of the product
+			product.setName(name);
+			product.setPrice(price);
+			product.setWeight(weight);
+			product.setQuantity(quantity);
+			product.setDescription(description);
+			product.setImage(productImage);
+
+			Category category = this.categoryService.getCategory(categoryId);
+			product.setCategory(category);
+
+			this.productService.updateProduct(id, product);
+		}
+
+		// Redirect back to the products page
 		return "redirect:/admin/products";
+
 	}
 	
 	@GetMapping("products/delete")

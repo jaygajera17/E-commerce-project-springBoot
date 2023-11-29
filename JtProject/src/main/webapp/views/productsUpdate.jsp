@@ -44,10 +44,10 @@
 			</div>
 		</div>
 	</nav><br>
-	<c:forEach var="product" items="products">
+
 	<div class="jumbotron container border border-info">
 		<h3>Update Existing Product</h3>
-		<form action="/products/update/${product.id}" method="post">
+		<form action="/admin/products/update/${product.id}" method="post">
 			<div class="row">
 				<div class="col-sm-5">
 					
@@ -65,12 +65,12 @@
 					<div class="form-group">
 					
 						<label for="category">Select Category</label> 
-						<select class="form-control border border-success" name="categoryid" readonly>
-							<option selected>Select a Category</option>
-                            							<c:forEach var="category" items="${categories}">
-                            								<option value="${category.id}">${category.name}</option>
-                            							</c:forEach>
-						</select>
+						<select class="form-control border border-warning" name="categoryid" required>
+                                                    <option value="" selected>Select a Category</option>
+                                                    <c:forEach var="category" items="${categories}">
+                                                        <option value="${category.id}">${category.name}</option>
+                                                    </c:forEach>
+                                                </select>
 					</div>
 					<div class="form-group">
 						<label for="price">Price</label> 
@@ -91,7 +91,7 @@
 				<div class="col-sm-5">
 				<div class="form-group">
 						<label for="description">Product Description</label>
-						<textarea class="form-control border border-success" rows="4" name="product.description" placeholder="Product Details" value= "${ pdescription }"></textarea>
+						<textarea class="form-control border border-success" rows="4" name="description" placeholder="Product Details">${product.description}</textarea>
 					</div>
 					<p>Product Image</p>
 					<div class="custom-file">
@@ -114,7 +114,7 @@
 			</div>
 		</form>
 	</div>
-	</c:forEach>
+
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

@@ -36,10 +36,12 @@ public class productDao {
 		return this.sessionFactory.getCurrentSession().get(Product.class, id);
 	}
 
+	@Transactional
 	public Product updateProduct(Product product){
-		this.sessionFactory.getCurrentSession().update(String.valueOf(Product.class),product);
+		this.sessionFactory.getCurrentSession().update(product); //Fix: Product update button is not working
 		return product;
 	}
+
 	@Transactional
 	public Boolean deletProduct(int id) {
 
