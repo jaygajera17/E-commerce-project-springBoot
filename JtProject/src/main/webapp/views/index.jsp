@@ -93,7 +93,7 @@
             <div class="card-body">
              <b> <h4 class="card-title">${product.name}</h4></b>
               <h5 class="card-text">Category: ${product.category.name}</h5>
-              <h5 class="card-text">Price: ${product.price}</h5>
+              <h5 class="card-text">Price $: ${product.price}</h5>
               <p class="card-text">Description: ${product.description}</p>
               <a href="#" class="btn btn-primary">Add to Cart</a>
             </div>
