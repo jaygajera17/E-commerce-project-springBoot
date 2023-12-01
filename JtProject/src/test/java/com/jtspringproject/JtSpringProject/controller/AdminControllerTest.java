@@ -7,13 +7,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.servlet.ModelAndView;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.jtspringproject.JtSpringProject.services.userService;
+import com.jtspringproject.JtSpringProject.services.categoryService;
 
 import com.jtspringproject.JtSpringProject.models.User;
 
@@ -23,6 +23,9 @@ class AdminControllerTest {
 
     @Mock
     private userService userService;
+
+    @Mock
+    private  categoryService categoryService;
 
     @InjectMocks
     private AdminController adminController;
@@ -82,6 +85,40 @@ class AdminControllerTest {
 
         // Asserting the view name
         assertEquals("adminlogin", result.getViewName());
+    }
+
+
+    @Test
+    public void testRemoveCategoryDb_Success() {
+        int categoryId = 5;
+
+        // Mocking behavior of categoryService.deleteCategory
+        when(categoryService.deleteCategory(categoryId)).thenReturn(true);
+
+        // Calling the method to be tested
+        ModelAndView modelAndView = adminController.removeCategoryDb(categoryId);
+
+        // Verify that the correct ModelAndView is returned
+        assertFalse(modelAndView.getModel().containsKey("delete"));
+        assertEquals("redirect:/admin/categories", modelAndView.getViewName());
+
+
+    }
+
+    @Test
+    public void testRemoveCategoryDb_Failure() {
+        int categoryId = 1;
+
+        // Mocking behavior of categoryService.deleteCategory
+        when(categoryService.deleteCategory(categoryId)).thenReturn(false);
+
+        // Calling the method to be tested
+        ModelAndView modelAndView = adminController.removeCategoryDb(categoryId);
+
+        // Verify that the correct ModelAndView is returned
+        assertTrue(modelAndView.getModel().containsKey("delete"));
+        assertEquals("redirect:/admin/categories", modelAndView.getViewName());
+
     }
 
 
