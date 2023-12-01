@@ -38,6 +38,11 @@ public class UserController{
 	@Autowired
 	private productService productService;
 
+	@GetMapping("/")
+	public String redirectToLogin() {
+		return "userLogin";
+	}
+
 	@GetMapping("/register")
 	public String registerUser()
 	{
@@ -49,8 +54,15 @@ public class UserController{
 	{
 		return "buy";
 	}
-	
 
+	@GetMapping("/logout")
+	public String logout(HttpServletResponse res) {
+		Cookie usernameCookie = new Cookie("username", "");
+		usernameCookie.setMaxAge(0);
+		res.addCookie(usernameCookie);
+
+		return "userLogin";
+	}
 
 	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
 	public ModelAndView userlogin( @RequestParam("username") String username, @RequestParam("password") String pass,Model model,HttpServletResponse res) {
