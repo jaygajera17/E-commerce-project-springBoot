@@ -80,7 +80,7 @@ public class AdminController {
 	public ModelAndView adminlogin( @RequestParam("username") String username, @RequestParam("password") String pass) {
 		
 		User user=this.userService.checkLogin(username, pass);
-		
+
 		if( user != null && user.getRole() != null && user.getRole().equals("ROLE_ADMIN")) {
 			ModelAndView mv = new ModelAndView("adminHome");
 			adminlogcheck=1;
@@ -92,7 +92,9 @@ public class AdminController {
 			mv.addObject("msg", "Please enter correct username and password");
 			return mv;
 		}
+
 	}
+
 	@GetMapping("categories")
 	public ModelAndView getcategory() {
 
