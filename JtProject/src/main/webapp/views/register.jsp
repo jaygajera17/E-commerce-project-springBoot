@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
     <div class="col-sm-6">
         <h3 style="margin-top: 10px">Sign Up Now</h3>
         <p>Please fill out this to register</p>
-        <form action="newuserregister" method="post">
+        <form action="newuserregister" method="post" onsubmit="return validatePassword()">
             <div class="form-group">
                 <label for="firstName">User Name</label>
                 <input type="text" name="username" id="firstName" required placeholder="Your Username*" required class="form-control form-control-lg">
@@ -33,19 +33,41 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control form-control-lg" required placeholder="Password*" required name="password"
-                       id="password">
+                       id="password" oninput="validatePassword()">
+                <small id="passwordHelp" class="form-text text-muted">Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one number.</small>
             </div>
             <div class="form-group">
                 <label for="Address">Address</label>
                 <textarea class="form-control form-control-lg" rows="3" placeholder="Enter Your Address" name="address"></textarea>
             </div>
-<span style="margin-top: 10px">Already have an account <a class="linkControl" href="/">Login here</a></span> <br><br>
+            <span style="margin-top: 10px">Already have an account <a class="linkControl" href="/">Login here</a></span> <br><br>
             <input type="submit" value="Register" class="btn btn-primary btn-block"><br>
-            
+
         </form>
     </div>
 </div>
 
+<script>
+    function validatePassword() {
+        var password = document.getElementById("password").value;
+
+        // Check if the password meets the criteria
+        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        var isValidPassword = passwordRegex.test(password);
+
+        // Display the validation message
+        var passwordHelp = document.getElementById("passwordHelp");
+        if (isValidPassword) {
+            passwordHelp.style.color = "green";
+            passwordHelp.innerHTML = "Password is valid!";
+            return true;
+        } else {
+            passwordHelp.style.color = "red";
+            passwordHelp.innerHTML = "Password must be at least 8 characters, include one uppercase letter, one lowercase letter, and one number.";
+            return false;
+        }
+    }
+</script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
