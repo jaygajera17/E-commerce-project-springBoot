@@ -81,7 +81,7 @@ public class AdminController {
 		
 		User user=this.userService.checkLogin(username, pass);
 		
-		if(user.getRole().equals("ROLE_ADMIN")) {
+		if(user.getRole() != null && user.getRole().equals("ROLE_ADMIN")) {
 			ModelAndView mv = new ModelAndView("adminHome");
 			adminlogcheck=1;
 			mv.addObject("admin", user);

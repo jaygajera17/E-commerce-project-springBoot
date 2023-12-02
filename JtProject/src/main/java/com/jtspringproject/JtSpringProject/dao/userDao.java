@@ -60,4 +60,11 @@ public class userDao {
 		}
     	
     }
+
+	@Transactional
+	public boolean userExists(String username) {
+		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
+		query.setParameter("username",username);
+		return !query.getResultList().isEmpty();
+	}
 }

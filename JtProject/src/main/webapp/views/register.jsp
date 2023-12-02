@@ -41,7 +41,8 @@
             </div>
 <span style="margin-top: 10px">Already have an account <a class="linkControl" href="/">Login here</a></span> <br><br>
             <input type="submit" value="Register" class="btn btn-primary btn-block"><br>
-            
+            <br><h3 style="color:red;">${msg}</h3>
+            <br>
         </form>
     </div>
 </div>

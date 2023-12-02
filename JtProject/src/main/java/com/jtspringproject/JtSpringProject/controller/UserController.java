@@ -62,8 +62,9 @@ public class UserController{
 		System.out.println(pass);
 		User u = this.userService.checkLogin(username, pass);
 		System.out.println(u.getUsername());
-		if(u.getUsername().equals(username)) {	
-			
+
+		if(username.equals(u.getUsername())) {
+
 			res.addCookie(new Cookie("username", u.getUsername()));
 			ModelAndView mView  = new ModelAndView("index");	
 			mView.addObject("user", u);
@@ -101,14 +102,25 @@ public class UserController{
 		return mView;
 	}
 	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
-	public String newUseRegister(@ModelAttribute User user)
+	public ModelAndView newUseRegister(@ModelAttribute User user)
 	{
-		
-		System.out.println(user.getEmail());
-		user.setRole("ROLE_NORMAL");
-		this.userService.addUser(user);
-		
-		return "redirect:/";
+		// Check if username already exists in database
+		boolean exists = this.userService.checkUserExists(user.getUsername());
+
+		if(!exists) {
+			System.out.println(user.getEmail());
+			user.setRole("ROLE_NORMAL");
+			this.userService.addUser(user);
+
+			System.out.println("New user created: " + user.getUsername());
+			ModelAndView mView = new ModelAndView("userLogin");
+			return mView;
+		} else {
+			System.out.println("New user not created - username taken: " + user.getUsername());
+			ModelAndView mView = new ModelAndView("register");
+			mView.addObject("msg", user.getUsername() + " is taken. Please choose a different username.");
+			return mView;
+		}
 	}
 	
 	
