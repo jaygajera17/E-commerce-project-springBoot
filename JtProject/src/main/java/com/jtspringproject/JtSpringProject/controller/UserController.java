@@ -38,6 +38,9 @@ public class UserController{
 	@Autowired
 	private productService productService;
 
+	@Autowired
+	private cartService cartService;
+
 	@GetMapping("/register")
 	public String registerUser()
 	{
@@ -56,22 +59,19 @@ public class UserController{
 		
 		return "userLogin";
 	}
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
-	public ModelAndView userlogin( @RequestParam("username") String username, @RequestParam("password") String pass,Model model,HttpServletResponse res) {
-		
-		System.out.println(pass);
-		User u = this.userService.checkLogin(username, pass);
-		System.out.println(u.getUsername());
-		if(u.getUsername().equals(username)) {	
-			
-			res.addCookie(new Cookie("username", u.getUsername()));
-			ModelAndView mView  = new ModelAndView("index");	
-			mView.addObject("user", u);
-			List<Product> products = this.productService.getProducts();
 
+	@RequestMapping(value = "loginvalidate", method = RequestMethod.POST)
+	public ModelAndView userlogin( @RequestParam("username") String username, @RequestParam("password") String pass) {
+		User user = this.userService.checkLogin(username, pass);
+		System.out.println(user.getUsername());
+		if(user.getUsername().equals(username)) {
+			ModelAndView mView = new ModelAndView("userHome");
+			mView.addObject("user", user);
+			List<Product> products = this.productService.getProducts();
 			if (products.isEmpty()) {
 				mView.addObject("msg", "No products are available");
 			} else {
+				System.out.println(products.get(0).getName());
 				mView.addObject("products", products);
 			}
 			return mView;
@@ -81,9 +81,16 @@ public class UserController{
 			mView.addObject("msg", "Please enter correct email and password");
 			return mView;
 		}
-		
+
 	}
-	
+
+//	@GetMapping("/{userId}/carts")
+//	public String viewCart(@PathVariable String username, Model model) {
+//		Cart cart = cartService.getCartByUsername(username);
+//		model.addAttribute("cart", cart);
+//		return "cart";
+//	}
+
 	
 	@GetMapping("/user/products")
 	public ModelAndView getproduct() {
