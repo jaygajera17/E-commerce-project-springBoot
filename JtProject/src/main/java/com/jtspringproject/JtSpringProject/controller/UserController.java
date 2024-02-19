@@ -28,139 +28,134 @@ import com.jtspringproject.JtSpringProject.services.productService;
 import com.jtspringproject.JtSpringProject.services.cartService;
 
 
-
 @Controller
-public class UserController{
-	
-	@Autowired
-	private userService userService;
+public class UserController {
 
-	@Autowired
-	private productService productService;
+    @Autowired
+    private userService userService;
 
-	@GetMapping("/register")
-	public String registerUser()
-	{
-		return "register";
-	}
+    @Autowired
+    private productService productService;
 
-	@GetMapping("/buy")
-	public String buy()
-	{
-		return "buy";
-	}
-	
+    @GetMapping("/register")
+    public String registerUser() {
+        return "register";
+    }
 
-	@GetMapping("/")
-	public String userlogin(Model model) {
-		
-		return "userLogin";
-	}
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
-	public ModelAndView userlogin( @RequestParam("username") String username, @RequestParam("password") String pass,Model model,HttpServletResponse res) {
-		
-		System.out.println(pass);
-		User u = this.userService.checkLogin(username, pass);
-		System.out.println(u.getUsername());
+    @GetMapping("/buy")
+    public String buy() {
+        return "buy";
+    }
 
-		if(username.equals(u.getUsername())) {
 
-			res.addCookie(new Cookie("username", u.getUsername()));
-			ModelAndView mView  = new ModelAndView("index");	
-			mView.addObject("user", u);
-			List<Product> products = this.productService.getProducts();
+    @GetMapping("/")
+    public String userlogin(Model model) {
 
-			if (products.isEmpty()) {
-				mView.addObject("msg", "No products are available");
-			} else {
-				mView.addObject("products", products);
-			}
-			return mView;
+        return "userLogin";
+    }
 
-		}else {
-			ModelAndView mView = new ModelAndView("userLogin");
-			mView.addObject("msg", "Please enter correct email and password");
-			return mView;
-		}
-		
-	}
-	
-	
-	@GetMapping("/user/products")
-	public ModelAndView getproduct() {
+    @RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
+    public ModelAndView userlogin(@RequestParam("username") String username, @RequestParam("password") String pass, Model model, HttpServletResponse res) {
 
-		ModelAndView mView = new ModelAndView("uproduct");
+        System.out.println(pass);
+        User u = this.userService.checkLogin(username, pass);
+        System.out.println(u.getUsername());
 
-		List<Product> products = this.productService.getProducts();
+        if (username.equals(u.getUsername())) {
 
-		if(products.isEmpty()) {
-			mView.addObject("msg","No products are available");
-		}else {
-			mView.addObject("products",products);
-		}
+            res.addCookie(new Cookie("username", u.getUsername()));
+            ModelAndView mView = new ModelAndView("index");
+            mView.addObject("user", u);
+            List<Product> products = this.productService.getProducts();
 
-		return mView;
-	}
-	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
-	public ModelAndView newUseRegister(@ModelAttribute User user)
-	{
-		// Check if username already exists in database
-		boolean exists = this.userService.checkUserExists(user.getUsername());
+            if (products.isEmpty()) {
+                mView.addObject("msg", "No products are available");
+            } else {
+                mView.addObject("products", products);
+            }
+            return mView;
 
-		if(!exists) {
-			System.out.println(user.getEmail());
-			user.setRole("ROLE_NORMAL");
-			this.userService.addUser(user);
+        } else {
+            ModelAndView mView = new ModelAndView("userLogin");
+            mView.addObject("msg", "Please enter correct email and password");
+            return mView;
+        }
 
-			System.out.println("New user created: " + user.getUsername());
-			ModelAndView mView = new ModelAndView("userLogin");
-			return mView;
-		} else {
-			System.out.println("New user not created - username taken: " + user.getUsername());
-			ModelAndView mView = new ModelAndView("register");
-			mView.addObject("msg", user.getUsername() + " is taken. Please choose a different username.");
-			return mView;
-		}
-	}
-	
-	
-	
-	   //for Learning purpose of model
-		@GetMapping("/test")
-		public String Test(Model model)
-		{
-			System.out.println("test page");
-			model.addAttribute("author","jay gajera");
-			model.addAttribute("id",40);
-			
-			List<String> friends = new ArrayList<String>();
-			model.addAttribute("f",friends);
-			friends.add("xyz");
-			friends.add("abc");
-			
-			return "test";
-		}
-		
-		// for learning purpose of model and view ( how data is pass to view)
-		
-		@GetMapping("/test2")
-		public ModelAndView Test2()
-		{
-			System.out.println("test page");
-			//create modelandview object
-			ModelAndView mv=new ModelAndView();
-			mv.addObject("name","jay gajera 17");
-			mv.addObject("id",40);
-			mv.setViewName("test2");
-			
-			List<Integer> list=new ArrayList<Integer>();
-			list.add(10);
-			list.add(25);
-			mv.addObject("marks",list);
-			return mv;
-			
-			
-		}
+    }
+
+
+    @GetMapping("/user/products")
+    public ModelAndView getproduct() {
+
+        ModelAndView mView = new ModelAndView("uproduct");
+
+        List<Product> products = this.productService.getProducts();
+
+        if (products.isEmpty()) {
+            mView.addObject("msg", "No products are available");
+        } else {
+            mView.addObject("products", products);
+        }
+
+        return mView;
+    }
+
+    @RequestMapping(value = "newuserregister", method = RequestMethod.POST)
+    public ModelAndView newUseRegister(@ModelAttribute User user) {
+        // Check if username already exists in database
+        boolean exists = this.userService.checkUserExists(user.getUsername());
+
+        if (!exists) {
+            System.out.println(user.getEmail());
+            user.setRole("ROLE_NORMAL");
+            this.userService.addUser(user);
+
+            System.out.println("New user created: " + user.getUsername());
+            ModelAndView mView = new ModelAndView("userLogin");
+            return mView;
+        } else {
+            System.out.println("New user not created - username taken: " + user.getUsername());
+            ModelAndView mView = new ModelAndView("register");
+            mView.addObject("msg", user.getUsername() + " is taken. Please choose a different username.");
+            return mView;
+        }
+    }
+
+
+    //for Learning purpose of model
+    @GetMapping("/test")
+    public String Test(Model model) {
+        System.out.println("test page");
+        model.addAttribute("author", "jay gajera");
+        model.addAttribute("id", 40);
+
+        List<String> friends = new ArrayList<String>();
+        model.addAttribute("f", friends);
+        friends.add("xyz");
+        friends.add("abc");
+
+        return "test";
+    }
+
+    // for learning purpose of model and view ( how data is pass to view)
+
+    @GetMapping("/test2")
+    public ModelAndView Test2() {
+        System.out.println("test page");
+        //create modelandview object
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("name", "jay gajera 17");
+        mv.addObject("id", 40);
+        mv.setViewName("test2");
+
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(10);
+        list.add(25);
+        mv.addObject("marks", list);
+        return mv;
+
+
+    }
 
 
 //	@GetMapping("carts")
@@ -169,5 +164,5 @@ public class UserController{
 //		ModelAndView mv= new ModelAndView();
 //		List<Cart>carts = cartService.getCarts();
 //	}
-	  
+
 }
