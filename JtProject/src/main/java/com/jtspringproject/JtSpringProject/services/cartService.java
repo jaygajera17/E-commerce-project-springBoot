@@ -8,31 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class cartService {
-    @Autowired
-    private cartDao cartDao;
+public Interface cartService {
 
-    public Cart addCart(Cart cart)
-    {
-        return cartDao.addCart(cart);
-    }
-//    public Cart getCart(int id)
-//    {
-//        return cartDao.getCart(id);
-//    }
-public List<Cart> getCarts(){
-    return this.cartDao.getCarts();
-}
-
-    public void updateCart(Cart cart){
-        cartDao.updateCart(cart);
-    }
-    public void deleteCart(Cart cart)
-    {
-        cartDao.deleteCart(cart);
-    }
-
+    public Cart addCart(Cart cart);
+    public List<Cart> getCarts();
+    public void updateCart(Cart cart);
+    public void deleteCart(Cart cart);
 
 
 }

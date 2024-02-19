@@ -1,4 +1,5 @@
 package com.jtspringproject.JtSpringProject.dao;
+
 import java.util.List;
 
 import com.jtspringproject.JtSpringProject.models.Cart;
@@ -13,7 +14,9 @@ public class cartDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sf){ this.sessionFactory =sf;}
+    public void setSessionFactory(SessionFactory sf) {
+        this.sessionFactory = sf;
+    }
 
     @Transactional
     public Cart addCart(Cart cart) {
