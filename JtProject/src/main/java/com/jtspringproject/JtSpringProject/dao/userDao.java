@@ -43,7 +43,7 @@ public class userDao {
     @Transactional
     public User getUser(String username,String password) {
     	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
-    	query.setParameter("username",username);
+		query.setParameter("username", username);
     	
     	try {
 			User user = (User) query.getSingleResult();

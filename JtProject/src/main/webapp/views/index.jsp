@@ -35,7 +35,7 @@
         </button>
 		
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <h4>Welcome ${ username } </h4>
+        <h4>Welcome ${ user.username } </h4>
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 <li class="nav-item active">
@@ -45,7 +45,7 @@
                     <a class="nav-link" href="profileDisplay" >Profile</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" href="logout">Logout</a>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" href="http://localhost:8080/">Logout</a>
                 </li>
                
             </ul>
