@@ -16,16 +16,15 @@ public class Cart {
     @JoinColumn(name="customer_id")
     private User customer;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+//    @ManyToMany
+//    @JoinTable(
+//            joinColumns = @JoinColumn(name = "cart_id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id")
+//    )
+//    private List<Product> products;
 
 
     public Cart() {
-        products = new ArrayList<>();
     }
 
     public int getId() {
@@ -36,6 +35,7 @@ public class Cart {
         this.id = id;
     }
 
+
     public User getCustomer() {
         return customer;
     }
@@ -44,19 +44,29 @@ public class Cart {
         this.customer = customer;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
+//    public List<Product> getProducts() {
+//        return products;
+//    }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
+//    public List<Product> getProductsByUser(int customer_id ) {
+//        List<Product> userProducts = new ArrayList<Product>();
+//        for (Product product : products) {
+//            if (product.getCustomer().getId() == customer_id) {
+//                userProducts.add(product);
+//            }
+//        }
+//        return userProducts;
+//    }
 
-    public void addProduct(Product product) {
-        products.add(product);
-    }
+//    public void setProducts(List<Product> products) {
+//        this.products = products;
+//    }
 
-    public void removeProduct(Product product) {
-        products.remove(product);
-    }
+//    public void addProduct(Product product) {
+//        products.add(product);
+//    }
+//
+//    public void removeProduct(Product product) {
+//        products.remove(product);
+//    }
 }
