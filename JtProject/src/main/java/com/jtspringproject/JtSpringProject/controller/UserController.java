@@ -50,6 +50,11 @@ public class UserController{
 		return "buy";
 	}
 	
+	@GetMapping("/profileDisplay")
+	public String display()
+	{
+		return "showprofile";
+	}
 
 	@GetMapping("/")
 	public String userlogin(Model model) {
