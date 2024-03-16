@@ -34,10 +34,8 @@ public class userDao extends HttpServlet {
         return userList;
     }
 
-	@Transactional
-	public User getCurrentUser(HttpServletRequest request, HttpServletResponse response){
-		HttpSession session = request.getSession();
-	}
+
+
 
     @Transactional
 	public User saveUser(User user) {

@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.jtspringproject.JtSpringProject.dao.userDao;
 import com.jtspringproject.JtSpringProject.models.User;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class userService {
@@ -29,4 +33,6 @@ public class userService {
 	public boolean checkUserExists(String username) {
 		return this.userDao.userExists(username);
 	}
+
+
 }
