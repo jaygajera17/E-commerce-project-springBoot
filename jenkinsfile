@@ -1,0 +1,77 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven'
+        jdk 'Jdk'
+    }
+
+    environment {
+        MAVEN_HOME = tool 'Maven'
+        SONARQUBE_URL = 'http://68.154.7.109:9000' // SonarQube URL
+        SONARQUBE_TOKEN = credentials('Sonarqube-token') // SonarQube token credential ID
+        NEXUS_URL = 'http://68.154.7.109:8081/repository/maven-releases/' // Nexus repository URL
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/syedhhahahays/E-commerce-project-springBoot.git'
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn clean verify"
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') { // Use the correct SonarQube server configuration name
+                    sh "${MAVEN_HOME}/bin/mvn sonar:sonar -Dsonar.projectKey=com.jtspringproject:JtSpringProject -Dsonar.projectName=JtSpringProject -Dsonar.projectVersion=0.0.1-SNAPSHOT -Dsonar.sources=src/main/java -Dsonar.language=java -Dsonar.sourceEncoding=UTF-8"
+                }
+            }
+        }
+
+        stage('Deploy to Nexus') {
+            steps {
+                script {
+                    def pom = readMavenPom file: 'pom.xml'
+                    def groupId = pom.groupId
+                    def artifactId = pom.artifactId
+                    def version = pom.version
+                    def filePath = "target/${artifactId}-${version}.jar"
+
+                    echo "Version: ${version}"
+                    echo "File Path: ${filePath}"
+
+                    if (fileExists(filePath)) {
+                        echo 'File exists, proceeding with deployment...'
+                        sh """
+                            ${MAVEN_HOME}/bin/mvn deploy:deploy-file \
+                            -DgroupId=${groupId} \
+                            -DartifactId=${artifactId} \
+                            -Dversion=${version} \
+                            -Dpackaging=jar \
+                            -Dfile=${filePath} \
+                            -DrepositoryId=nexus \
+                            -Durl=${NEXUS_URL}
+                        """
+                    } else {
+                        error "Artifact file not found at ${filePath}"
+                    }
+                }
+            }
+        }
+    } // <-- Closing stages block
+
+    post {
+        success {
+            echo 'Build, SonarQube Analysis, and Deployment succeeded!'
+        }
+        failure {
+            echo 'Build, SonarQube Analysis, or Deployment failed.'
+        }
+    }
+} // <-- Closing pipeline block
