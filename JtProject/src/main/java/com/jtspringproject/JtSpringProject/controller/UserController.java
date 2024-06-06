@@ -15,9 +15,11 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jtspringproject.JtSpringProject.services.cartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +52,17 @@ public class UserController{
 		return "buy";
 	}
 	
+	@GetMapping("/profileDisplay")
+	public ModelAndView display()
+	{
+		ModelAndView mView = new ModelAndView("updateProfile");
+		//User u= this.userService.getCurrentUser();
+		//String name= u.getUsername();
+		//System.out.println(name);
+		//mView.addObject("username","lisa");
+		return mView;
+	}
+
 
 	@GetMapping("/")
 	public String userlogin(Model model) {

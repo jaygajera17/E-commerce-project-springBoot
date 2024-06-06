@@ -21,7 +21,7 @@ public class Product {
 	
 	private String image;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+//	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "category_id",referencedColumnName = "category_id")
 	private Category category;
 	

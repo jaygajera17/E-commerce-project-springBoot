@@ -3,6 +3,9 @@ package com.jtspringproject.JtSpringProject.dao;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sound.midi.Soundbank;
 
 import org.hibernate.Session;
@@ -13,10 +16,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jtspringproject.JtSpringProject.models.User;
+import javax.servlet.http.HttpServletRequest;
 
 
 @Repository
-public class userDao {
+public class userDao extends HttpServlet {
 	@Autowired
     private SessionFactory sessionFactory;
 	
@@ -29,21 +33,26 @@ public class userDao {
 		List<User>  userList = session.createQuery("from CUSTOMER").list();
         return userList;
     }
-    
+
+
+
+
     @Transactional
 	public User saveUser(User user) {
 		this.sessionFactory.getCurrentSession().saveOrUpdate(user);
 		System.out.println("User added" + user.getId());
         return user;
 	}
-    
-//    public User checkLogin() {
-//    	this.sessionFactory.getCurrentSession().
-//    }
+
+ //public User checkLogin() {
+ //  	this.sessionFactory.getCurrentSession();
+ // }
+
+
     @Transactional
     public User getUser(String username,String password) {
     	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
-    	query.setParameter("username",username);
+		query.setParameter("username", username);
     	
     	try {
 			User user = (User) query.getSingleResult();
