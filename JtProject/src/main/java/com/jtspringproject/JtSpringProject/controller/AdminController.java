@@ -237,7 +237,7 @@ public class AdminController {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
 			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
 			stmt.setString(1, usernameforclass);
-			ResultSet rst = stmt.execute();
+			ResultSet rst = stmt.executeQuery();
 			
 			if(rst.next())
 			{

@@ -26,5 +26,7 @@ public class userService {
 		return this.userDao.getUser(username, password);
 	}
 
-	
+	public boolean checkUserExists(String username) {
+		return this.userDao.userExists(username);
+	}
 }
