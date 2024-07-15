@@ -29,8 +29,10 @@
 
 ### Database
 
-MySQL or MariaDB can be used as the database for this project. The database connection can be configured in the `application.properties` file, with the appropriate values for the following properties:
-(you'd better use another username not root)
+MySQL or MariaDB can be used as the database for this project. The database connection can be configured in the `src/main/resources/application.properties` file, with the appropriate values for the following properties:
+
+**( You'd better use another username not root, and ensure that the user has the corresponding permissions for the database. )**
+
 ```properties
     db.url=jdbc:mysql://[ip address of db]:[port of db]/ecommjava?createDatabaseIfNotExist=true
     db.username=[username]
