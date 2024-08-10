@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jtspringproject.JtSpringProject.services.cartService;
@@ -101,6 +102,7 @@ public class UserController{
 
 		return mView;
 	}
+	
 	@RequestMapping(value = "newuserregister", method = RequestMethod.POST)
 	public ModelAndView newUseRegister(@ModelAttribute User user)
 	{
@@ -122,6 +124,43 @@ public class UserController{
 			return mView;
 		}
 	}
+
+	@GetMapping("/profileDisplay")
+	    public String profileDisplay(Model model, HttpServletRequest request) {
+	        try {
+	            Cookie[] cookies = request.getCookies();
+	            String username = null;
+	
+	            if (cookies != null) {
+	                for (Cookie cookie : cookies) {
+	                    if ("username".equals(cookie.getName())) {
+	                        username = cookie.getValue();
+	                        break;
+	                    }
+	                }
+	            }
+	
+	            if (username != null) {
+	                User user = userService.getUserByUsername(username);
+	
+	                if (user != null) {
+	                    model.addAttribute("userid", user.getId());
+	                    model.addAttribute("username", user.getUsername());
+	                    model.addAttribute("email", user.getEmail());
+	                    model.addAttribute("password", user.getPassword()); 
+	                    model.addAttribute("address", user.getAddress());
+	                } else {
+	                    model.addAttribute("msg", "User not found");
+	                }
+	            } else {
+	                model.addAttribute("msg", "Username not found in cookies");
+	            }
+	        } catch (Exception e) {
+	            System.out.println("Exception: " + e);
+	            model.addAttribute("msg", "An error occurred while retrieving user details");
+	        }
+	        return "updateProfile";
+	    }
 	
 	
 	
