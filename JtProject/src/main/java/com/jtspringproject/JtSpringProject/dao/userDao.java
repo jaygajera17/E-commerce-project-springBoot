@@ -67,4 +67,17 @@ public class userDao {
 		query.setParameter("username",username);
 		return !query.getResultList().isEmpty();
 	}
+
+	@Transactional
+	public User getUserByUsername(String username) {
+	        Query<User> query = sessionFactory.getCurrentSession().createQuery("from User where username = :username", User.class);
+	        query.setParameter("username", username);
+	        
+	        try {
+	            return query.getSingleResult();
+	        } catch (Exception e) {
+	            System.out.println(e.getMessage());
+	            return null; 
+	        }
+    	}
 }
