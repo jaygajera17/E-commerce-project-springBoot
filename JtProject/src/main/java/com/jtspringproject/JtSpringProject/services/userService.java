@@ -35,4 +35,8 @@ public class userService {
 	public boolean checkUserExists(String username) {
 		return this.userDao.userExists(username);
 	}
+
+	public User getUserByUsername(String username) {
+	        return userDao.getUserByUsername(username);
+	    }
 }
