@@ -27,14 +27,17 @@ import net.bytebuddy.asm.Advice.OffsetMapping.ForOrigin.Renderer.ForReturnTypeNa
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
+
+	private final userService userService;
+	private final categoryService categoryService;
+	private final productService productService;
+
 	@Autowired
-	private userService userService;
-	@Autowired
-	private categoryService categoryService;
-	
-	@Autowired
-	private productService productService;
+	public AdminController(userService userService, categoryService categoryService, productService productService) {
+		this.userService = userService;
+		this.categoryService = categoryService;
+		this.productService = productService;
+	}
 	
 	int adminlogcheck = 0;
 	String usernameforclass = "";
