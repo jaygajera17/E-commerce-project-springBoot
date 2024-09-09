@@ -32,12 +32,15 @@ import com.jtspringproject.JtSpringProject.services.cartService;
 
 @Controller
 public class UserController{
-	
-	@Autowired
-	private userService userService;
+
+	private final userService userService;
+	private final productService productService;
 
 	@Autowired
-	private productService productService;
+	public UserController(userService userService, productService productService) {
+		this.userService = userService;
+		this.productService = productService;
+	}
 
 	@GetMapping("/register")
 	public String registerUser()
