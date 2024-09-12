@@ -65,7 +65,7 @@ public class UserController{
 	{
 		ModelAndView mView  = new ModelAndView("index");	
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		mView.addObject("user", username);
+		mView.addObject("username", username);
 		List<Product> products = this.productService.getProducts();
 
 		if (products.isEmpty()) {
