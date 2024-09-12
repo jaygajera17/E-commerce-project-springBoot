@@ -46,7 +46,10 @@ public class SecurityConfiguration {
                     
                     .logout(logout -> logout.logoutUrl("/admin/logout")
                             .logoutSuccessUrl("/admin/login")
-                            .deleteCookies("JSESSIONID"));
+                            .deleteCookies("JSESSIONID"))
+                    .exceptionHandling(exception -> exception
+                            .accessDeniedPage("/403")  // Custom 403 page
+                        );
             http.csrf(csrf -> csrf.disable());
 			return http.build();
 		}
@@ -73,7 +76,10 @@ public class SecurityConfiguration {
                     
                     .logout(logout -> logout.logoutUrl("/logout")
                             .logoutSuccessUrl("/login")
-                            .deleteCookies("JSESSIONID"));
+                            .deleteCookies("JSESSIONID"))
+                    .exceptionHandling(exception -> exception
+                            .accessDeniedPage("/403")  // Custom 403 page
+                        );
 
             http.csrf(csrf -> csrf.disable());
 			return http.build();
