@@ -1,16 +1,23 @@
 package com.jtspringproject.JtSpringProject.controller;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jtspringproject.JtSpringProject.models.Category;
@@ -19,10 +26,6 @@ import com.jtspringproject.JtSpringProject.models.User;
 import com.jtspringproject.JtSpringProject.services.categoryService;
 import com.jtspringproject.JtSpringProject.services.productService;
 import com.jtspringproject.JtSpringProject.services.userService;
-import com.mysql.cj.protocol.Resultset;
-
-import net.bytebuddy.asm.Advice.This;
-import net.bytebuddy.asm.Advice.OffsetMapping.ForOrigin.Renderer.ForReturnTypeName;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,76 +42,38 @@ public class AdminController {
 		this.productService = productService;
 	}
 	
-	int adminlogcheck = 0;
-	String usernameforclass = "";
-	@RequestMapping(value = {"/","/logout"})
-	public String returnIndex() {
-		adminlogcheck =0;
-		usernameforclass = "";
-		return "userLogin";
-	}
-	
-	
-	
 	@GetMapping("/index")
 	public String index(Model model) {
-		if("".equalsIgnoreCase(usernameforclass))
-			return "userLogin";
-		else {
-			model.addAttribute("username", usernameforclass);
-			return "index";
-		}
-			
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		model.addAttribute("username", username);
+		return "index";			
 	}
-	
 	
 	@GetMapping("login")
-	public String adminlogin() {
-		
-		return "adminlogin";
+	public ModelAndView adminlogin(@RequestParam(required = false) String error) {
+	    ModelAndView mv = new ModelAndView("adminlogin");
+	    if ("true".equals(error)) {
+	        mv.addObject("msg", "Invalid username or password. Please try again.");
+	    }
+	    return mv;
 	}
-	@GetMapping("Dashboard")
-	public String adminHome(Model model) {
-		if(adminlogcheck==1)
-			return "adminHome";
-		else
-			return "redirect:/admin/login";
+	
+	@GetMapping( value={"/","Dashboard"})
+	public ModelAndView adminHome(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    ModelAndView mv = new ModelAndView("adminHome");
+	    mv.addObject("admin", authentication.getName());
+	    return mv;
 	}
-	@GetMapping("/loginvalidate")
-	public String adminlog(Model model) {
-		
-		return "adminlogin";
-	}
-	@RequestMapping(value = "loginvalidate", method = RequestMethod.POST)
-	public ModelAndView adminlogin( @RequestParam("username") String username, @RequestParam("password") String pass) {
-		
-		User user=this.userService.checkLogin(username, pass);
-		
-		if("ROLE_ADMIN".equals(user.getRole())) {
-			ModelAndView mv = new ModelAndView("adminHome");
-			adminlogcheck=1;
-			mv.addObject("admin", user);
-			return mv;
-		}
-		else {
-			ModelAndView mv = new ModelAndView("adminlogin");
-			mv.addObject("msg", "Please enter correct username and password");
-			return mv;
-		}
-	}
+	
 	@GetMapping("categories")
 	public ModelAndView getcategory() {
-		if(adminlogcheck==0){
-			ModelAndView mView = new ModelAndView("adminlogin");
-			return mView;
-		}
-		else {
-			ModelAndView mView = new ModelAndView("categories");
-			List<Category> categories = this.categoryService.getCategories();
-			mView.addObject("categories", categories);
-			return mView;
-		}
+		ModelAndView mView = new ModelAndView("categories");
+		List<Category> categories = this.categoryService.getCategories();
+		mView.addObject("categories", categories);
+		return mView;
 	}
+	
 	@PostMapping("/categories")
 	public String addCategory(@RequestParam("categoryname") String category_name)
 	{
@@ -123,11 +88,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("categories/delete")
-	public ModelAndView removeCategoryDb(@RequestParam("id") int id)
+	public String removeCategoryDb(@RequestParam("id") int id)
 	{	
 			this.categoryService.deleteCategory(id);
-			ModelAndView mView = new ModelAndView("forward:/categories");
-			return mView;
+			return "redirect:/admin/categories";
 	}
 	
 	@GetMapping("categories/update")
@@ -141,24 +105,18 @@ public class AdminController {
 //	 --------------------------Remaining --------------------
 	@GetMapping("products")
 	public ModelAndView getproduct() {
-		if(adminlogcheck==0){
-			ModelAndView mView = new ModelAndView("adminlogin");
-			return mView;
+		ModelAndView mView = new ModelAndView("products");
+
+		List<Product> products = this.productService.getProducts();
+		
+		if (products.isEmpty()) {
+			mView.addObject("msg", "No products are available");
+		} else {
+			mView.addObject("products", products);
 		}
-		else {
-			ModelAndView mView = new ModelAndView("products");
-
-			List<Product> products = this.productService.getProducts();
-
-			if (products.isEmpty()) {
-				mView.addObject("msg", "No products are available");
-			} else {
-				mView.addObject("products", products);
-			}
-			return mView;
-		}
-
+		return mView;
 	}
+	
 	@GetMapping("products/add")
 	public ModelAndView addProduct() {
 		ModelAndView mView = new ModelAndView("productsAdd");
@@ -218,16 +176,10 @@ public class AdminController {
 	
 	@GetMapping("customers")
 	public ModelAndView getCustomerDetail() {
-		if(adminlogcheck==0){
-			ModelAndView mView = new ModelAndView("adminlogin");
-			return mView;
-		}
-		else {
-			ModelAndView mView = new ModelAndView("displayCustomers");
-			List<User> users = this.userService.getUsers();
-			mView.addObject("customers", users);
-			return mView;
-		}
+		ModelAndView mView = new ModelAndView("displayCustomers");
+		List<User> users = this.userService.getUsers();
+		mView.addObject("customers", users);
+		return mView;
 	}
 	
 	
@@ -239,7 +191,10 @@ public class AdminController {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
 			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
-			stmt.setString(1, usernameforclass);
+			
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			stmt.setString(1, username);
+			
 			ResultSet rst = stmt.executeQuery();
 			
 			if(rst.next())
@@ -280,13 +235,19 @@ public class AdminController {
 			pst.setString(4, address);
 			pst.setInt(5, userid);
 			int i = pst.executeUpdate();	
-			usernameforclass = username;
+			
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+		            username,
+		            password,
+		            SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
+		    SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 		}
 		catch(Exception e)
 		{
 			System.out.println("Exception:"+e);
 		}
-		return "redirect:/index";
+		return "redirect:index";
 	}
 
 }

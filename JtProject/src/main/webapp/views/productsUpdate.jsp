@@ -46,7 +46,7 @@
 	</nav><br>
 	<div class="jumbotron container border border-info">
 		<h3>Update Existing Product</h3>
-		<form action="/products/update/${product.id}" method="post">
+		<form action="/admin/products/update/${product.id}" method="post">
 			<div class="row">
 				<div class="col-sm-5">
 					
@@ -90,7 +90,7 @@
 				<div class="col-sm-5">
 				<div class="form-group">
 						<label for="description">Product Description</label>
-						<textarea class="form-control border border-success" rows="4" name="product.description" placeholder="Product Details" value= "${ pdescription }"></textarea>
+						<textarea class="form-control border border-success" rows="4" name="description" placeholder="Product Details" value= "${ pdescription }"></textarea>
 					</div>
 					<p>Product Image</p>
 					<div class="custom-file">

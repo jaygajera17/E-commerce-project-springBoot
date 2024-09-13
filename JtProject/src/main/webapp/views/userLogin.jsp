@@ -46,7 +46,7 @@
 <div class="login-container p-4">
     <div class="jumbotron border p-4">
         <h2 class="text-center">User Login</h2>
-        <form action="userloginvalidate" method="post">
+        <form action="/userloginvalidate" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <div class="input-group">

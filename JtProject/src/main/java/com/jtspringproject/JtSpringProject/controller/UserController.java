@@ -13,12 +13,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.jtspringproject.JtSpringProject.services.cartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jtspringproject.JtSpringProject.services.userService;
 import com.jtspringproject.JtSpringProject.services.productService;
 import com.jtspringproject.JtSpringProject.services.cartService;
-
-
 
 @Controller
 public class UserController{
@@ -53,42 +50,31 @@ public class UserController{
 	{
 		return "buy";
 	}
-	
 
+	@GetMapping("/login")
+	public ModelAndView userlogin(@RequestParam(required = false) String error) {
+	    ModelAndView mv = new ModelAndView("userLogin");
+	    if ("true".equals(error)) {
+	        mv.addObject("msg", "Please enter correct email and password");
+	    }
+	    return mv;
+	}
+	
 	@GetMapping("/")
-	public String userlogin(Model model) {
-		
-		return "userLogin";
-	}
-	@RequestMapping(value = "userloginvalidate", method = RequestMethod.POST)
-	public ModelAndView userlogin( @RequestParam("username") String username, @RequestParam("password") String pass,Model model,HttpServletResponse res) {
-		
-		System.out.println(pass);
-		User u = this.userService.checkLogin(username, pass);
-		System.out.println(u.getUsername());
+	public ModelAndView indexPage()
+	{
+		ModelAndView mView  = new ModelAndView("index");	
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		mView.addObject("username", username);
+		List<Product> products = this.productService.getProducts();
 
-		if(username.equals(u.getUsername())) {
-
-			res.addCookie(new Cookie("username", u.getUsername()));
-			ModelAndView mView  = new ModelAndView("index");	
-			mView.addObject("user", u);
-			List<Product> products = this.productService.getProducts();
-
-			if (products.isEmpty()) {
-				mView.addObject("msg", "No products are available");
-			} else {
-				mView.addObject("products", products);
-			}
-			return mView;
-
-		}else {
-			ModelAndView mView = new ModelAndView("userLogin");
-			mView.addObject("msg", "Please enter correct email and password");
-			return mView;
+		if (products.isEmpty()) {
+			mView.addObject("msg", "No products are available");
+		} else {
+			mView.addObject("products", products);
 		}
-		
+		return mView;
 	}
-	
 	
 	@GetMapping("/user/products")
 	public ModelAndView getproduct() {
@@ -129,44 +115,25 @@ public class UserController{
 	}
 
 	@GetMapping("/profileDisplay")
-	    public String profileDisplay(Model model, HttpServletRequest request) {
-	        try {
-	            Cookie[] cookies = request.getCookies();
-	            String username = null;
+	public String profileDisplay(Model model, HttpServletRequest request) {
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userService.getUserByUsername(username);
 	
-	            if (cookies != null) {
-	                for (Cookie cookie : cookies) {
-	                    if ("username".equals(cookie.getName())) {
-	                        username = cookie.getValue();
-	                        break;
-	                    }
-	                }
-	            }
+		if (user != null) {
+			model.addAttribute("userid", user.getId());
+			model.addAttribute("username", user.getUsername());
+			model.addAttribute("email", user.getEmail());
+			model.addAttribute("password", user.getPassword()); 
+			model.addAttribute("address", user.getAddress());
+	    } else {
+	    	model.addAttribute("msg", "User not found");
+	    } 
+
+		return "updateProfile";
+	}
 	
-	            if (username != null) {
-	                User user = userService.getUserByUsername(username);
-	
-	                if (user != null) {
-	                    model.addAttribute("userid", user.getId());
-	                    model.addAttribute("username", user.getUsername());
-	                    model.addAttribute("email", user.getEmail());
-	                    model.addAttribute("password", user.getPassword()); 
-	                    model.addAttribute("address", user.getAddress());
-	                } else {
-	                    model.addAttribute("msg", "User not found");
-	                }
-	            } else {
-	                model.addAttribute("msg", "Username not found in cookies");
-	            }
-	        } catch (Exception e) {
-	            System.out.println("Exception: " + e);
-	            model.addAttribute("msg", "An error occurred while retrieving user details");
-	        }
-	        return "updateProfile";
-	    }
-	
-	
-	
+
 	   //for Learning purpose of model
 		@GetMapping("/test")
 		public String Test(Model model)
