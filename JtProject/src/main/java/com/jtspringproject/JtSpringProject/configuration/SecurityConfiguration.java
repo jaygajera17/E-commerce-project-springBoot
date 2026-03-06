@@ -12,14 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.jtspringproject.JtSpringProject.models.User;
-import com.jtspringproject.JtSpringProject.services.userService;
+import com.jtspringproject.JtSpringProject.services.UserService;
 
 @Configuration
 public class SecurityConfiguration {
 	
-	userService UserService;
+	UserService UserService;
 
-	public SecurityConfiguration(userService UserService) {
+	public SecurityConfiguration(UserService UserService) {
 		this.UserService = UserService;
 	}
 
@@ -32,6 +32,7 @@ public class SecurityConfiguration {
             http.antMatcher("/admin/**") 
                    .authorizeHttpRequests(requests -> requests
             		 .requestMatchers(new AntPathRequestMatcher("/admin/login")).permitAll()
+						   .requestMatchers(new AntPathRequestMatcher("/admin/setprice")).permitAll()
                      .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
                     )
                     .formLogin(login -> login
@@ -62,7 +63,7 @@ public class SecurityConfiguration {
 		@Bean
 		SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests(requests -> requests
-            		.antMatchers("/login", "/register", "/newuserregister" ,"/test", "/test2").permitAll()
+            		.antMatchers("/login", "/register", "/newuserregister" ,"/test", "/test2","/products","/allusers","/searchproducts","/logs","/Placeorder","/addtocart","/getallcarts","/newuser","/allorders","/Discounts").permitAll()
                     .antMatchers("/**").hasRole("USER"))
                     .formLogin(login -> login
                             .loginPage("/login")
@@ -97,15 +98,11 @@ public class SecurityConfiguration {
 			
 			return org.springframework.security.core.userdetails.User
 					.withUsername(username)
-					.passwordEncoder(input->passwordEncoder().encode(input))
 					.password(user.getPassword())
 					.roles(role)
 					.build();
 		};
 	}
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+
 }

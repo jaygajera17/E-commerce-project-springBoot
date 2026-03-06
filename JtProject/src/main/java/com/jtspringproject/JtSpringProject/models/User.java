@@ -16,7 +16,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	@Column(unique = true)
 	private String username;
@@ -30,7 +30,7 @@ public class User {
 	private String address;
 	
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

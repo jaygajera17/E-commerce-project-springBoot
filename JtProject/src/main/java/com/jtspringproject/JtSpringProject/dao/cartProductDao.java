@@ -31,7 +31,7 @@ public class cartProductDao {
     }
 
     @Transactional
-    public List<Product> getProductByCartID(Integer cart_id) {
+    public List<Product> getProductByCartID(int cart_id) {
         String sql = "SELECT product_id FROM cart_product WHERE cart_id = :cart_id";
         List<Integer> productIds = this.sessionFactory.getCurrentSession()
                 .createNativeQuery(sql)
@@ -44,7 +44,13 @@ public class cartProductDao {
                 .setParameterList("product_ids", productIds)
                 .list();
     }
-
+    @Transactional
+    public List<CartProduct> getProductByID(int cartId) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM CartProduct cp WHERE cp.id.cartId = :cartId", CartProduct.class)
+                .setParameter("cartId", cartId)
+                .list();
+    }
     @Transactional
     public void updateCartProduct(CartProduct cartProduct) {
         this.sessionFactory.getCurrentSession().update(cartProduct);
@@ -53,5 +59,16 @@ public class cartProductDao {
     @Transactional
     public void deleteCartProduct(CartProduct cartProduct) {
         this.sessionFactory.getCurrentSession().delete(cartProduct);
+    }
+    @Transactional
+    public CartProduct findByCartAndProduct(int cartId, int productId) {
+        return sessionFactory.getCurrentSession()
+                .createQuery(
+                        "FROM CartProduct cp WHERE cp.id.cartId = :cid AND cp.id.productId = :pid",
+                        CartProduct.class
+                )
+                .setParameter("cid", cartId)
+                .setParameter("pid", productId)
+                .uniqueResult();
     }
 }

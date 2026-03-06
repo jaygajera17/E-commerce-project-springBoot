@@ -19,6 +19,13 @@ public class CartProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @Column(nullable = false)
+    private int quantity;
+
     public CartProduct() {}
 
     public CartProduct(Cart cart, Product product) {
@@ -49,5 +56,20 @@ public class CartProduct {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

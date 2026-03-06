@@ -6,42 +6,52 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
+import DTO.productdto;
+import com.jtspringproject.JtSpringProject.models.Logs;
+import com.jtspringproject.JtSpringProject.services.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jtspringproject.JtSpringProject.models.Category;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
-import com.jtspringproject.JtSpringProject.services.categoryService;
-import com.jtspringproject.JtSpringProject.services.productService;
-import com.jtspringproject.JtSpringProject.services.userService;
+import com.jtspringproject.JtSpringProject.services.CategoryService;
+import com.jtspringproject.JtSpringProject.services.ProductService;
+import com.jtspringproject.JtSpringProject.services.UserService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-	private final userService userService;
-	private final categoryService categoryService;
-	private final productService productService;
+	private final UserService userService;
+	private final CategoryService categoryService;
+	private final ProductService productService;
+	private final LogService logservice;
 
 	@Autowired
-	public AdminController(userService userService, categoryService categoryService, productService productService) {
+	public AdminController(UserService userService, CategoryService categoryService, ProductService productService, LogService logservice) {
 		this.userService = userService;
 		this.categoryService = categoryService;
 		this.productService = productService;
+		this.logservice= logservice;
 	}
-	
+	@GetMapping("/logs")
+	public List<Logs> getalllogs(){
+		return logservice.getalllogs();
+	}
+
+	@PostMapping("/setprice")
+	@ResponseBody
+	public void setprice( @RequestBody productdto product){
+		this.productService.updateProductPrice(product.id,product);
+	}
+
 	@GetMapping("/index")
 	public String index(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -249,5 +259,6 @@ public class AdminController {
 		}
 		return "redirect:index";
 	}
+
 
 }
