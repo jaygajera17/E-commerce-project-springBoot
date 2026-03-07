@@ -46,7 +46,7 @@ public class AdminController {
 	public String index(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		model.addAttribute("username", username);
-		return "index";			
+		return "indexteja";			
 	}
 	
 	@GetMapping("login")
