@@ -8,6 +8,6 @@ public class ErrorController {
 
     @GetMapping("/403")
     public String accessDenied() {
-        return "403"; 
+        return "403 forbidden"; 
     }
 }
