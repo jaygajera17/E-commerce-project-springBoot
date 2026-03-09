@@ -39,4 +39,20 @@ public class userService {
 	public User getUserByUsername(String username) {
 	        return userDao.getUserByUsername(username);
 	    }
+
+	public void deleteUser(int id) {
+		userDao.deleteUser(id);
+	}
+
+	public void toggleUserActive(int id) {
+		userDao.toggleUserActive(id);
+	}
+
+	public User getUserById(int id) {
+		return userDao.getUserById(id);
+	}
+
+	public void updateUser(User user) {
+		userDao.saveUser(user);
+	}
 }

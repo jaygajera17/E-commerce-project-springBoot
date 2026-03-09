@@ -28,6 +28,9 @@ public class User {
 	private String role;
 	
 	private String address;
+
+	@Column(name = "is_active", nullable = false)
+	private boolean isActive = true;
 	
 	
 	public int getId() {
@@ -77,7 +80,12 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	 
 
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean active) {
+		isActive = active;
+	}
 }

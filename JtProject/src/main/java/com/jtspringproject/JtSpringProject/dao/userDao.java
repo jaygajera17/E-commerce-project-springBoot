@@ -70,7 +70,7 @@ public class userDao {
 
 	@Transactional
 	public User getUserByUsername(String username) {
-	        Query<User> query = sessionFactory.getCurrentSession().createQuery("from User where username = :username", User.class);
+	        Query<User> query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username", User.class);
 	        query.setParameter("username", username);
 	        
 	        try {
@@ -80,4 +80,29 @@ public class userDao {
 	            return null; 
 	        }
     	}
+
+	@Transactional
+	public void deleteUser(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		User user = session.get(User.class, id);
+		if (user != null) {
+			user.setActive(false);
+			session.update(user);
+		}
+	}
+
+	@Transactional
+	public void toggleUserActive(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		User user = session.get(User.class, id);
+		if (user != null) {
+			user.setActive(!user.isActive());
+			session.update(user);
+		}
+	}
+
+	@Transactional
+	public User getUserById(int id) {
+		return this.sessionFactory.getCurrentSession().get(User.class, id);
+	}
 }

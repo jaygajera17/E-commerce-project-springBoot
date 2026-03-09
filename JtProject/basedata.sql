@@ -2,8 +2,8 @@
 SET SQL_MODE ='IGNORE_SPACE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 # create database and use it
-CREATE DATABASE IF NOT EXISTS ecommjava;
-USE ecommjava;
+CREATE DATABASE IF NOT EXISTS ecomjava;
+USE ecomjava;
 
 # create the category table
 CREATE TABLE IF NOT EXISTS CATEGORY(
@@ -30,13 +30,15 @@ email    varchar(255) null,
 password varchar(255) null,
 role     varchar(255) null,
 username varchar(255) null,
+is_active tinyint(1) not null default 1,
 UNIQUE (username)
 );
 
-# insert default customers
-INSERT INTO CUSTOMER(address, email, password, role, username) VALUES
-                                                                   ('123, Albany Street', 'admin@nyan.cat', '123', 'ROLE_ADMIN', 'admin'),
-                                                                   ('765, 5th Avenue', 'lisa@gmail.com', '765', 'ROLE_NORMAL', 'lisa');
+# insert default customers (BCrypt: admin=123)
+# For lisa=765, register via /register or update password in DB with BCrypt hash
+INSERT INTO CUSTOMER(address, email, password, role, username, is_active) VALUES
+('123, Albany Street', 'admin@nyan.cat', '$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG', 'ROLE_ADMIN', 'admin', 1),
+('765, 5th Avenue', 'lisa@gmail.com', '765', 'ROLE_NORMAL', 'lisa', 1);
 
 # create the product table
 CREATE TABLE IF NOT EXISTS PRODUCT(

@@ -12,13 +12,15 @@
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <title>Admin Login</title>
     <style>
-    
     	body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f8f9fa;
+            padding: 15px;
+            margin: 0;
+            box-sizing: border-box;
         }
         .login-container {
         	max-width: 400px;
@@ -40,6 +42,20 @@
         }
         .form-control {
             border-radius: 0 0.25rem 0.25rem 0;
+        }
+        input[type="submit"] {
+            width: 100%;
+            min-height: 44px;
+        }
+        @media (max-width: 576px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            .login-container {
+                margin: 0 auto;
+            }
         }
     </style>
 </head>

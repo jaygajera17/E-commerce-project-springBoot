@@ -3,6 +3,7 @@ package com.jtspringproject.JtSpringProject;
 import java.util.Properties;
  
 import javax.sql.DataSource;
+import javax.persistence.EntityManagerFactory;
  
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
  
 @Configuration
@@ -68,5 +71,19 @@ public class HibernateConfiguration {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
-    }   
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan(PACKAGES_TO_SCAN);
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        Properties props = new Properties();
+        props.put("hibernate.dialect", DIALECT);
+        props.put("hibernate.show_sql", SHOW_SQL);
+        props.put("hibernate.hbm2ddl.auto", HBM2DDL_AUTO);
+        em.setJpaProperties(props);
+        return em;
+    }
 }

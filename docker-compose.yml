@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ecommerce-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecommjava
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ./JtProject
+      dockerfile: Dockerfile
+    container_name: ecommerce-app
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/ecommjava?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

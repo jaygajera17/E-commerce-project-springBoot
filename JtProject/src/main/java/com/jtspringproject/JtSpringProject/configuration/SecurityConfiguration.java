@@ -32,6 +32,7 @@ public class SecurityConfiguration {
             http.antMatcher("/admin/**") 
                    .authorizeHttpRequests(requests -> requests
             		 .requestMatchers(new AntPathRequestMatcher("/admin/login")).permitAll()
+                     .requestMatchers(new AntPathRequestMatcher("/admin/loginvalidate")).permitAll()
                      .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
                     )
                     .formLogin(login -> login
@@ -93,11 +94,13 @@ public class SecurityConfiguration {
 			if(user == null) {
 	            throw new UsernameNotFoundException("User with username " + username + " not found.");
 			}
+			if(!user.isActive()) {
+				throw new UsernameNotFoundException("User account is deactivated.");
+			}
 			String role =  user.getRole().equals("ROLE_ADMIN") ? "ADMIN":"USER"; 
 			
 			return org.springframework.security.core.userdetails.User
 					.withUsername(username)
-					.passwordEncoder(input->passwordEncoder().encode(input))
 					.password(user.getPassword())
 					.roles(role)
 					.build();

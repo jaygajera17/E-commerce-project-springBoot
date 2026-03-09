@@ -50,11 +50,11 @@
 		<table class="table">
 
 			<tr>
-				
 				<th scope="col">Customer Name</th>
 				<th scope="col">Email</th>
 				<th scope="col">Address</th>
-				<th scope="col">Delete</th>
+				<th scope="col">Status</th>
+				<th scope="col">Actions</th>
 			</tr>
 			<tbody>
 				<c:forEach var="customer" items="${customers }">
@@ -64,12 +64,26 @@
 					</td>
 					<td>
 					    ${customer.email}
-						
 					</td>
 					<td>
 					    ${customer.address}
-						
-				    </td>
+					</td>
+					<td>
+						<c:choose>
+							<c:when test="${customer.active}">
+								<span class="badge badge-success">Active</span>
+							</c:when>
+							<c:otherwise>
+								<span class="badge badge-secondary">Inactive</span>
+							</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<a href="/admin/customers/toggleActive?id=${customer.id}" class="btn btn-sm ${customer.active ? 'btn-warning' : 'btn-success'}" 
+						   onclick="return confirm('${customer.active ? 'Deactivate' : 'Activate'} this customer?')">
+							${customer.active ? 'Deactivate' : 'Activate'}
+						</a>
+					</td>
 					</tr>
                 </c:forEach>
 
