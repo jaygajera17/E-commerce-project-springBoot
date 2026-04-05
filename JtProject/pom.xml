@@ -19,6 +19,12 @@
 	</properties>
 	<dependencies>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -74,6 +80,19 @@
 	</dependencies>
 
 	<build>
+		<!-- JSPs under src/main/webapp are not on the classpath by default; embedded Tomcat serves them from META-INF/resources -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<targetPath>META-INF/resources</targetPath>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

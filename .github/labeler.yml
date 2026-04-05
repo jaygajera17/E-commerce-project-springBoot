@@ -1,0 +1,21 @@
+# actions/labeler@v5 — https://github.com/actions/labeler
+# Label names must exist on the repo, or the workflow needs issues: write to create them.
+
+java:
+  - changed-files:
+      - any-glob-to-any-file: "JtProject/**/*.java"
+
+jsp:
+  - changed-files:
+      - any-glob-to-any-file: "JtProject/**/*.jsp"
+
+build:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "JtProject/pom.xml"
+          - "JtProject/mvnw"
+          - "JtProject/mvnw.cmd"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: ".github/**"

@@ -15,8 +15,19 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      issues: write
 
     steps:
+    # pull_request_target runs workflow from the base branch, so .github/labeler.yml
+    # is not on disk until it is merged. Load config from the PR head instead.
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
+        path: pr-head
+        fetch-depth: 1
+
     - uses: actions/labeler@v5.0.0
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        configuration-path: pr-head/.github/labeler.yml
