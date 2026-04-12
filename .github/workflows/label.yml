@@ -6,7 +6,9 @@
 # https://github.com/actions/labeler
 
 name: Labeler
-on: [pull_request_target]
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   label:
@@ -17,6 +19,25 @@ jobs:
       pull-requests: write
 
     steps:
-    - uses: actions/labeler@v5.0.0
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Checkout base branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Verify labeler config exists
+        id: labeler_config
+        shell: bash
+        run: |
+          if [[ -f ".github/labeler.yml" ]]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Labeler config missing::.github/labeler.yml was not found on base branch; skipping labeler instead of failing the workflow."
+          fi
+
+      - name: Apply labels
+        if: steps.labeler_config.outputs.exists == 'true'
+        uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labeler.yml
