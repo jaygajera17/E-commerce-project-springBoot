@@ -1,0 +1,11 @@
+feature:
+  - changed-files:
+    - any-glob-to-any-file: ["**/*.java", "**/*.jsp", "**/*.html", "**/*.css", "**/*.js"]
+
+config:
+  - changed-files:
+    - any-glob-to-any-file: ["**/*.xml", "**/*.properties", "**/*.yml", "**/*.yaml"]
+
+docs:
+  - changed-files:
+    - any-glob-to-any-file: ["**/*.md", "**/*.txt"]
