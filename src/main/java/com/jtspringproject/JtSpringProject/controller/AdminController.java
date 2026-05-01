@@ -29,6 +29,9 @@ public class AdminController {
 	private final userService userService;
 	private final categoryService categoryService;
 	private final productService productService;
+	private static final String REDIRECT_ADMIN_PRODUCTS = "redirect:/admin/products";
+	private static final String REDIRECT_ADMIN_CATEGORIES = "redirect:/admin/categories";
+	private static final String VIEW_CATEGORIES = "categories";
 
 	@Autowired
 	public AdminController(userService userService, categoryService categoryService, productService productService) {
@@ -63,29 +66,29 @@ public class AdminController {
 
 	@GetMapping("categories")
 	public ModelAndView getCategories() {
-		ModelAndView mView = new ModelAndView("categories");
+		ModelAndView mView = new ModelAndView(VIEW_CATEGORIES);
 		List<Category> categories = this.categoryService.getCategories();
-		mView.addObject("categories", categories);
+		mView.addObject(VIEW_CATEGORIES, categories);
 		return mView;
 	}
 
 	@PostMapping("/categories")
 	public String addCategory(@RequestParam("categoryname") String categoryName) {
 		this.categoryService.addCategory(categoryName);
-		return "redirect:categories";
+		return REDIRECT_ADMIN_CATEGORIES;
 	}
 
 	@PostMapping("categories/delete")
 	public String deleteCategory(@RequestParam("id") int id) {
 		this.categoryService.deleteCategory(id);
-		return "redirect:/admin/categories";
+		return REDIRECT_ADMIN_PRODUCTS;
 	}
 
 	@PostMapping("categories/update")
 	public String updateCategory(@RequestParam("categoryid") int id,
 			@RequestParam("categoryname") String categoryname) {
 		this.categoryService.updateCategory(id, categoryname);
-		return "redirect:/admin/categories";
+		return REDIRECT_ADMIN_CATEGORIES;
 	}
 
 	@GetMapping("products")
@@ -106,7 +109,7 @@ public class AdminController {
 	public ModelAndView addProduct() {
 		ModelAndView mView = new ModelAndView("productsAdd");
 		List<Category> categories = this.categoryService.getCategories();
-		mView.addObject("categories", categories);
+		mView.addObject(VIEW_CATEGORIES, categories);
 		return mView;
 	}
 
@@ -117,7 +120,7 @@ public class AdminController {
 			@RequestParam("productImage") String productImage) {
 		Product product = buildProduct(name, categoryId, price, weight, quantity, description, productImage);
 		this.productService.addProduct(product);
-		return "redirect:/admin/products";
+		return REDIRECT_ADMIN_PRODUCTS;
 	}
 
 	@GetMapping("products/update/{id}")
@@ -127,7 +130,7 @@ public class AdminController {
 		Product product = this.productService.getProduct(id);
 		List<Category> categories = this.categoryService.getCategories();
 
-		mView.addObject("categories", categories);
+		mView.addObject(VIEW_CATEGORIES, categories);
 		mView.addObject("product", product);
 		return mView;
 	}
@@ -139,18 +142,18 @@ public class AdminController {
 			@RequestParam("description") String description, @RequestParam("productImage") String productImage) {
 		Product product = buildProduct(name, categoryId, price, weight, quantity, description, productImage);
 		this.productService.updateProduct(id, product);
-		return "redirect:/admin/products";
+		return REDIRECT_ADMIN_PRODUCTS;
 	}
 
 	@PostMapping("products/delete")
 	public String removeProduct(@RequestParam("id") int id) {
 		this.productService.deleteProduct(id);
-		return "redirect:/admin/products";
+		return REDIRECT_ADMIN_PRODUCTS;
 	}
 
 	@PostMapping("products")
 	public String redirectProductsPost() {
-		return "redirect:/admin/categories";
+		return REDIRECT_ADMIN_CATEGORIES;
 	}
 
 	@GetMapping("customers")
