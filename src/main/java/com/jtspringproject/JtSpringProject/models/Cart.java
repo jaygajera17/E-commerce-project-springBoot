@@ -1,13 +1,14 @@
 package com.jtspringproject.JtSpringProject.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.Data;
 
-@Entity(name = "CART")
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity(name="CART")
+@Data
 public class Cart {
 
     @Id
@@ -15,25 +16,7 @@ public class Cart {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name="customer_id")
     private User customer;
 
-    public Cart() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public User getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(User customer) {
-        this.customer = customer;
-    }
 }

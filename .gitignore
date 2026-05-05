@@ -40,3 +40,6 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
+
+# Local database volume data (runtime-only, machine-specific)
+Db_volumes/

@@ -1,232 +1,177 @@
 <a href="https://trendshift.io/repositories/151" target="_blank"><img src="https://trendshift.io/api/badge/repositories/151" alt="jaygajera17%2FE-commerce-project-springBoot | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-# E-commerce Spring Boot (JSP + Hibernate)
+# E-commerce Spring Boot Project
 
-Production-oriented Java e-commerce web application built with Spring Boot, JSP, Spring Security, and Hibernate SessionFactory.
+Modernized Spring Boot + JSP e-commerce app with Spring Security, JPA, Flyway, Dockerized MySQL, and Maven wrapper support.
 
-This project follows a layered MVC architecture and supports role-based access for admin and customer workflows.
+## Quick Navigation
 
-<br/><br/>
+- [What Changed Recently](#what-changed-recently)
+- [Prerequisites](#prerequisites)
+- [Project Setup](#project-setup)
+- [Run the Application](#run-the-application)
+- [Run Tests](#run-tests)
+- [Database Configuration](#database-configuration)
+- [Troubleshooting](#troubleshooting)
+- [Workflow and Architecture](#workflow-and-architecture)
+- [Useful Links](#useful-links)
 
-<h1>🛒 E-Commerce Spring Boot</h1>
- 
-<p>A production-oriented Java e-commerce web application built with Spring Boot, JSP, Spring Security, and Hibernate — featuring role-based access for admin and customer workflows.</p>
-<br/>
-<!-- Badges Row 1: Community -->
-<p>
-  <a href="https://github.com/jaygajera17/E-commerce-project-springBoot/stargazers">
-    <img src="https://img.shields.io/github/stars/jaygajera17/E-commerce-project-springBoot?style=flat-square&logo=github&labelColor=1a1a2e&color=f5a623&label=Stars" alt="Stars"/>
-  </a>
-  <a href="https://github.com/jaygajera17/E-commerce-project-springBoot/network/members">
-    <img src="https://img.shields.io/github/forks/jaygajera17/E-commerce-project-springBoot?style=flat-square&logo=github&labelColor=1a1a2e&color=4a90d9&label=Forks" alt="Forks"/>
-  </a>
-  <a href="https://github.com/jaygajera17/E-commerce-project-springBoot/issues">
-    <img src="https://img.shields.io/github/issues/jaygajera17/E-commerce-project-springBoot?style=flat-square&logo=github&labelColor=1a1a2e&color=e05c5c&label=Issues" alt="Issues"/>
-  </a>
-  <a href="https://github.com/jaygajera17/E-commerce-project-springBoot/pulls">
-    <img src="https://img.shields.io/github/issues-pr/jaygajera17/E-commerce-project-springBoot?style=flat-square&logo=github&labelColor=1a1a2e&color=8e44ad&label=Pull+Requests" alt="Pull Requests"/>
-  </a>
-  <a href="https://github.com/jaygajera17/E-commerce-project-springBoot/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/jaygajera17/E-commerce-project-springBoot?style=flat-square&logo=github&labelColor=1a1a2e&color=27ae60&label=Contributors" alt="Contributors"/>
-  </a>
-</p>
+## What Changed Recently
 
-<br/>
+- Project structure moved from `JtProject/` to repository root.
+- Added Docker support with `Dockerfile` and `docker-compose.yml`.
+- Added Maven wrapper metadata in `.mvn/wrapper/`.
+- Updated Java target in `pom.xml` to Java 17.
+- Made datasource settings environment-overridable:
+  - `SPRING_DATASOURCE_URL`
+  - `SPRING_DATASOURCE_USERNAME`
+  - `SPRING_DATASOURCE_PASSWORD`
+- Aligned local defaults with Docker MySQL mapping (`localhost:3308`).
+- Added H2-based test config in `src/test/resources/application.properties`.
+- Added test dependency `com.h2database:h2` in `pom.xml`.
+- Ignored local DB runtime files via `Db_volumes/` in `.gitignore`.
 
-## Highlights
+## Prerequisites
 
-- Server-rendered e-commerce app (JSP views)
-- Spring Security authentication and role-based authorization
-- Custom Hibernate SessionFactory configuration (non-Spring-Data JPA runtime)
-- MySQL-backed persistence with DAO and service layers
-- Admin modules for products, categories, and customer listing
-- User modules for registration, login, profile management, and product browsing
-- Jenkins pipeline file included for CI/CD bootstrap
+- Java 17
+- Docker Desktop (for containerized MySQL)
+- Git
+- IntelliJ IDEA or Eclipse
 
-## Tech Stack
+## Project Setup
 
-<p>
-  <img src="https://img.shields.io/badge/Java-11-ED8B00?style=flat-square&logo=openjdk&logoColor=white&labelColor=1a1a2e" alt="Java 11"/>
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.6.4-6DB33F?style=flat-square&logo=springboot&logoColor=white&labelColor=1a1a2e" alt="Spring Boot"/>
-  <img src="https://img.shields.io/badge/Spring%20Security-5.x-6DB33F?style=flat-square&logo=springsecurity&logoColor=white&labelColor=1a1a2e" alt="Spring Security"/>
-  <img src="https://img.shields.io/badge/Hibernate-ORM-59666C?style=flat-square&logo=hibernate&logoColor=white&labelColor=1a1a2e" alt="Hibernate"/>
-  <img src="https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat-square&logo=mysql&logoColor=white&labelColor=1a1a2e" alt="MySQL"/>
-  <img src="https://img.shields.io/badge/Maven-Build-C71A36?style=flat-square&logo=apachemaven&logoColor=white&labelColor=1a1a2e" alt="Maven"/>
-</p>
+### 1) Clone and Open
 
-- Java 11
-- Spring Boot 2.6.4
-- Spring MVC
-- Spring Security
-- Hibernate ORM (via `LocalSessionFactoryBean`)
-- JSP + JSTL + Tomcat Jasper
-- MySQL 8 connector
-- Maven
-
-## Project Structure
-
-```text
-src/main/java/com/jtspringproject/JtSpringProject/
-  configuration/     # Security config
-  controller/        # MVC controllers
-  dao/               # Data access layer
-  models/            # Entities
-  services/          # Business layer
-  repository/        # Spring Data repository (partial)
-  HibernateConfiguration.java
-  JtSpringProjectApplication.java
-src/main/resources/
-  application.properties
-src/main/webapp/views/
-  *.jsp
-basedata.sql
-pom.xml
+```powershell
+git clone <your-fork-or-repo-url>
+Set-Location "E-commerce-project-springBoot-pr-work"
 ```
 
-## Getting Started
+Open the repository root as a Maven project.
 
-### Prerequisites
+### 2) Set Java in Current PowerShell Session
 
-- Java 11+
-- Maven 3.8+
-- MySQL or MariaDB
-
-### 1) Clone and move into project
-
-```bash
-git clone https://github.com/jaygajera17/E-commerce-project-springBoot.git
-cd E-commerce-project-springBoot
+```powershell
+$env:JAVA_HOME="C:\Path\To\Your\JDK17"
+$env:Path="$env:JAVA_HOME\bin;$env:Path"
+java -version
 ```
 
-### 2) Configure database
+### 3) Start MySQL Container
 
-Update `src/main/resources/application.properties`:
+```powershell
+docker compose up -d ecom-mysql-db
+```
+
+## Run the Application
+
+```powershell
+Set-Location "<path-to>E-commerce-project-springBoot-pr-work"
+./mvnw.cmd spring-boot:run
+```
+
+Open these endpoints in your browser:
+
+- `http://localhost:8080/`
+- `http://localhost:8080/register`
+- `http://localhost:8080/admin/products`
+
+## Run Tests
+
+```powershell
+./mvnw.cmd test
+```
+
+Tests use H2 in-memory DB from `src/test/resources/application.properties`, so local MySQL is not required for test execution.
+
+## Database Configuration
+
+Runtime file: `src/main/resources/application.properties`
 
 ```properties
-db.driver=com.mysql.cj.jdbc.Driver
-db.url=jdbc:mysql://localhost:3306/ecommjava?createDatabaseIfNotExist=true
-db.username=your_db_user
-db.password=your_db_password
-
-hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
-hibernate.show_sql=true
-hibernate.hbm2ddl.auto=update
-entitymanager.packagesToScan=com
+spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3308/db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME:user}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:password}
 ```
 
-### 3) Optional: seed sample data
+If you use local (non-Docker) MySQL, set values before running:
 
-Run `basedata.sql` against your database if you want initial categories/users/products.
-
-Note: sample credentials in `basedata.sql` are development-only defaults.
-
-### 4) Run the app
-
-```bash
-mvn clean package
-mvn spring-boot:run
+```powershell
+$env:SPRING_DATASOURCE_URL="jdbc:mysql://localhost:3306/db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false"
+$env:SPRING_DATASOURCE_USERNAME="root"
+$env:SPRING_DATASOURCE_PASSWORD="root"
 ```
 
-App URL: http://localhost:8080/
+## Seed Data
 
-## IDE Notes (IntelliJ)
-
-If JSP views are not resolved, set the run configuration working directory to `$MODULE_WORKING_DIR$`.
-
-## Core Endpoints
-
-### Public/User
-
-- `/`
-- `/login`
-- `/register`
-- `/newuserregister`
-- `/user/products`
-- `/profileDisplay`
-
-### Admin
-
-- `/admin/`
-- `/admin/Dashboard`
-- `/admin/products`
-- `/admin/categories`
-- `/admin/customers`
-
-## Security Model
-
-- Admin routes under `/admin/**` require role `ADMIN`
-- User routes require role `USER`
-- Login pages:
-  - Admin: `/admin/login`
-  - User: `/login`
-- CSRF protection is enabled for form submissions
-
-## Build and Test
-
-```bash
-mvn clean verify
-```
-
-Notes:
-
-- `mvn test` requires a reachable database because context startup initializes Hibernate and datasource beans.
-
-## CI/CD
-
-A Jenkins pipeline is included in `jenkins file` with stages for:
-
-- Checkout
-- Build
-- Test
-- Deploy (template placeholder)
-
-Adjust branch, deployment steps, and credentials for your environment.
+- Base SQL file: `basedata.sql`
+- Flyway migrations: `src/main/resources/db/migration/`
 
 ## Troubleshooting
 
-- `Could not resolve placeholder 'db.driver'`:
-  - Ensure all `db.*` keys exist in `application.properties`
-- JSP pages not rendering:
-  - Verify working directory and `spring.mvc.view.prefix=/views/`
-- Tests failing on startup:
-  - Start MySQL and verify connection credentials first
+- `JAVA_HOME not found`: set `JAVA_HOME` to a JDK (not JRE), then restart terminal.
+- `release version 21 not supported`: run with Java 17.
+- `Communications link failure`: ensure MySQL is up and port matches datasource URL (`3308` in current compose).
+- JSP not loading in IDE: run from repository root so `src/main/webapp/WEB-INF/views` resolves correctly.
 
-## Screenshots
+## Workflow and Architecture
+
+![Workflow](https://github.com/jaygajera17/E-commerce-project-springBoot/assets/81226571/69951cb7-65e2-4225-8681-2542859aaec6)
+
+### Controller
+
+- Handles endpoints and passes model data to JSP views (`ModelAndView`).
+
+```java
+@GetMapping("login")
+public String adminlogin() {
+	return "adminlogin";
+}
+```
+
+- When `/login` is accessed, `src/main/webapp/views/adminlogin.jsp` is rendered.
+
+### Models
+
+- Represent entities and their relationships.
+
+### View
+
+- Renders UI with data received from controllers.
+
+## Common Endpoints
+
+- `http://localhost:8080/`
+- `http://localhost:8080/register`
+- `http://localhost:8080/admin/products`
+- `http://localhost:8080/admin/customers`
+- `http://localhost:8080/admin/categories`
+- `http://localhost:8080/admin/Dashboard`
+
+## Useful Links
+
+### Spring Boot References
+
+- [Official Apache Maven Documentation](https://maven.apache.org/guides/index.html)
+- [Spring Boot Maven Plugin Reference](https://docs.spring.io/spring-boot/docs/2.6.4/maven-plugin/reference/html/)
+- [Create an OCI Image](https://docs.spring.io/spring-boot/docs/2.6.4/maven-plugin/reference/html/#build-image)
+- [Spring Web Reference](https://docs.spring.io/spring-boot/docs/2.6.4/reference/htmlsingle/#boot-features-developing-web-applications)
+
+### Guides
+
+- [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
+- [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
+- [Building REST Services with Spring](https://spring.io/guides/tutorials/bookmarks/)
+
+### Project Demo
+
+- [YouTube project walkthrough (legacy version)](https://youtu.be/c6WWdINWSlI) [![youtube][youtube-shield]][youtube-url]
+
+## Core Endpoints
 
 ![Preview 1](https://github.com/jaygajera17/E-commerce-project-springBoot/assets/81226571/02a04d3c-1fc9-418c-b231-639f6525d07e)
 ![Preview 2](https://github.com/jaygajera17/E-commerce-project-springBoot/assets/81226571/24c4451b-43a6-4c23-a78a-786eab4303b0)
 ![Preview 3](https://github.com/jaygajera17/E-commerce-project-springBoot/assets/81226571/93c1baeb-326c-450f-867e-a883900a6644)
 
-## Roadmap
-
-See the full roadmap in [roadmap.md](roadmap.md).
-
-Current priorities:
-
-- Solid foundation: CI, Docker Compose, contribution workflow, and test coverage.
-- Complete e-commerce domain: cart, checkout, auth, search, and API docs.
-- Industry patterns: caching, concurrency control, observability, and scalability.
-- Long-term architecture: event-driven patterns and microservice decomposition guide.
-
-## Demo
-
-demo video: https://youtu.be/c6WWdINWSlI
-
-## ⭐ Support This Project
-
-If this project helped you, please consider giving it a star on GitHub.
-Your support helps improve visibility and motivates future maintenance.
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=jaygajera17%2FE-commerce-project-springBoot&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=jaygajera17/E-commerce-project-springBoot&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=jaygajera17/E-commerce-project-springBoot&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=jaygajera17/E-commerce-project-springBoot&type=date&legend=top-left" />
- </picture>
-</a>
-
-<div align="center">
-  <sub>Built as a college project · Grown into a community resource · Maintained with ❤️</sub>
-</div>
+[youtube-shield]: https://img.shields.io/youtube/views/c6WWdINWSlI?style=social
+[youtube-url]: https://youtu.be/c6WWdINWSlI

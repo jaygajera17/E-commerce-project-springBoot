@@ -1,11 +1,14 @@
 package com.jtspringproject.JtSpringProject.models;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Data
 public class CartProductId implements Serializable {
 
     @Column(name = "cart_id")
@@ -21,21 +24,6 @@ public class CartProductId implements Serializable {
         this.productId = productId;
     }
 
-    public Integer getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Integer cartId) {
-        this.cartId = cartId;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
 
     @Override
     public boolean equals(Object o) {

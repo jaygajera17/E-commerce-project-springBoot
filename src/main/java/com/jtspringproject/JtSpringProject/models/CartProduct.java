@@ -1,9 +1,11 @@
 package com.jtspringproject.JtSpringProject.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "CART_PRODUCT")
+@Data
 public class CartProduct {
 
     @EmbeddedId
@@ -27,27 +29,4 @@ public class CartProduct {
         this.id = new CartProductId(cart.getId(), product.getId());
     }
 
-    public CartProductId getId() {
-        return id;
-    }
-
-    public void setId(CartProductId id) {
-        this.id = id;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 }

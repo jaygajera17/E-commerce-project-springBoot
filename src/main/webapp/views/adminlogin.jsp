@@ -1,83 +1,165 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <title>Admin Login</title>
+    <title>Admin Login – ShopEase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-    
-    	body {
+        * { font-family: 'Inter', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: #0d0d1a;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa;
+            justify-content: center;
         }
-        .login-container {
-        	max-width: 400px;
+
+        .auth-wrapper {
+            display: flex;
+            width: 900px;
+            max-width: 95vw;
+            min-height: 520px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+
+        .auth-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #2d1b69 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-panel::before {
+            content: '';
+            position: absolute;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            top: -80px; left: -80px;
+        }
+        .auth-panel::after {
+            content: '';
+            position: absolute;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            bottom: -60px; right: -60px;
+        }
+        .auth-panel .brand-icon { font-size: 3rem; margin-bottom: 16px; z-index: 1; }
+        .auth-panel h2 { font-weight: 700; font-size: 1.8rem; z-index: 1; }
+        .auth-panel p  { font-size: 0.95rem; opacity: 0.8; text-align: center; z-index: 1; }
+
+        .shield-badge {
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            width: 70px; height: 70px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 14px;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        .auth-form {
+            flex: 1;
+            background: #161628;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .auth-form h3 { color: #fff; font-weight: 700; font-size: 1.6rem; margin-bottom: 4px; }
+        .auth-form .sub { color: #7777aa; font-size: 0.9rem; margin-bottom: 30px; }
+
+        .form-floating label { color: #7777aa; }
+        .form-floating .form-control {
+            background: #0d0d1a;
+            border: 1.5px solid #2a2a4a;
+            border-radius: 10px;
+            color: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-floating .form-control:focus {
+            background: #0d0d1a;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168,85,247,0.25);
+            color: #fff;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 12px;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            background: white;
+            transition: transform 0.15s, box-shadow 0.15s;
         }
-        .login-container .jumbotron {
-            border-radius: 8px;
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(168,85,247,0.45);
+            color: #fff;
         }
-        .input-group-text {
-            background-color: #007bff;
-            color: white;
-            border-radius: 0.25rem 0 0 0.25rem;
-        }
-        .input-group-prepend .input-group-text {
-            border-right: 0;
-        }
-        .form-control {
-            border-radius: 0 0.25rem 0.25rem 0;
+        .btn-login:active { transform: translateY(0); }
+
+        .error-msg { color: #ff6b7a; font-size: 0.9rem; text-align: center; margin-top: 10px; }
+
+        @media (max-width: 650px) {
+            .auth-panel { display: none; }
+            .auth-form { padding: 40px 24px; }
         }
     </style>
 </head>
+<body>
 
-<body class="bg-dark">
+<div class="auth-wrapper">
+    <div class="auth-panel">
+        <div class="shield-badge"><i class="fas fa-shield-halved"></i></div>
+        <h2>Admin Portal</h2>
+        <p>Secure access to ShopEase administration. Authorised personnel only.</p>
+    </div>
 
-<div class="login-container p-4">
-    <div class="jumbotron border p-4">
-        <h2 class="text-center">Admin Login</h2>
+    <div class="auth-form">
+        <h3>Admin Sign In</h3>
+        <p class="sub">Enter your admin credentials to continue</p>
+
         <form action="/admin/loginvalidate" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    </div>
-                    <input type="text" name="username" id="username" placeholder="Admin username" required class="form-control form-control-lg">
-                </div>
+            <div class="form-floating mb-3">
+                <input type="text" name="username" id="username"
+                       class="form-control" placeholder="Admin Username" required>
+                <label for="username"><i class="fas fa-user-shield me-2"></i>Admin Username</label>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                    </div>
-                    <input type="password" class="form-control form-control-lg" placeholder="Admin Password" required name="password" id="password">
-                </div>
+            <div class="form-floating mb-4">
+                <input type="password" name="password" id="password"
+                       class="form-control" placeholder="Password" required>
+                <label for="password"><i class="fas fa-lock me-2"></i>Password</label>
             </div>
-            <input type="submit" value="Login" class="btn btn-primary btn-block mt-4">
-            <h3 class="text-center text-danger mt-3">${msg}</h3>
+
+            <button type="submit" class="btn-login">
+                <i class="fas fa-right-to-bracket me-2"></i>Sign In
+            </button>
+
+            <p class="error-msg">${msg}</p>
         </form>
     </div>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
