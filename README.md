@@ -191,6 +191,38 @@ Adjust branch, deployment steps, and credentials for your environment.
 - Tests failing on startup:
   - Start MySQL and verify connection credentials first
 
+## ❗ Common Errors & Fixes
+
+### 1. JSP views not loading (404 error after startup)
+**Symptom:** App starts but http://localhost:8080/ shows 404.
+**Fix:** In IntelliJ IDEA:
+- Go to Run → Edit Configurations
+- Select `JtSpringProjectApplication`
+- Set "Working directory" to `$MODULE_WORKING_DIR$`
+- Click Apply → OK → Restart the app
+
+### 2. Maven build fails / project not recognized
+**Symptom:** `mvn install` errors or IntelliJ doesn't see Spring Boot.
+**Fix:**
+- Right-click `pom.xml` → "Add as Maven Project"
+- Make sure you open the **JtProject** subfolder, not the root folder
+- Use JDK 11 or JDK 17 (not JDK 21+ — Hibernate dialect may conflict)
+
+### 3. Database connection error on startup
+**Symptom:** `Communications link failure` or `Access denied for user`.
+**Fix:** Open `JtProject/src/main/resources/application.properties` and set:
+```properties
+db.url=jdbc:mysql://localhost:3306/ecommjava?createDatabaseIfNotExist=true
+db.username=YOUR_MYSQL_USERNAME
+db.password=YOUR_MYSQL_PASSWORD
+```
+Then run `basedata.sql` in MySQL Workbench to load initial data.
+
+### 4. `mvn test` fails without a database
+**Symptom:** Tests fail immediately with datasource errors.
+**Fix:** This project's tests require a running MySQL instance.
+Start MySQL first, then run `mvn test`.
+
 ## Screenshots
 
 ![Preview 1](https://github.com/jaygajera17/E-commerce-project-springBoot/assets/81226571/02a04d3c-1fc9-418c-b231-639f6525d07e)
