@@ -18,8 +18,12 @@ public class Product {
 	private String name;
 
 	private String image;
+	// Multiple products can belong to the same category.
+	// If this association was previously mapped as @OneToOne, ensure any existing
+	// UNIQUE constraint on PRODUCT.category_id is removed via migration/manual DDL,
+	// since Hibernate schema auto-update may not drop that constraint automatically.
 	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
+	@JoinColumn(name = "category_id", referencedColumnName = "category_id", unique = false)
 	private Category category;
 
 	private int quantity;
