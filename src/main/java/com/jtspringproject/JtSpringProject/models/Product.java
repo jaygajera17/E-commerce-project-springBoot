@@ -1,6 +1,5 @@
 package com.jtspringproject.JtSpringProject.models;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity(name="PRODUCT")
 public class Product {
@@ -16,22 +14,26 @@ public class Product {
 	@Column(name = "product_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
-	
+
 	private String image;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "category_id",referencedColumnName = "category_id")
+
+	@ManyToOne
+	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
 	private Category category;
-	
+
 	private int quantity;
-	
+
 	private int price;
-	
+
 	private int weight;
-	
+
 	private String description;
+
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	private User customer;
 
 	public int getId() {
 		return id;
@@ -56,7 +58,6 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
 
 	public Category getCategory() {
 		return category;
@@ -97,10 +98,12 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customer;
-	
-	
+
+	public User getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(User customer) {
+		this.customer = customer;
+	}
 }
