@@ -19,7 +19,9 @@ public class productDao {
 
 	@Transactional
 	public List<Product> getProducts() {
-		return this.sessionFactory.getCurrentSession().createQuery("from PRODUCT", Product.class).list();
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("select distinct p from PRODUCT p left join fetch p.category", Product.class)
+				.list();
 	}
 
 	@Transactional
@@ -30,7 +32,10 @@ public class productDao {
 
 	@Transactional
 	public Product getProduct(int id) {
-		return this.sessionFactory.getCurrentSession().get(Product.class, id);
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("select p from PRODUCT p left join fetch p.category where p.id = :id", Product.class)
+				.setParameter("id", id)
+				.uniqueResult();
 	}
 
 	@Transactional

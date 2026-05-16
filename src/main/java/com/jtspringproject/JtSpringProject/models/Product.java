@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,12 +19,9 @@ public class Product {
 	private String name;
 
 	private String image;
-	// Multiple products can belong to the same category.
-	// If this association was previously mapped as @OneToOne, ensure any existing
-	// UNIQUE constraint on PRODUCT.category_id is removed via migration/manual DDL,
-	// since Hibernate schema auto-update may not drop that constraint automatically.
-	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "category_id", unique = false)
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
 	private Category category;
 
 	private int quantity;
