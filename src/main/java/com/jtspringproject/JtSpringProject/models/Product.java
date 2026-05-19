@@ -9,14 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
+import javax.validation.constraints.NotBlank;
 @Entity(name="PRODUCT")
 public class Product {
 	@Id
 	@Column(name = "product_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	
+
+    @NotBlank
 	private String name;
 	
 	private String image;
