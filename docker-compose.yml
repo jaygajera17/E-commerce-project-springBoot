@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ecomm-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecommjava
+      MYSQL_USER: ecommuser
+      MYSQL_PASSWORD: ecommpass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./basedata.sql:/docker-entrypoint-initdb.d/basedata.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: ecomm-app
+    ports:
+      - "8081:8080"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/ecommjava?createDatabaseIfNotExist=true
+      DB_USERNAME: ecommuser
+      DB_PASSWORD: ecommpass
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
