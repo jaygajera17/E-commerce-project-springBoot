@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, feature/add-docker-compose ]
   pull_request:
     branches: [ master ]
 
