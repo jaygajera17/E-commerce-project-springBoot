@@ -1,22 +1,40 @@
-# This workflow will triage pull requests and apply a label based on the
-# paths that are modified in the pull request.
-#
-# To use this workflow, you will need to set up a .github/labeler.yml
-# file with configuration.  For more information, see:
-# https://github.com/actions/labeler
-
 name: Labeler
-on: [pull_request_target]
-
+on:
+  push:
+  pull_request:
+    branches: 
+      - master2
+      - feature
+      
 jobs:
-  label:
-
+  springbootapp:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
-    - uses: actions/labeler@v5.0.0
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: actions/checkout@v4
+      - name: Show files
+        run: |
+          pwd
+          ls -la
+          find . -name "pom.xml"
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Build with Maven
+        working-directory: JtProject
+        run: mvn clean package -DskipTests
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD_GITHUBACTIONS }}
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./JtProject
+          push: true
+          tags: vasakkal/e-commerce-project-springboot:latest
+        
