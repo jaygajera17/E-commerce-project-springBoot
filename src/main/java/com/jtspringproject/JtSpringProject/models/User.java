@@ -26,6 +26,10 @@ public class User {
 
 	private String address;
 
+	// Soft-delete flag: deactivated customers keep their data and can be reactivated.
+	@Column(name = "is_active", nullable = false, columnDefinition = "boolean default true")
+	private boolean active = true;
+
 	public int getId() {
 		return id;
 	}
@@ -72,6 +76,14 @@ public class User {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

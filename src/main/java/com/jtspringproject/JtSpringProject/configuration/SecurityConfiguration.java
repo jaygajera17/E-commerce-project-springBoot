@@ -93,6 +93,7 @@ public class SecurityConfiguration {
 					.withUsername(username)
 					.password(user.getPassword())
 					.roles(role)
+					.disabled(!user.isActive())
 					.build();
 		};
 	}

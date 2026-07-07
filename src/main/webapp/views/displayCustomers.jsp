@@ -54,7 +54,8 @@
 				<th scope="col">Customer Name</th>
 				<th scope="col">Email</th>
 				<th scope="col">Address</th>
-				<th scope="col">Delete</th>
+				<th scope="col">Status</th>
+				<th scope="col">Action</th>
 			</tr>
 			<tbody>
 				<c:forEach var="customer" items="${customers }">
@@ -68,8 +69,38 @@
 					</td>
 					<td>
 					    ${customer.address}
-						
+
 				    </td>
+					<td>
+						<c:choose>
+							<c:when test="${customer.active}">
+								<span class="badge badge-success">Active</span>
+							</c:when>
+							<c:otherwise>
+								<span class="badge badge-secondary">Inactive</span>
+							</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<c:if test="${customer.role ne 'ROLE_ADMIN'}">
+							<c:choose>
+								<c:when test="${customer.active}">
+									<form action="customers/deactivate" method="post">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<input type="hidden" name="id" value="${customer.id}">
+										<input type="submit" value="Deactivate" class="btn btn-danger btn-sm">
+									</form>
+								</c:when>
+								<c:otherwise>
+									<form action="customers/activate" method="post">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<input type="hidden" name="id" value="${customer.id}">
+										<input type="submit" value="Activate" class="btn btn-success btn-sm">
+									</form>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+					</td>
 					</tr>
                 </c:forEach>
 

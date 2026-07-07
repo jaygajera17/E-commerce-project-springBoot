@@ -31,6 +31,7 @@ public class AdminController {
 	private final productService productService;
 	private static final String REDIRECT_ADMIN_PRODUCTS = "redirect:/admin/products";
 	private static final String REDIRECT_ADMIN_CATEGORIES = "redirect:/admin/categories";
+	private static final String REDIRECT_ADMIN_CUSTOMERS = "redirect:/admin/customers";
 	private static final String VIEW_CATEGORIES = "categories";
 
 	@Autowired
@@ -162,6 +163,18 @@ public class AdminController {
 		List<User> users = this.userService.getUsers();
 		mView.addObject("customers", users);
 		return mView;
+	}
+
+	@PostMapping("customers/deactivate")
+	public String deactivateCustomer(@RequestParam("id") int id) {
+		this.userService.setUserActiveStatus(id, false);
+		return REDIRECT_ADMIN_CUSTOMERS;
+	}
+
+	@PostMapping("customers/activate")
+	public String activateCustomer(@RequestParam("id") int id) {
+		this.userService.setUserActiveStatus(id, true);
+		return REDIRECT_ADMIN_CUSTOMERS;
 	}
 
 	@GetMapping("profileDisplay")
