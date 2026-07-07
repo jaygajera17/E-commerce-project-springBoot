@@ -71,6 +71,18 @@ public class userService {
 		return this.userDao.saveUser(existingUser);
 	}
 
+	public User setUserActiveStatus(int userId, boolean active) {
+		User user = this.userDao.getUserById(userId);
+		if (user == null) {
+			return null;
+		}
+		if (!active && "ROLE_ADMIN".equals(user.getRole())) {
+			throw new IllegalStateException("Admin accounts cannot be deactivated.");
+		}
+		user.setActive(active);
+		return this.userDao.saveUser(user);
+	}
+
 	private boolean isPasswordEncoded(String password) {
 		return password != null
 				&& (password.startsWith("$2a$") || password.startsWith("$2b$") || password.startsWith("$2y$"));
