@@ -21,7 +21,7 @@ public class Product {
 	
 	private String image;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "category_id",referencedColumnName = "category_id")
 	private Category category;
 	
@@ -32,6 +32,16 @@ public class Product {
 	private int weight;
 	
 	private String description;
+
+	public int getVolume() {
+		return volume;
+	}
+
+	public void setVolume(int volume) {
+		this.volume = volume;
+	}
+
+	private int volume;
 
 	public int getId() {
 		return id;

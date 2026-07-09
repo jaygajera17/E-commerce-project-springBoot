@@ -2,6 +2,7 @@ package com.jtspringproject.JtSpringProject.services;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,18 @@ public class userService {
 			if (user.getPassword() != null && !isPasswordEncoded(user.getPassword())) {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
 			}
+
+			//DEFAULT USER VALUES
+			if(user.getBadge()==null){
+				user.setBadge(User.Badge.BRONZE);
+			}
+
+			user.setLoyaltyPoints(0);
+
+			if(user.getPhoneValidation()== null){
+				user.setPhoneValidation(User.PhoneValidation.NOT_VERIFIED);
+			}
+
 			return this.userDao.saveUser(user);
 		} catch (DataIntegrityViolationException e) {
 			throw new IllegalStateException("Unable to create user due to data integrity constraints.", e);
