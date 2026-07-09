@@ -1,11 +1,7 @@
 package com.jtspringproject.JtSpringProject.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "CUSTOMER")
 @Table
@@ -18,6 +14,14 @@ public class User {
 	@Column(unique = true)
 	private String username;
 
+	@Column(nullable = false,updatable = false)
+	private LocalDateTime createdAt;
+
+	@PrePersist
+	protected void onCreate(){
+		createdAt = LocalDateTime.now();
+	}
+
 	private String email;
 
 	private String password;
@@ -25,6 +29,90 @@ public class User {
 	private String role;
 
 	private String address;
+
+	@Column(length=20)
+	private String phoneNumber;
+
+	public enum PhoneValidation{
+		NOT_VERIFIED,
+		VERIFIED,
+		PENDING
+	}
+
+	@Enumerated(EnumType.STRING)
+	private PhoneValidation phoneValidation;
+
+	public enum Badge{
+		NONE,
+		BRONZE,
+		SILVER,
+		GOLD,
+		PLATINUM
+	}
+
+	@Enumerated(EnumType.STRING)
+	private Badge badge;
+
+
+
+	private int loyaltyPoints;
+
+	public enum sellerVerificationStatus{
+		PENDING,
+		VERIFIED,
+		REJECTED
+	}
+
+	@Enumerated(EnumType.STRING)
+	private sellerVerificationStatus sellerVerificationStatus;
+
+	public Badge getBadge() {
+		return badge;
+	}
+
+	public void setBadge(Badge badge) {
+		this.badge = badge;
+	}
+
+	public int getLoyaltyPoints() {
+		return loyaltyPoints;
+	}
+
+	public void setLoyaltyPoints(int loyaltyPoints) {
+		this.loyaltyPoints = loyaltyPoints;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public PhoneValidation getPhoneValidation() {
+		return phoneValidation;
+	}
+
+	public void setPhoneValidation(PhoneValidation phoneValidation) {
+		this.phoneValidation = phoneValidation;
+	}
+
+	public sellerVerificationStatus getSellerVerificationStatus() {
+		return sellerVerificationStatus;
+	}
+
+	public void setSellerVerificationStatus(sellerVerificationStatus sellerVerificationStatus) {
+		this.sellerVerificationStatus = sellerVerificationStatus;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
 	public int getId() {
 		return id;

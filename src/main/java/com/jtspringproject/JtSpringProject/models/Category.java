@@ -14,7 +14,16 @@ public class Category {
 	private int id;
 	
 	private String name;
-	
+
+	public String getCategoryType() {
+		return categoryType;
+	}
+
+	public void setCategoryType(String categoryType) {
+		this.categoryType = categoryType;
+	}
+
+	private String categoryType;
 	public int getId() {
 		return id;
 	}
