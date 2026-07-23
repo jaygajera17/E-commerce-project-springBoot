@@ -86,6 +86,19 @@ public class AdminController {
 			return "redirect:categories";
 		}
 	}
+
+	@PostMapping("/items")
+	public String addItem(@RequestParam("itemName") String category_name)
+	{
+		System.out.println(item_name);
+		
+		Item item =  this.itemService.addCategory(item_name);
+		if(item.getName().equals(item_name)) {
+			return "redirect:categories";
+		}else {
+			return "redirect:categories";
+		}
+	}
 	
 	@GetMapping("categories/delete")
 	public String removeCategoryDb(@RequestParam("id") int id)
