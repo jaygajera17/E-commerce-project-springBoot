@@ -1,5 +1,6 @@
 package com.jtspringproject.JtSpringProject.services;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,45 @@ public class userService {
 		return this.userDao.getUserById(id);
 	}
 
-	public User updateUserProfile(int userId, String username, String email, String password, String address) {
+	public User updateUserProfile(
+			int requestedUserId,
+			String authenticatedUsername,
+			String username,
+			String email,
+			String password,
+			String address
+	) throws AccessDeniedException {
+		User authenticatedUser=this.userDao.getUserByUsername(authenticatedUsername);
+		if(authenticatedUser==null){
+			throw new AccessDeniedException("Authenticated user not found");
+
+		}
+		// Authorization check
+		if(authenticatedUser.getId()!=requestedUserId){
+			throw new AccessDeniedException("User is not authorized to update this profile");
+		}
+
+
+
+		authenticatedUser.setUsername(username);
+		authenticatedUser.setEmail(email);
+		authenticatedUser.setAddress(address);
+
+		if (password != null && !password.trim().isEmpty()) {
+			authenticatedUser.setPassword(isPasswordEncoded(password) ? password : passwordEncoder.encode(password));
+		}
+
+		return this.userDao.saveUser(authenticatedUser);
+	}
+	public User updateUserProfile(
+			int userId,
+			String username,
+			String email,
+			String password,
+			String address) {
+
 		User existingUser = this.userDao.getUserById(userId);
+
 		if (existingUser == null) {
 			return null;
 		}
@@ -65,7 +103,11 @@ public class userService {
 		existingUser.setAddress(address);
 
 		if (password != null && !password.trim().isEmpty()) {
-			existingUser.setPassword(isPasswordEncoded(password) ? password : passwordEncoder.encode(password));
+			existingUser.setPassword(
+					isPasswordEncoded(password)
+							? password
+							: passwordEncoder.encode(password)
+			);
 		}
 
 		return this.userDao.saveUser(existingUser);
