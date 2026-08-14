@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jtspringproject.JtSpringProject.services.userService;
 import com.jtspringproject.JtSpringProject.services.productService;
+import org.springframework.security.access.AccessDeniedException;
 
 @Controller
 public class UserController {
@@ -122,6 +123,26 @@ public class UserController {
 			@RequestParam("email") String email,
 			@RequestParam("password") String password,
 			@RequestParam("address") String address) {
+		
+		// Authorization check: Get the authenticated user's information
+		String authenticatedUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+		User authenticatedUser = userService.getUserByUsername(authenticatedUsername);
+		
+		// Verify user is authorized to modify this profile
+		// Allow modification only if:
+		// 1. User is modifying their own profile, OR
+		// 2. User is an admin modifying any profile
+		if (authenticatedUser == null) {
+			throw new AccessDeniedException("User not authenticated");
+		}
+		
+		boolean isOwnProfile = authenticatedUser.getId() == userid;
+		boolean isAdmin = "ROLE_ADMIN".equals(authenticatedUser.getRole());
+		
+		if (!isOwnProfile && !isAdmin) {
+			throw new AccessDeniedException("You are not authorized to modify this user's profile");
+		}
+		
 		User updatedUser = this.userService.updateUserProfile(userid, username, email, password, address);
 		if (updatedUser != null) {
 			refreshAuthenticatedPrincipal(username);
