@@ -27,6 +27,10 @@ public class productService {
 		return this.productDao.getProduct(id);
 	}
 
+    public List<Product> searchProducts(String query) {
+        return this.productDao.searchProducts(query);
+    }
+
 	public Product updateProduct(int id, Product product) {
 		product.setId(id);
 		return this.productDao.updateProduct(product);

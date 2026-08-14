@@ -21,7 +21,15 @@ public class productDao {
 	public List<Product> getProducts() {
 		return this.sessionFactory.getCurrentSession().createQuery("from PRODUCT", Product.class).list();
 	}
-
+    @Transactional
+    public List<Product> searchProducts(String query) {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery(
+                        "from PRODUCT p where lower(p.name) like :query or lower(p.description) like :query",
+                        Product.class)
+                .setParameter("query", "%" + query.toLowerCase() + "%")
+                .list();
+    }
 	@Transactional
 	public Product addProduct(Product product) {
 		this.sessionFactory.getCurrentSession().save(product);

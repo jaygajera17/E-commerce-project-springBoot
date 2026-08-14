@@ -66,21 +66,29 @@ public class UserController {
 		return mView;
 	}
 
-	@GetMapping("/user/products")
-	public ModelAndView getProducts() {
+    @GetMapping("/user/products")
+    public ModelAndView getProducts(@RequestParam(required = false) String search) {
 
-		ModelAndView mView = new ModelAndView("uproduct");
+        ModelAndView mView = new ModelAndView("uproduct");
 
-		List<Product> products = this.productService.getProducts();
+        List<Product> products;
 
-		if (products.isEmpty()) {
-			mView.addObject("msg", "No products are available");
-		} else {
-			mView.addObject("products", products);
-		}
+        if (search == null || search.trim().isEmpty()) {
+            products = this.productService.getProducts();
+        } else {
+            products = this.productService.searchProducts(search.trim());
+        }
 
-		return mView;
-	}
+        if (products.isEmpty()) {
+            mView.addObject("msg", "No products found");
+        } else {
+            mView.addObject("products", products);
+        }
+
+        mView.addObject("search", search);
+
+        return mView;
+    }
 
 	@PostMapping("newuserregister")
 	public ModelAndView registerNewUser(@ModelAttribute User user) {
