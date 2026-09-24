@@ -1,0 +1,10 @@
+.git
+.gitignore
+.idea
+.vscode
+target
+*.log
+README.md
+terraform/.terraform
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup

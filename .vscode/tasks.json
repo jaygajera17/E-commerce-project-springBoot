@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run local Spring Boot app",
+			"type": "shell",
+			"command": "cmd /c .\\mvnw.cmd spring-boot:run",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run local Spring Boot app",
+			"type": "shell",
+			"command": "\"C:\\Windows\\System32\\cmd.exe\" /c \".\\mvnw.cmd spring-boot:run\"",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
