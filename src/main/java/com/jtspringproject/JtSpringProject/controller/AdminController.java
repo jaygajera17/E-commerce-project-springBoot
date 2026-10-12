@@ -2,6 +2,7 @@ package com.jtspringproject.JtSpringProject.controller;
 
 import java.util.List;
 
+import com.jtspringproject.JtSpringProject.factory.ProductFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,7 @@ import com.jtspringproject.JtSpringProject.services.userService;
 @RequestMapping("/admin")
 public class AdminController {
 
+	private final ProductFactory productFactory;
 	private final userService userService;
 	private final categoryService categoryService;
 	private final productService productService;
@@ -33,8 +35,11 @@ public class AdminController {
 	private static final String REDIRECT_ADMIN_CATEGORIES = "redirect:/admin/categories";
 	private static final String VIEW_CATEGORIES = "categories";
 
+
 	@Autowired
-	public AdminController(userService userService, categoryService categoryService, productService productService) {
+	public AdminController(userService userService, categoryService categoryService, productService productService,
+						   ProductFactory productFactory) {
+		this.productFactory = productFactory;
 		this.userService = userService;
 		this.categoryService = categoryService;
 		this.productService = productService;
@@ -118,7 +123,8 @@ public class AdminController {
 			@RequestParam("price") int price, @RequestParam("weight") int weight,
 			@RequestParam("quantity") int quantity, @RequestParam("description") String description,
 			@RequestParam("productImage") String productImage) {
-		Product product = buildProduct(name, categoryId, price, weight, quantity, description, productImage);
+		Product product = this.productFactory.
+				createProduct(name, categoryId, price, weight, quantity, description, productImage);
 		this.productService.addProduct(product);
 		return REDIRECT_ADMIN_PRODUCTS;
 	}
@@ -140,7 +146,8 @@ public class AdminController {
 			@RequestParam("categoryid") int categoryId, @RequestParam("price") int price,
 			@RequestParam("weight") int weight, @RequestParam("quantity") int quantity,
 			@RequestParam("description") String description, @RequestParam("productImage") String productImage) {
-		Product product = buildProduct(name, categoryId, price, weight, quantity, description, productImage);
+		Product product = this.productFactory.
+				createProduct(name, categoryId, price, weight, quantity, description, productImage);
 		this.productService.updateProduct(id, product);
 		return REDIRECT_ADMIN_PRODUCTS;
 	}
@@ -201,18 +208,6 @@ public class AdminController {
 		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 	}
 
-	private Product buildProduct(String name, int categoryId, int price, int weight, int quantity,
-			String description, String productImage) {
-		Category category = this.categoryService.getCategory(categoryId);
-		Product product = new Product();
-		product.setName(name);
-		product.setCategory(category);
-		product.setDescription(description);
-		product.setPrice(price);
-		product.setImage(productImage);
-		product.setWeight(weight);
-		product.setQuantity(quantity);
-		return product;
-	}
+
 
 }
